@@ -133,8 +133,48 @@ let data, markets, sourceIndex;
 let mapSvg, mapLayer, mapPaths, zoomBehavior, activeProjection, worldGeoFeatures = [];
 
 function flag(iso3) {
-  const c = ISO2[iso3];
-  return c ? String.fromCodePoint(...[...c].map(x => 127397 + x.charCodeAt(0))) : "🌐";
+  const code = (ISO2[iso3] || "").toLowerCase();
+  if (!code) return `<span class="flag-fallback">🌐</span>`;
+  return `<img class="table-flag-img" src="https://flagcdn.com/28x21/${code}.png" srcset="https://flagcdn.com/56x42/${code}.png 2x" width="22" height="16" alt="${code.toUpperCase()}" loading="lazy">`;
+}
+
+function getHeatColor(val, min = 0, max = 10) {
+  const num = Math.max(min, Math.min(max, Number(val) || 0));
+  const t = (num - min) / (max - min || 1); // 0.0 to 1.0
+
+  // Continuous stops: Red (0) -> Orange (3.5) -> Amber/Yellow (5.5) -> Lime (7.5) -> Green (10)
+  const stops = [
+    { p: 0.0, r: 239, g: 68, b: 68 },
+    { p: 0.35, r: 249, g: 115, b: 22 },
+    { p: 0.55, r: 234, g: 179, b: 8 },
+    { p: 0.75, r: 132, g: 204, b: 22 },
+    { p: 1.0, r: 16, g: 185, b: 129 }
+  ];
+
+  let i = 0;
+  while (i < stops.length - 1 && t > stops[i + 1].p) i++;
+  const s1 = stops[i];
+  const s2 = stops[i + 1] || s1;
+  const factor = s2.p === s1.p ? 0 : (t - s1.p) / (s2.p - s1.p);
+
+  const r = Math.round(s1.r + factor * (s2.r - s1.r));
+  const g = Math.round(s1.g + factor * (s2.g - s1.g));
+  const b = Math.round(s1.b + factor * (s2.b - s1.b));
+
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+function renderHeatCell(val, isBold = false) {
+  const num = Number(val);
+  if (isNaN(num)) return `<span>${esc(val)}</span>`;
+  const isEf = state.metric === "ef_2025" && !isBold;
+  const min = isEf ? 400 : 0;
+  const max = isEf ? 650 : 10;
+  const rgb = getHeatColor(num, min, max);
+  const bg = rgb.replace("rgb", "rgba").replace(")", ", 0.12)");
+  const border = rgb.replace("rgb", "rgba").replace(")", ", 0.3)");
+  const formatted = isEf ? Math.round(num) : (isBold && num % 1 !== 0 ? num.toFixed(2) : num);
+  return `<span class="heat-pill ${isBold ? 'heat-bold' : ''}" style="color:${rgb}; background:${bg}; border:1px solid ${border};" title="Rating: ${num} / 10">${formatted}</span>`;
 }
 
 function metricValue(m) {
@@ -804,8 +844,8 @@ function renderKPIs(shown) {
   const selectedMarket = markets.find(m => m.iso3 === state.selected);
   if (selectedMarket) {
     const iso2Code = ISO2[selectedMarket.iso3] || selectedMarket.iso3;
-    if ($("kpiSelectedCountry")) $("kpiSelectedCountry").textContent = `${selectedMarket.country} (${iso2Code})`;
-    if ($("kpiSelectedRoute")) $("kpiSelectedRoute").textContent = `${flag(selectedMarket.iso3)} ${selectedMarket.status}`;
+    if ($("kpiSelectedCountry")) $("kpiSelectedCountry").innerHTML = `${flag(selectedMarket.iso3)} ${selectedMarket.country} (${iso2Code})`;
+    if ($("kpiSelectedRoute")) $("kpiSelectedRoute").innerHTML = `${selectedMarket.status}`;
   }
 }
 
@@ -822,13 +862,20 @@ function renderFloatingDetail(market) {
   card.style.display = "block";
 
   const iso2Code = ISO2[market.iso3] || market.iso3;
-  if ($("floatingFlag")) $("floatingFlag").textContent = flag(market.iso3);
+  if ($("floatingFlag")) $("floatingFlag").innerHTML = flag(market.iso3);
   if ($("floatingCountryName")) $("floatingCountryName").textContent = `${market.country} (${iso2Code})`;
   if ($("floatingCountryRegion")) $("floatingCountryRegion").textContent = market.cluster;
 
   const fitScore = market.derived ? market.derived.launch_fit : 0;
-  if ($("floatingScoreBig")) $("floatingScoreBig").textContent = fitScore;
-  if ($("floatingScoreBar")) $("floatingScoreBar").style.width = `${Math.min(100, fitScore * 10)}%`;
+  const fitColor = getHeatColor(fitScore, 0, 10);
+  if ($("floatingScoreBig")) {
+    $("floatingScoreBig").textContent = fitScore;
+    $("floatingScoreBig").style.color = fitColor;
+  }
+  if ($("floatingScoreBar")) {
+    $("floatingScoreBar").style.width = `${Math.min(100, fitScore * 10)}%`;
+    $("floatingScoreBar").style.background = fitColor;
+  }
 
   const dimList = $("floatingDimensionsList");
   if (dimList) {
@@ -844,14 +891,14 @@ function renderFloatingDetail(market) {
     dimList.innerHTML = dimDefs.map(d => {
       const val = market.ratings ? (market.ratings[d.key] ?? 0) : 0;
       const pct = Math.min(100, val * 10);
-      const color = val >= 8 ? "#10b981" : val >= 5 ? "#2563eb" : "#f59e0b";
+      const color = getHeatColor(val, 0, 10);
       return `
         <div class="floating-dim-row" title="${esc(DIMENSION_META[d.key]?.title || d.label)} (${d.weight}): ${val}/10">
           <span class="floating-dim-label">${esc(d.label)}</span>
           <div class="floating-dim-track">
             <div class="floating-dim-fill" style="width: ${pct}%; background: ${color};"></div>
           </div>
-          <span class="floating-dim-val">${val}</span>
+          <span class="floating-dim-val" style="color:${color}; font-weight:800;">${val}</span>
         </div>
       `;
     }).join("");
@@ -900,25 +947,27 @@ function renderTable() {
 
     return `
       <tr class="${isSelected ? 'selected' : ''}" data-row-select="${m.iso3}" style="cursor:pointer;">
-        <td style="color:var(--muted);font-weight:700;font-size:11px;">${idx + 1}</td>
-        <td>
+        <td style="color:var(--muted);font-weight:700;font-size:11px;text-align:center;">${idx + 1}</td>
+        <td class="td-left">
           <div class="table-market-cell">
-            <span class="table-market-flag">${flag(m.iso3)}</span>
+            ${flag(m.iso3)}
             <div>
-              <div class="table-market-name">${esc(m.country)} <span style="font-weight:600;font-size:11px;color:var(--muted)">(${iso2Code})</span></div>
+              <div class="table-market-name">${esc(m.country)} <span class="table-market-iso">(${iso2Code})</span></div>
               <div class="table-market-sub">${esc(m.cluster)}</div>
             </div>
           </div>
         </td>
-        <td><span class="td-route">${esc(m.status)}</span></td>
-        <td class="score-bold">${curVal}</td>
-        <td>${m.ratings.demand}</td>
-        <td>${m.ratings.paid_conversion}</td>
-        <td>${m.ratings.distribution}</td>
-        <td>${m.ratings.whitespace}</td>
-        <td>${m.ratings.delivery}</td>
-        <td>${m.ratings.feasibility}</td>
-        <td>${m.ratings.evidence_confidence}</td>
+        <td class="td-left">
+          <span class="route-badge-pill" title="${esc(m.status)}">${esc(m.status)}</span>
+        </td>
+        <td>${renderHeatCell(curVal, true)}</td>
+        <td>${renderHeatCell(m.ratings.demand)}</td>
+        <td>${renderHeatCell(m.ratings.paid_conversion)}</td>
+        <td>${renderHeatCell(m.ratings.distribution)}</td>
+        <td>${renderHeatCell(m.ratings.whitespace)}</td>
+        <td>${renderHeatCell(m.ratings.delivery)}</td>
+        <td>${renderHeatCell(m.ratings.feasibility)}</td>
+        <td>${renderHeatCell(m.ratings.evidence_confidence)}</td>
         <td style="text-align:center;">
           <button class="btn-table-action ${isCompared ? 'btn-table-added' : 'btn-table-compare'}" data-compare="${m.iso3}" type="button">
             ${isCompared ? "Added" : "+ Compare"}
@@ -951,7 +1000,7 @@ function renderWatchlist() {
     const iso2Code = ISO2[w.iso3] || w.iso3;
     return `
       <li class="watchlist-item" data-watchlist="${w.iso3}">
-        <span class="watchlist-flag">${flag(w.iso3)}</span>
+        <div class="watchlist-flag-wrap">${flag(w.iso3)}</div>
         <div style="flex:1;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <span class="watchlist-title">${esc(w.country)}</span>
@@ -976,6 +1025,7 @@ function renderCompare() {
 
   container.innerHTML = selected.map(m => {
     const fitScore = m.derived ? m.derived.launch_fit : 0;
+    const fitColor = getHeatColor(fitScore, 0, 10);
     const iso2Code = ISO2[m.iso3] || m.iso3;
     const dimRows = [
       { key: "demand", label: "Demand" },
@@ -988,14 +1038,14 @@ function renderCompare() {
     ].map(d => {
       const val = m.ratings ? (m.ratings[d.key] ?? 0) : 0;
       const pct = Math.min(100, val * 10);
-      const color = val >= 8 ? "#10b981" : val >= 5 ? "#2563eb" : "#f59e0b";
+      const color = getHeatColor(val, 0, 10);
       return `
         <div class="comp-dim-row">
           <span class="comp-dim-label">${esc(d.label)}</span>
           <div class="comp-dim-track">
             <div class="comp-dim-fill" style="width: ${pct}%; background: ${color};"></div>
           </div>
-          <span class="comp-dim-val">${val}</span>
+          <span class="comp-dim-val" style="color:${color}; font-weight:800;">${val}</span>
         </div>
       `;
     }).join("");
@@ -1006,7 +1056,7 @@ function renderCompare() {
           <span class="comp-flag">${flag(m.iso3)}</span>
           <div style="flex:1;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h4 class="comp-card-title">${esc(m.country)} (${iso2Code})</h4>
+              <h4 class="comp-card-title">${esc(m.country)} <span style="font-size:11px;color:var(--muted);font-weight:600;">(${iso2Code})</span></h4>
               <button class="btn-mini btn-comp-remove" data-remove-compare="${m.iso3}" type="button" title="Remove from comparison" style="padding:2px 7px;font-size:11px;cursor:pointer;">✕</button>
             </div>
             <div class="comp-route">${esc(m.status)}</div>
@@ -1016,10 +1066,10 @@ function renderCompare() {
         <div class="comp-score-section">
           <div class="comp-score-row">
             <span class="comp-score-label">Launch Fit</span>
-            <span class="comp-score-val">${fitScore} <span style="font-size:12px;color:var(--muted)">/ 10</span></span>
+            <span class="comp-score-val" style="color:${fitColor};">${fitScore} <span style="font-size:12px;color:var(--muted)">/ 10</span></span>
           </div>
           <div class="floating-bar-track">
-            <div class="floating-bar-fill" style="width: ${fitScore * 10}%;"></div>
+            <div class="floating-bar-fill" style="width: ${fitScore * 10}%; background: ${fitColor};"></div>
           </div>
         </div>
 
@@ -1057,15 +1107,19 @@ function renderInsights() {
   if (!container || !markets) return;
   const top3 = markets.slice().sort((a, b) => (b.derived?.launch_fit || 0) - (a.derived?.launch_fit || 0)).slice(0, 3);
 
-  container.innerHTML = top3.map((m, idx) => `
-    <div class="top-candidate-item" style="cursor:pointer;" data-select-candidate="${m.iso3}">
-      <span class="top-candidate-num">${idx + 1}.</span>
-      <span style="font-size:16px;">${flag(m.iso3)}</span>
-      <span class="top-candidate-name">${esc(m.country)}</span>
-      <span class="top-candidate-route">· ${esc(m.cluster)}</span>
-      <span class="top-candidate-score">${m.derived.launch_fit} / 10</span>
-    </div>
-  `).join("");
+  container.innerHTML = top3.map((m, idx) => {
+    const fitScore = m.derived.launch_fit;
+    const fitColor = getHeatColor(fitScore, 0, 10);
+    return `
+      <div class="top-candidate-item" style="cursor:pointer;" data-select-candidate="${m.iso3}">
+        <span class="top-candidate-num">${idx + 1}.</span>
+        ${flag(m.iso3)}
+        <span class="top-candidate-name">${esc(m.country)}</span>
+        <span class="top-candidate-route">· ${esc(m.cluster)}</span>
+        <span class="top-candidate-score" style="color:${fitColor}; font-weight:800;">${fitScore} / 10</span>
+      </div>
+    `;
+  }).join("");
 
   document.querySelectorAll("[data-select-candidate]").forEach(el => {
     el.addEventListener("click", () => {
