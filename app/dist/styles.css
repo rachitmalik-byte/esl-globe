@@ -2500,10 +2500,28 @@ body[data-theme="ops"] .theme-btn.active {
   transform: none;
 }
 .ai-disclaimer {
-  font-size: 9px;
+  font-size: 9.5px;
   color: var(--muted);
-  text-align: center;
-  margin-top: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding: 0 4px;
+}
+.ai-key-pill {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  border-radius: 4px;
+  font-size: 9.5px;
+  padding: 2px 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ai-key-pill:hover {
+  background: var(--surface-3);
+  color: var(--text);
+  border-color: var(--accent);
 }
 
 /* =====================================================

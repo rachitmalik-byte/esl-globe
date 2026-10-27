@@ -1662,6 +1662,22 @@ function setupEvents() {
     });
   }
 
+  if ($("aiKeySettingsBtn")) {
+    $("aiKeySettingsBtn").addEventListener("click", () => {
+      const curKey = localStorage.getItem("GEMINI_API_KEY") || "";
+      const input = prompt("Enter or update your Google Gemini API Key (saved in your browser):", curKey);
+      if (input !== null) {
+        if (input.trim()) {
+          localStorage.setItem("GEMINI_API_KEY", input.trim());
+          alert("✓ Gemini API key saved! AI requests will now use this key.");
+        } else {
+          localStorage.removeItem("GEMINI_API_KEY");
+          alert("Custom key cleared; using default key.");
+        }
+      }
+    });
+  }
+
   // Delegated clicks for AI prompt chips and copy buttons
   document.addEventListener("click", e => {
     const promptBtn = e.target.closest(".ai-prompt-chip, .ai-mini-chip");
@@ -1718,7 +1734,9 @@ function download(filename, content, type) {
 /* =====================================================
    Atlas AI Copilot Client Implementation
    ===================================================== */
-const GEMINI_CLIENT_KEY = window.GEMINI_API_KEY || localStorage.getItem("GEMINI_API_KEY") || "";
+function getGeminiClientKey() {
+  return (window.GEMINI_API_KEY || localStorage.getItem("GEMINI_API_KEY") || "").trim();
+}
 
 const aiState = {
   isOpen: false,
@@ -1900,10 +1918,16 @@ async function sendAiMessage(promptText) {
 
   try {
     let reply = "";
+    const clientKey = getGeminiClientKey();
+    const reqHeaders = { "Content-Type": "application/json" };
+    if (clientKey) {
+      reqHeaders["x-gemini-key"] = clientKey;
+    }
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: reqHeaders,
         body: JSON.stringify({
           message: text,
           history: aiState.history.slice(0, -1),
@@ -1915,7 +1939,7 @@ async function sendAiMessage(promptText) {
         reply = json.reply;
       }
     } catch (serverErr) {
-      console.warn("Local /api/chat unreachable, falling back to direct client Gemini API call", serverErr);
+      console.warn("Server /api/chat unreachable, falling back to direct client call", serverErr);
     }
 
     if (!reply) {
@@ -1924,9 +1948,14 @@ async function sendAiMessage(promptText) {
 
     aiState.history.push({ role: "assistant", content: reply });
   } catch (err) {
+    const isMissingKey = !getGeminiClientKey();
+    const errorMsg = isMissingKey
+      ? "⚠️ **Gemini API Key Required:** Please click the **'🔑 Key'** button at the bottom of this chat window to paste your Google Gemini API key (or configure `GEMINI_API_KEY` on your deployment)."
+      : `⚠️ **Unable to complete request:** ${err.message || "Failed to reach Gemini API"}. Please check your connection or try again.`;
+
     aiState.history.push({
       role: "assistant",
-      content: `⚠️ **Unable to complete request:** ${err.message || "Failed to reach Gemini API"}. Please check your connection or try again.`
+      content: errorMsg
     });
   } finally {
     aiState.isGenerating = false;
@@ -1962,41 +1991,57 @@ async function callGeminiDirect(message, history, contextCountry) {
   }
   contents.push({ role: "user", parts: [{ text: message }] });
 
-  if (!GEMINI_CLIENT_KEY) {
-    throw new Error("AI server endpoint (/api/chat) is unreachable. If running in static preview, set window.GEMINI_API_KEY.");
+  const clientKey = getGeminiClientKey();
+  if (!clientKey) {
+    throw new Error("No Gemini API key available. Click '🔑 Key' in the chat footer to enter your key.");
   }
 
-  let response;
-  let errText = "";
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_CLIENT_KEY}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemInstruction }] },
-          contents,
-          generationConfig: { temperature: 0.35, maxOutputTokens: 1000 }
-        })
-      });
-      if (response.ok) break;
-      if ((response.status === 503 || response.status === 429) && attempt < 2) {
-        await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
-        continue;
+  const candidateModels = [
+    "gemini-2.5-flash",
+    "gemini-flash-latest",
+    "gemini-3.5-flash",
+    "gemini-3.8-flash"
+  ];
+
+  let response = null;
+  let lastErr = "";
+
+  for (const model of candidateModels) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${clientKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: systemInstruction }] },
+            contents,
+            generationConfig: { temperature: 0.35, maxOutputTokens: 1000 }
+          })
+        });
+
+        if (response.ok) break;
+
+        if ((response.status === 503 || response.status === 429) && attempt === 0) {
+          await new Promise(r => setTimeout(r, 800));
+          continue;
+        }
+
+        lastErr = await response.text();
+        break; // Try next candidate model
+      } catch (e) {
+        lastErr = e.message;
+        if (attempt === 0) {
+          await new Promise(r => setTimeout(r, 500));
+          continue;
+        }
+        break;
       }
-      errText = await response.text();
-      break;
-    } catch (e) {
-      if (attempt < 2) {
-        await new Promise(r => setTimeout(r, 1000));
-        continue;
-      }
-      throw e;
     }
+    if (response && response.ok) break;
   }
 
   if (!response || !response.ok) {
-    throw new Error(`Gemini API returned ${response ? response.status : "network error"}: ${errText.slice(0, 100)}`);
+    throw new Error(`Gemini API error (${response ? response.status : "network"}): ${lastErr.slice(0, 150)}`);
   }
 
   const json = await response.json();

@@ -1,0 +1,1353 @@
+{
+  "dataset": "ESL market evidence pack v1",
+  "as_of": "2026-10-27",
+  "coverage": "30 countries; AI-first English learning with optional teacher escalation; B2B/B2B2C screening",
+  "data_rules": [
+    "Observed fields quote a source. Ratings are analyst assessments, not observed facts.",
+    "EF EPI is a self-selected online-test signal, not national fluency or paid demand.",
+    "Paid English learner count, app CAC, conversion, retention and competitor profit are unavailable unless public first-party evidence exists."
+  ],
+  "rating_definitions": {
+    "demand": "job-linked practical English need in target cohort",
+    "paid_conversion": "relative ability/capacity to buy digital service, not observed English-app conversion",
+    "delivery": "digital, mobile and payment readiness",
+    "distribution": "B2B/B2B2C channel fit",
+    "whitespace": "room for a differentiated role-specific AI product",
+    "feasibility": "localization, regulation, payments and execution practicality",
+    "evidence_confidence": "quality and coverage of current evidence, not attractiveness"
+  },
+  "global_sources": [
+    {
+      "id": "ef2025",
+      "url": "https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf",
+      "use": "2025/2024 English learner signal",
+      "quality": "medium; self-selected test takers"
+    },
+    {
+      "id": "findex2025",
+      "url": "https://www.worldbank.org/en/publication/globalfindex/download-data",
+      "use": "payment, account, phone and internet data",
+      "quality": "high for 2024 survey fields"
+    },
+    {
+      "id": "wdi",
+      "url": "https://databank.worldbank.org/",
+      "use": "income, population, labor, internet and services indicators",
+      "quality": "high after field/year validation"
+    },
+    {
+      "id": "itu2025",
+      "url": "https://www.itu.int/itu-d/reports/statistics/idi2025/",
+      "use": "ICT delivery context",
+      "quality": "medium-high; 2023 reference data"
+    },
+    {
+      "id": "wbdigital2025",
+      "url": "https://documents1.worldbank.org/curated/en/099112525160536089/pdf/P505350-59c98ca8-0803-4f23-b470-17f3dab010ab.pdf",
+      "use": "digital services and skills-demand proxy",
+      "quality": "medium-high sector evidence"
+    },
+    {
+      "id": "supernova_mint_2026",
+      "url": "https://www.livemint.com/companies/supernova-in-talks-to-raise-15-20-million-from-vertex-ventures-verlinvest-11790151494506.html?openSearch=true",
+      "use": "Reported Supernova ARR and fundraising discussion",
+      "quality": "medium-low; unnamed-source journalism, not a filing"
+    },
+    {
+      "id": "mysivi_first_party",
+      "url": "https://www.mysivi.ai/team-and-culture",
+      "use": "MySivi self-reported ARR, profitability and growth claims",
+      "quality": "low-medium; company claim, no audit"
+    },
+    {
+      "id": "mysivi_inc42_2024",
+      "url": "https://inc42.com/startups/how-mysivi-is-using-ai-to-help-people-become-proficient-in-spoken-english/",
+      "use": "MySivi April 2024 pricing, paid users, MAU, downloads and revenue report",
+      "quality": "medium; journalism quoting company"
+    },
+    {
+      "id": "speakx_elevation_2025",
+      "url": "https://www.elevationcapital.cc/perspectives/speakx-building-india-largest-ai-language-learning-app",
+      "use": "SpeakX paid subscribers, ARR and team claim",
+      "quality": "medium; investor publication"
+    },
+    {
+      "id": "speakx_mint_2025",
+      "url": "https://www.livemint.com/companies/start-ups/english-learning-startup-speakx-looks-to-raise-15-million-11751345238766.html",
+      "use": "SpeakX price, ARR and EBITDA-run-rate claim",
+      "quality": "medium; journalism quoting company/sources"
+    },
+    {
+      "id": "stimuler_razorpay",
+      "url": "https://razorpay.com/rize/startup-directory/stimuler/",
+      "use": "Stimuler business profile and reported downloads",
+      "quality": "low-medium; directory/company-reported adoption"
+    }
+  ],
+  "market_records": [
+    {
+      "iso3": "JPN",
+      "country": "Japan",
+      "cluster": "East Asia",
+      "status": "Premium enterprise opportunity",
+      "ef_2025": 446,
+      "ef_change_2024": -8,
+      "band": "Very low",
+      "ratings": {
+        "demand": 9,
+        "paid_conversion": 10,
+        "delivery": 10,
+        "distribution": 9,
+        "whitespace": 2,
+        "feasibility": 7,
+        "evidence_confidence": 8
+      },
+      "buyer": "Enterprise L&D and motivated professionals; high ability to pay.",
+      "target": "AI/global-team work and hiring English sold through local enterprise partners.",
+      "supply": "Dense test-prep, corporate English, teacher and AI product market.",
+      "risk": "High CAC, deep Japanese localisation and entrenched competitors.",
+      "demand_evidence": "ETS HR-leader survey: 96% say English importance has increased; survey not national prevalence.",
+      "sources": [
+        "ef2025",
+        "https://www.ets.org/insights-and-perspectives/japan-ai-increases-need-for-english-skills.html",
+        "https://www.ipa.go.jp/digital/chousa/discussion-paper/dx2025_digital_talent_ai_era.html"
+      ],
+      "derived": {
+        "launch_fit": 8.15
+      },
+      "dossier_markdown": "# Japan (JPN) - English-learning market dossier\n\n**Status:** Premium enterprise opportunity\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 9 / 10 |\n| paid conversion | 10 / 10 |\n| delivery | 10 / 10 |\n| distribution | 9 / 10 |\n| whitespace | 2 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Enterprise L&D and motivated professionals; high ability to pay.\n- **Most testable outcome:** AI/global-team work and hiring English sold through local enterprise partners.\n- **Existing/substitute supply:** Dense test-prep, corporate English, teacher and AI product market.\n- **Main risk:** High CAC, deep Japanese localisation and entrenched competitors.\n- **Evidence signal:** ETS HR-leader survey: 96% say English importance has increased; survey not national prevalence.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Japanese. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (446 in 2025, -8 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.ets.org/insights-and-perspectives/japan-ai-increases-need-for-english-skills.html)\n- [Direct country source](https://www.ipa.go.jp/digital/chousa/discussion-paper/dx2025_digital_talent_ai_era.html)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "SAU",
+      "country": "Saudi Arabia",
+      "cluster": "Gulf / MENA",
+      "status": "Enterprise-only",
+      "ef_2025": 404,
+      "ef_change_2024": -13,
+      "band": "Very low",
+      "ratings": {
+        "demand": 8,
+        "paid_conversion": 9,
+        "delivery": 9,
+        "distribution": 8,
+        "whitespace": 6,
+        "feasibility": 4,
+        "evidence_confidence": 7
+      },
+      "buyer": "Employers, training providers and public workforce programs; not low-price self-serve.",
+      "target": "Arabic-assisted workplace English with auditable assessment.",
+      "supply": "International/local providers; Arabic, procurement and compliance are material.",
+      "risk": "Partner dependence and long sales cycles.",
+      "demand_evidence": "Vision 2030 and digital-sector workforce programmes support enterprise skills demand; not paid-English count.",
+      "sources": [
+        "https://www.ef.com/saen/epi/regions/middle-east/saudi-arabia/",
+        "https://www.vision2030.gov.sa/media/ecdjfopq/vision2030_annual_report_2025_en.pdf",
+        "https://www.hrsd.gov.sa/sites/default/files/2025-02/Digital%20Sector%20Skills%20Intro%20Report_EN.pdf"
+      ],
+      "derived": {
+        "launch_fit": 7.8
+      },
+      "dossier_markdown": "# Saudi Arabia (SAU) - English-learning market dossier\n\n**Status:** Enterprise-only\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 8 / 10 |\n| paid conversion | 9 / 10 |\n| delivery | 9 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 4 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Employers, training providers and public workforce programs; not low-price self-serve.\n- **Most testable outcome:** Arabic-assisted workplace English with auditable assessment.\n- **Existing/substitute supply:** International/local providers; Arabic, procurement and compliance are material.\n- **Main risk:** Partner dependence and long sales cycles.\n- **Evidence signal:** Vision 2030 and digital-sector workforce programmes support enterprise skills demand; not paid-English count.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Arabic. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (404 in 2025, -13 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/saen/epi/regions/middle-east/saudi-arabia/)\n- [Direct country source](https://www.vision2030.gov.sa/media/ecdjfopq/vision2030_annual_report_2025_en.pdf)\n- [Direct country source](https://www.hrsd.gov.sa/sites/default/files/2025-02/Digital%20Sector%20Skills%20Intro%20Report_EN.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "MEX",
+      "country": "Mexico",
+      "cluster": "Latin America",
+      "status": "Tier 1: nearshoring B2B",
+      "ef_2025": 440,
+      "ef_change_2024": -19,
+      "band": "Very low",
+      "ratings": {
+        "demand": 9,
+        "paid_conversion": 6,
+        "delivery": 8,
+        "distribution": 8,
+        "whitespace": 5,
+        "feasibility": 7,
+        "evidence_confidence": 8
+      },
+      "buyer": "Manufacturing, logistics, tech and customer-service employers; Spanish-first sales/content.",
+      "target": "Technical/customer English for nearshoring supervisors, support and logistics teams.",
+      "supply": "Many consumer options; less proven role-specific assessment systems.",
+      "risk": "Long enterprise sales cycles and strong regional variation.",
+      "demand_evidence": "Nearshoring shows early manufacturing-job effects; 68% of employers report difficulty finding qualified talent in IDB analysis.",
+      "sources": [
+        "https://www.ef.do/epi/regions/latin-america/mexico/",
+        "https://www.banxico.org.mx/DIBM/web/documento/visor.html?clave=2025-16&locale=en",
+        "https://www.iadb.org/en/blog/labor-markets/closing-digital-talent-gap-model-driving-mexicos-productive-future"
+      ],
+      "derived": {
+        "launch_fit": 7.4
+      },
+      "dossier_markdown": "# Mexico (MEX) - English-learning market dossier\n\n**Status:** Tier 1: nearshoring B2B\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 9 / 10 |\n| paid conversion | 6 / 10 |\n| delivery | 8 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Manufacturing, logistics, tech and customer-service employers; Spanish-first sales/content.\n- **Most testable outcome:** Technical/customer English for nearshoring supervisors, support and logistics teams.\n- **Existing/substitute supply:** Many consumer options; less proven role-specific assessment systems.\n- **Main risk:** Long enterprise sales cycles and strong regional variation.\n- **Evidence signal:** Nearshoring shows early manufacturing-job effects; 68% of employers report difficulty finding qualified talent in IDB analysis.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Spanish. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (440 in 2025, -19 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.do/epi/regions/latin-america/mexico/)\n- [Direct country source](https://www.banxico.org.mx/DIBM/web/documento/visor.html?clave=2025-16&locale=en)\n- [Direct country source](https://www.iadb.org/en/blog/labor-markets/closing-digital-talent-gap-model-driving-mexicos-productive-future)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "KOR",
+      "country": "South Korea",
+      "cluster": "East Asia",
+      "status": "Premium, high-competition enterprise",
+      "ef_2025": 522,
+      "ef_change_2024": -1,
+      "band": "Moderate",
+      "ratings": {
+        "demand": 6,
+        "paid_conversion": 10,
+        "delivery": 10,
+        "distribution": 8,
+        "whitespace": 2,
+        "feasibility": 8,
+        "evidence_confidence": 7
+      },
+      "buyer": "Premium parents, professionals and employers.",
+      "target": "Adult workplace outcomes unavailable from test-prep/classroom tools.",
+      "supply": "Very intense academy, tutor, edtech and AI-learning market.",
+      "risk": "High spend does not equal easy entry or good economics.",
+      "demand_evidence": "Government has introduced AI digital materials including English; US trade overview estimated edtech growth to 2025.",
+      "sources": [
+        "ef2025",
+        "https://www.oecd.org/en/publications/oecd-economic-surveys-korea-2026_6b87f585-en/full-report/smarting-up-education-and-life-long-learning_707e5ccd.html",
+        "https://www.trade.gov/market-intelligence/south-korea-education-technology"
+      ],
+      "derived": {
+        "launch_fit": 7.1
+      },
+      "dossier_markdown": "# South Korea (KOR) - English-learning market dossier\n\n**Status:** Premium, high-competition enterprise\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 6 / 10 |\n| paid conversion | 10 / 10 |\n| delivery | 10 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 2 / 10 |\n| feasibility | 8 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Premium parents, professionals and employers.\n- **Most testable outcome:** Adult workplace outcomes unavailable from test-prep/classroom tools.\n- **Existing/substitute supply:** Very intense academy, tutor, edtech and AI-learning market.\n- **Main risk:** High spend does not equal easy entry or good economics.\n- **Evidence signal:** Government has introduced AI digital materials including English; US trade overview estimated edtech growth to 2025.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Korean. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (522 in 2025, -1 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.oecd.org/en/publications/oecd-economic-surveys-korea-2026_6b87f585-en/full-report/smarting-up-education-and-life-long-learning_707e5ccd.html)\n- [Direct country source](https://www.trade.gov/market-intelligence/south-korea-education-technology)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "EGY",
+      "country": "Egypt",
+      "cluster": "MENA / Africa",
+      "status": "Tier 1: BPO / digital services",
+      "ef_2025": 458,
+      "ef_change_2024": -7,
+      "band": "Very low",
+      "ratings": {
+        "demand": 9,
+        "paid_conversion": 3,
+        "delivery": 7,
+        "distribution": 8,
+        "whitespace": 7,
+        "feasibility": 6,
+        "evidence_confidence": 8
+      },
+      "buyer": "Offshoring employers and job candidates; B2B/B2G beats consumer subscription.",
+      "target": "Customer/technical-support speaking paths connected to employer assessment.",
+      "supply": "Training ecosystem growing with outsourcing; Arabic localisation required.",
+      "risk": "Affordability, partner sales cycles and local content.",
+      "demand_evidence": "Digital offshoring exports doubled from $2.4bn in 2022 to $4.8bn in 2025, per ITIDA.",
+      "sources": [
+        "https://www.ef.com/wwar/epi/regions/africa/egypt/",
+        "https://itida.gov.eg/English/PressReleases/Pages/Egypt-Doubles-Digital-Offshoring-Exports-to-4.8B-Dollars.aspx",
+        "https://www.itida.gov.eg/English/Programs/Digital-Egypt-Strategy-for-Offshoring-Industry-2022-2026/Pages/default.aspx"
+      ],
+      "derived": {
+        "launch_fit": 6.95
+      },
+      "dossier_markdown": "# Egypt (EGY) - English-learning market dossier\n\n**Status:** Tier 1: BPO / digital services\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 9 / 10 |\n| paid conversion | 3 / 10 |\n| delivery | 7 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 7 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Offshoring employers and job candidates; B2B/B2G beats consumer subscription.\n- **Most testable outcome:** Customer/technical-support speaking paths connected to employer assessment.\n- **Existing/substitute supply:** Training ecosystem growing with outsourcing; Arabic localisation required.\n- **Main risk:** Affordability, partner sales cycles and local content.\n- **Evidence signal:** Digital offshoring exports doubled from $2.4bn in 2022 to $4.8bn in 2025, per ITIDA.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Arabic. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (458 in 2025, -7 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/wwar/epi/regions/africa/egypt/)\n- [Direct country source](https://itida.gov.eg/English/PressReleases/Pages/Egypt-Doubles-Digital-Offshoring-Exports-to-4.8B-Dollars.aspx)\n- [Direct country source](https://www.itida.gov.eg/English/Programs/Digital-Egypt-Strategy-for-Offshoring-Industry-2022-2026/Pages/default.aspx)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "ARE",
+      "country": "United Arab Emirates",
+      "cluster": "Gulf / MENA",
+      "status": "Enterprise / regional hub",
+      "ef_2025": 487,
+      "ef_change_2024": -2,
+      "band": "Low",
+      "ratings": {
+        "demand": 5,
+        "paid_conversion": 10,
+        "delivery": 10,
+        "distribution": 8,
+        "whitespace": 3,
+        "feasibility": 7,
+        "evidence_confidence": 5
+      },
+      "buyer": "Employers of multilingual frontline/professional teams; premium budgets.",
+      "target": "Rapid assessment/reporting for hospitality, retail, facilities and contact-centre teams.",
+      "supply": "Global premium vendors are entrenched.",
+      "risk": "Small domestic learner volume and intense premium competition.",
+      "demand_evidence": "Digital jobs-platform initiatives indicate workforce digitisation, not ESL demand.",
+      "sources": [
+        "ef2025",
+        "https://mof.gov.ae/wp-content/uploads/2026/03/Community-Edition-2026-en.pdf"
+      ],
+      "derived": {
+        "launch_fit": 6.9
+      },
+      "dossier_markdown": "# United Arab Emirates (ARE) - English-learning market dossier\n\n**Status:** Enterprise / regional hub\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 5 / 10 |\n| paid conversion | 10 / 10 |\n| delivery | 10 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 3 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 5 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Employers of multilingual frontline/professional teams; premium budgets.\n- **Most testable outcome:** Rapid assessment/reporting for hospitality, retail, facilities and contact-centre teams.\n- **Existing/substitute supply:** Global premium vendors are entrenched.\n- **Main risk:** Small domestic learner volume and intense premium competition.\n- **Evidence signal:** Digital jobs-platform initiatives indicate workforce digitisation, not ESL demand.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Arabic and English. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (487 in 2025, -2 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://mof.gov.ae/wp-content/uploads/2026/03/Community-Edition-2026-en.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "BRA",
+      "country": "Brazil",
+      "cluster": "Latin America",
+      "status": "Later: partner-led only",
+      "ef_2025": 482,
+      "ef_change_2024": 16,
+      "band": "Low",
+      "ratings": {
+        "demand": 8,
+        "paid_conversion": 6,
+        "delivery": 9,
+        "distribution": 7,
+        "whitespace": 4,
+        "feasibility": 5,
+        "evidence_confidence": 7
+      },
+      "buyer": "Large consumer/corporate opportunity; Portuguese depth and distribution required.",
+      "target": "Employer-paid tech, export or global-services English after core playbook is proven.",
+      "supply": "Mature schools, tutors and online providers increase CAC/localisation needs.",
+      "risk": "Huge TAM can hide poor unit economics.",
+      "demand_evidence": "Digital-skill gap persists; HR survey finds English gaps relevant to global services, but neither measures paid demand.",
+      "sources": [
+        "ef2025",
+        "https://www.gov.br/anatel/pt-br/assuntos/noticias/anatel-atualiza-metodologia-de-indicadores-para-medir-as-habilidades-digitais-dos-brasileiros",
+        "https://www.ets.org/insights-and-perspectives/english-fueling-latin-america-workforce.html"
+      ],
+      "derived": {
+        "launch_fit": 6.75
+      },
+      "dossier_markdown": "# Brazil (BRA) - English-learning market dossier\n\n**Status:** Later: partner-led only\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 8 / 10 |\n| paid conversion | 6 / 10 |\n| delivery | 9 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 4 / 10 |\n| feasibility | 5 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Large consumer/corporate opportunity; Portuguese depth and distribution required.\n- **Most testable outcome:** Employer-paid tech, export or global-services English after core playbook is proven.\n- **Existing/substitute supply:** Mature schools, tutors and online providers increase CAC/localisation needs.\n- **Main risk:** Huge TAM can hide poor unit economics.\n- **Evidence signal:** Digital-skill gap persists; HR survey finds English gaps relevant to global services, but neither measures paid demand.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Brazilian Portuguese. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (482 in 2025, +16 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.gov.br/anatel/pt-br/assuntos/noticias/anatel-atualiza-metodologia-de-indicadores-para-medir-as-habilidades-digitais-dos-brasileiros)\n- [Direct country source](https://www.ets.org/insights-and-perspectives/english-fueling-latin-america-workforce.html)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "IND",
+      "country": "India",
+      "cluster": "South Asia",
+      "status": "Home-market validation",
+      "ef_2025": 484,
+      "ef_change_2024": -6,
+      "band": "Low",
+      "ratings": {
+        "demand": 8,
+        "paid_conversion": 3,
+        "delivery": 8,
+        "distribution": 9,
+        "whitespace": 5,
+        "feasibility": 7,
+        "evidence_confidence": 7
+      },
+      "buyer": "Price-sensitive self-pay; stronger employer/college payer.",
+      "target": "Regional-language BPO, frontline sales or campus-to-job cohort with reporting.",
+      "supply": "Crowded free apps, tutors and local AI-speaking products.",
+      "risk": "Downloads do not establish paid demand; measure CAC, retention and human-escalation cost.",
+      "demand_evidence": "Large English aspiration; India-specific paid conversion is weak for generic apps.",
+      "sources": [
+        "ef2025",
+        "https://economictimes.indiatimes.com/news/india/duolingo-has-millions-of-indian-users-but-less-than-1-pay-luis-von-ahn-ceo-and-cofounder/articleshow/120857001.cms",
+        "https://business.speakx.ai/"
+      ],
+      "derived": {
+        "launch_fit": 6.7
+      },
+      "dossier_markdown": "# India (IND) - English-learning market dossier\n\n**Status:** Home-market validation\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 8 / 10 |\n| paid conversion | 3 / 10 |\n| delivery | 8 / 10 |\n| distribution | 9 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Price-sensitive self-pay; stronger employer/college payer.\n- **Most testable outcome:** Regional-language BPO, frontline sales or campus-to-job cohort with reporting.\n- **Existing/substitute supply:** Crowded free apps, tutors and local AI-speaking products.\n- **Main risk:** Downloads do not establish paid demand; measure CAC, retention and human-escalation cost.\n- **Evidence signal:** Large English aspiration; India-specific paid conversion is weak for generic apps.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Hindi plus state languages. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (484 in 2025, -6 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://economictimes.indiatimes.com/news/india/duolingo-has-millions-of-indian-users-but-less-than-1-pay-luis-von-ahn-ceo-and-cofounder/articleshow/120857001.cms)\n- [Direct country source](https://business.speakx.ai/)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "COL",
+      "country": "Colombia",
+      "cluster": "Latin America",
+      "status": "Tier 1: BPO / nearshore B2B",
+      "ef_2025": 480,
+      "ef_change_2024": -5,
+      "band": "Low",
+      "ratings": {
+        "demand": 7,
+        "paid_conversion": 5,
+        "delivery": 8,
+        "distribution": 8,
+        "whitespace": 5,
+        "feasibility": 7,
+        "evidence_confidence": 8
+      },
+      "buyer": "BPO, nearshore and job-transition cohorts in major cities.",
+      "target": "Bogot�/Barranquilla service simulations and manager reporting.",
+      "supply": "Institutes, public work-English programmes and consumer apps are substitutes.",
+      "risk": "No evidence supports broad claim that most job postings require English.",
+      "demand_evidence": "ANIF finds English requirement concentrated in limited role/city sample, while public programmes also add free supply.",
+      "sources": [
+        "https://www.ef.com/wwen/epi/regions/latin-america/colombia/",
+        "https://anif.com.co/wp-content/uploads/el-ingles-en-la-insercion-laboral-resultados-para-bogota-y-cundinamarca.pdf",
+        "https://desarrolloeconomico.gov.co/aprenda-ingles-gratis-y-consiga-empleo-asi-es-yes-bogota-el-nuevo-programa-de-formacion-laboral-creado-por-el-distrito/"
+      ],
+      "derived": {
+        "launch_fit": 6.6
+      },
+      "dossier_markdown": "# Colombia (COL) - English-learning market dossier\n\n**Status:** Tier 1: BPO / nearshore B2B\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 7 / 10 |\n| paid conversion | 5 / 10 |\n| delivery | 8 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** BPO, nearshore and job-transition cohorts in major cities.\n- **Most testable outcome:** Bogot�/Barranquilla service simulations and manager reporting.\n- **Existing/substitute supply:** Institutes, public work-English programmes and consumer apps are substitutes.\n- **Main risk:** No evidence supports broad claim that most job postings require English.\n- **Evidence signal:** ANIF finds English requirement concentrated in limited role/city sample, while public programmes also add free supply.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Spanish. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (480 in 2025, -5 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/wwen/epi/regions/latin-america/colombia/)\n- [Direct country source](https://anif.com.co/wp-content/uploads/el-ingles-en-la-insercion-laboral-resultados-para-bogota-y-cundinamarca.pdf)\n- [Direct country source](https://desarrolloeconomico.gov.co/aprenda-ingles-gratis-y-consiga-empleo-asi-es-yes-bogota-el-nuevo-programa-de-formacion-laboral-creado-por-el-distrito/)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1583531172005-814191b8b6c0?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "CHL",
+      "country": "Chile",
+      "cluster": "Latin America",
+      "status": "Selective premium B2B",
+      "ef_2025": 517,
+      "ef_change_2024": -8,
+      "band": "Moderate",
+      "ratings": {
+        "demand": 5,
+        "paid_conversion": 8,
+        "delivery": 9,
+        "distribution": 7,
+        "whitespace": 5,
+        "feasibility": 8,
+        "evidence_confidence": 8
+      },
+      "buyer": "Global-services, technology and professional users.",
+      "target": "Digital-export employer assessment and technical/customer English.",
+      "supply": "High digital infrastructure and active reskilling initiatives.",
+      "risk": "Smaller high-ACV market; limited generic consumer volume.",
+      "demand_evidence": "Digital-service exports rose from $331m to $1.106bn between 2016 and 2025; official trade data.",
+      "sources": [
+        "ef2025",
+        "https://www.subrei.gob.cl/sala-de-prensa/noticias/detalle-noticias/2026/07/23/se-triplicaron-en-10-a%C3%B1os--el-buen-momento-de-las-exportaciones-de-servicios-digitales-que-impulsar%C3%A1-el-cr%C3%A9dito-al-empleo",
+        "https://www.investchile.gob.cl/key-industries/global-services/"
+      ],
+      "derived": {
+        "launch_fit": 6.55
+      },
+      "dossier_markdown": "# Chile (CHL) - English-learning market dossier\n\n**Status:** Selective premium B2B\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 5 / 10 |\n| paid conversion | 8 / 10 |\n| delivery | 9 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 8 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Global-services, technology and professional users.\n- **Most testable outcome:** Digital-export employer assessment and technical/customer English.\n- **Existing/substitute supply:** High digital infrastructure and active reskilling initiatives.\n- **Main risk:** Smaller high-ACV market; limited generic consumer volume.\n- **Evidence signal:** Digital-service exports rose from $331m to $1.106bn between 2016 and 2025; official trade data.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Spanish. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (517 in 2025, -8 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.subrei.gob.cl/sala-de-prensa/noticias/detalle-noticias/2026/07/23/se-triplicaron-en-10-a%C3%B1os--el-buen-momento-de-las-exportaciones-de-servicios-digitales-que-impulsar%C3%A1-el-cr%C3%A9dito-al-empleo)\n- [Direct country source](https://www.investchile.gob.cl/key-industries/global-services/)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "VNM",
+      "country": "Vietnam",
+      "cluster": "Southeast Asia",
+      "status": "Tier 2: partner-led workplace test",
+      "ef_2025": 500,
+      "ef_change_2024": 2,
+      "band": "Moderate",
+      "ratings": {
+        "demand": 8,
+        "paid_conversion": 5,
+        "delivery": 8,
+        "distribution": 7,
+        "whitespace": 4,
+        "feasibility": 6,
+        "evidence_confidence": 8
+      },
+      "buyer": "Family/learner spend exists, but employer-linked speaking is clearer.",
+      "target": "Export-tech, manufacturing-support or vocational workplace English.",
+      "supply": "Intense centre, tutor and app competition; test prep dominates.",
+      "risk": "B2C CAC can overwhelm small price advantage.",
+      "demand_evidence": "Digital economy about 18% of GDP in 2024; DDS exports above $4.8bn in 2023.",
+      "sources": [
+        "https://www.ef.com/saen/epi/regions/asia/vietnam/",
+        "https://www.trade.gov/country-commercial-guides/vietnam-digital-economy-chapter",
+        "https://documents1.worldbank.org/curated/en/099112525160528750/pdf/P505350-7fe90098-b82b-47a4-9f4f-7048c70ead40.pdf"
+      ],
+      "derived": {
+        "launch_fit": 6.5
+      },
+      "dossier_markdown": "# Vietnam (VNM) - English-learning market dossier\n\n**Status:** Tier 2: partner-led workplace test\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 8 / 10 |\n| paid conversion | 5 / 10 |\n| delivery | 8 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 4 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Family/learner spend exists, but employer-linked speaking is clearer.\n- **Most testable outcome:** Export-tech, manufacturing-support or vocational workplace English.\n- **Existing/substitute supply:** Intense centre, tutor and app competition; test prep dominates.\n- **Main risk:** B2C CAC can overwhelm small price advantage.\n- **Evidence signal:** Digital economy about 18% of GDP in 2024; DDS exports above $4.8bn in 2023.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Vietnamese. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (500 in 2025, +2 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/saen/epi/regions/asia/vietnam/)\n- [Direct country source](https://www.trade.gov/country-commercial-guides/vietnam-digital-economy-chapter)\n- [Direct country source](https://documents1.worldbank.org/curated/en/099112525160528750/pdf/P505350-7fe90098-b82b-47a4-9f4f-7048c70ead40.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "THA",
+      "country": "Thailand",
+      "cluster": "Southeast Asia",
+      "status": "Tier 2: tourism/export test",
+      "ef_2025": 402,
+      "ef_change_2024": -13,
+      "band": "Very low",
+      "ratings": {
+        "demand": 8,
+        "paid_conversion": 5,
+        "delivery": 8,
+        "distribution": 6,
+        "whitespace": 5,
+        "feasibility": 7,
+        "evidence_confidence": 6
+      },
+      "buyer": "Tourism, hospitality, sales and export-facing workers.",
+      "target": "Hotel, travel, customer-service and industrial-supervisor speaking.",
+      "supply": "Schools and tutors are material; app enumeration pending.",
+      "risk": "Low proficiency signal alone does not prove paid market.",
+      "demand_evidence": "World Bank flags skills, infrastructure and regulatory needs in digital transformation.",
+      "sources": [
+        "https://www.ef.com/ca/epi/regions/asia/thailand/",
+        "https://documents1.worldbank.org/curated/en/099070225024525808/pdf/P508079-c47ce804-a29b-46f2-9207-38d85c3f032b.pdf"
+      ],
+      "derived": {
+        "launch_fit": 6.5
+      },
+      "dossier_markdown": "# Thailand (THA) - English-learning market dossier\n\n**Status:** Tier 2: tourism/export test\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 8 / 10 |\n| paid conversion | 5 / 10 |\n| delivery | 8 / 10 |\n| distribution | 6 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 6 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Tourism, hospitality, sales and export-facing workers.\n- **Most testable outcome:** Hotel, travel, customer-service and industrial-supervisor speaking.\n- **Existing/substitute supply:** Schools and tutors are material; app enumeration pending.\n- **Main risk:** Low proficiency signal alone does not prove paid market.\n- **Evidence signal:** World Bank flags skills, infrastructure and regulatory needs in digital transformation.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Thai. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (402 in 2025, -13 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/ca/epi/regions/asia/thailand/)\n- [Direct country source](https://documents1.worldbank.org/curated/en/099070225024525808/pdf/P508079-c47ce804-a29b-46f2-9207-38d85c3f032b.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "CHN",
+      "country": "China",
+      "cluster": "East Asia",
+      "status": "Do not enter without legal/channel route",
+      "ef_2025": 464,
+      "ef_change_2024": 9,
+      "band": "Low",
+      "ratings": {
+        "demand": 9,
+        "paid_conversion": 7,
+        "delivery": 10,
+        "distribution": 6,
+        "whitespace": 1,
+        "feasibility": 1,
+        "evidence_confidence": 6
+      },
+      "buyer": "Large theoretical demand, gated by access and education-policy constraints.",
+      "target": "Only through compliant local partner after legal review; no direct-launch recommendation.",
+      "supply": "Large domestic incumbents and regulated education-technology environment.",
+      "risk": "Regulation, data, content, payments and foreign-provider position are gate conditions.",
+      "demand_evidence": "2025 language-law revision reinforces governance of online/public language use; not full edtech legal analysis.",
+      "sources": [
+        "ef2025",
+        "https://en.moe.gov.cn/news/press_releases/202512/t20251231_1425379.html"
+      ],
+      "derived": {
+        "launch_fit": 6.5
+      },
+      "dossier_markdown": "# China (CHN) - English-learning market dossier\n\n**Status:** Do not enter without legal/channel route\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 9 / 10 |\n| paid conversion | 7 / 10 |\n| delivery | 10 / 10 |\n| distribution | 6 / 10 |\n| whitespace | 1 / 10 |\n| feasibility | 1 / 10 |\n| evidence confidence | 6 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Large theoretical demand, gated by access and education-policy constraints.\n- **Most testable outcome:** Only through compliant local partner after legal review; no direct-launch recommendation.\n- **Existing/substitute supply:** Large domestic incumbents and regulated education-technology environment.\n- **Main risk:** Regulation, data, content, payments and foreign-provider position are gate conditions.\n- **Evidence signal:** 2025 language-law revision reinforces governance of online/public language use; not full edtech legal analysis.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Mandarin Chinese. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (464 in 2025, +9 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://en.moe.gov.cn/news/press_releases/202512/t20251231_1425379.html)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "TUR",
+      "country": "T�rkiye",
+      "cluster": "MENA / Europe",
+      "status": "Tier 2: professional/export English",
+      "ef_2025": 488,
+      "ef_change_2024": -9,
+      "band": "Low",
+      "ratings": {
+        "demand": 7,
+        "paid_conversion": 5,
+        "delivery": 8,
+        "distribution": 7,
+        "whitespace": 5,
+        "feasibility": 6,
+        "evidence_confidence": 8
+      },
+      "buyer": "Export tech, tourism, e-commerce and professional learners.",
+      "target": "Business speaking for ICT/export teams, hospitality and e-commerce sellers.",
+      "supply": "Language schools and online training are mature; Turkish localization required.",
+      "risk": "Currency/inflation pricing and cybersecurity regulation.",
+      "demand_evidence": "2024 ICT market $36.7bn; 246,000+ sector employees; investment-agency data.",
+      "sources": [
+        "ef2025",
+        "https://www.invest.gov.tr/en/sectors/pages/ict.aspx",
+        "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-12-05-2026"
+      ],
+      "derived": {
+        "launch_fit": 6.35
+      },
+      "dossier_markdown": "# T�rkiye (TUR) - English-learning market dossier\n\n**Status:** Tier 2: professional/export English\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 7 / 10 |\n| paid conversion | 5 / 10 |\n| delivery | 8 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Export tech, tourism, e-commerce and professional learners.\n- **Most testable outcome:** Business speaking for ICT/export teams, hospitality and e-commerce sellers.\n- **Existing/substitute supply:** Language schools and online training are mature; Turkish localization required.\n- **Main risk:** Currency/inflation pricing and cybersecurity regulation.\n- **Evidence signal:** 2024 ICT market $36.7bn; 246,000+ sector employees; investment-agency data.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Turkish. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (488 in 2025, -9 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.invest.gov.tr/en/sectors/pages/ict.aspx)\n- [Direct country source](https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-12-05-2026)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "IDN",
+      "country": "Indonesia",
+      "cluster": "Southeast Asia",
+      "status": "Tier 1: low-cost B2B2C test",
+      "ef_2025": 471,
+      "ef_change_2024": 3,
+      "band": "Low",
+      "ratings": {
+        "demand": 8,
+        "paid_conversion": 3,
+        "delivery": 8,
+        "distribution": 7,
+        "whitespace": 5,
+        "feasibility": 7,
+        "evidence_confidence": 7
+      },
+      "buyer": "Mobile-first, price-sensitive learners; institutions reduce CAC.",
+      "target": "Vocational/SME service cohorts with AI speaking and supervisor dashboards.",
+      "supply": "Mature localized edtech; Bahasa onboarding and light data usage are table stakes.",
+      "risk": "Do not launch generic consumer subscription into crowded market.",
+      "demand_evidence": "Government Digital Society Index tracks infrastructure, literacy, empowerment and work.",
+      "sources": [
+        "https://www.ef.com/ca/epi/regions/asia/indonesia/",
+        "https://data.go.id/dataset/dataset/indeks-masyarakat-digital-indonesia-imdi-nasional",
+        "https://www.kearney.com/documents/291362523/297668319/Regenerative%2Btalent%2Bpools--The%2B2023%2BKearney%2BGlobal%2BServices%2BLocation%2BIndex.pdf/c7895012-1f45-eb16-55fb-d32dfa861a40?t=1690244354000"
+      ],
+      "derived": {
+        "launch_fit": 6.3
+      },
+      "dossier_markdown": "# Indonesia (IDN) - English-learning market dossier\n\n**Status:** Tier 1: low-cost B2B2C test\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 8 / 10 |\n| paid conversion | 3 / 10 |\n| delivery | 8 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Mobile-first, price-sensitive learners; institutions reduce CAC.\n- **Most testable outcome:** Vocational/SME service cohorts with AI speaking and supervisor dashboards.\n- **Existing/substitute supply:** Mature localized edtech; Bahasa onboarding and light data usage are table stakes.\n- **Main risk:** Do not launch generic consumer subscription into crowded market.\n- **Evidence signal:** Government Digital Society Index tracks infrastructure, literacy, empowerment and work.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Bahasa Indonesia. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (471 in 2025, +3 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/ca/epi/regions/asia/indonesia/)\n- [Direct country source](https://data.go.id/dataset/dataset/indeks-masyarakat-digital-indonesia-imdi-nasional)\n- [Direct country source](https://www.kearney.com/documents/291362523/297668319/Regenerative%2Btalent%2Bpools--The%2B2023%2BKearney%2BGlobal%2BServices%2BLocation%2BIndex.pdf/c7895012-1f45-eb16-55fb-d32dfa861a40?t=1690244354000)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "MYS",
+      "country": "Malaysia",
+      "cluster": "Southeast Asia",
+      "status": "Benchmark / specialised enterprise",
+      "ef_2025": 581,
+      "ef_change_2024": 15,
+      "band": "High",
+      "ratings": {
+        "demand": 4,
+        "paid_conversion": 8,
+        "delivery": 9,
+        "distribution": 8,
+        "whitespace": 4,
+        "feasibility": 8,
+        "evidence_confidence": 8
+      },
+      "buyer": "GBS and professional communication cohorts, not remedial mass market.",
+      "target": "Client communication, leadership, writing and assessment in GBS.",
+      "supply": "High proficiency and mature training reduce basic-English whitespace.",
+      "risk": "Narrow high-ACV niche, not a volume entry market.",
+      "demand_evidence": "ICT/e-commerce contributed 23.4% of economy in 2024; 749 GBS entities reported in 2025.",
+      "sources": [
+        "ef2025",
+        "https://www.dosm.gov.my/portal-main/release-content/malaysia-digital-economy-2025",
+        "https://www.digital.gov.my/en-GB/siaran/Investments-In-GBS-Industry-See-Massive-Surge%2C-To-Drive-Revenue-In-Malaysia-To-RM28.14-Billion-In-2025)"
+      ],
+      "derived": {
+        "launch_fit": 6.3
+      },
+      "dossier_markdown": "# Malaysia (MYS) - English-learning market dossier\n\n**Status:** Benchmark / specialised enterprise\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 4 / 10 |\n| paid conversion | 8 / 10 |\n| delivery | 9 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 4 / 10 |\n| feasibility | 8 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** GBS and professional communication cohorts, not remedial mass market.\n- **Most testable outcome:** Client communication, leadership, writing and assessment in GBS.\n- **Existing/substitute supply:** High proficiency and mature training reduce basic-English whitespace.\n- **Main risk:** Narrow high-ACV niche, not a volume entry market.\n- **Evidence signal:** ICT/e-commerce contributed 23.4% of economy in 2024; 749 GBS entities reported in 2025.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Malay and English. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (581 in 2025, +15 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.dosm.gov.my/portal-main/release-content/malaysia-digital-economy-2025)\n- [Direct country source](https://www.digital.gov.my/en-GB/siaran/Investments-In-GBS-Industry-See-Massive-Surge%2C-To-Drive-Revenue-In-Malaysia-To-RM28.14-Billion-In-2025))\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "UZB",
+      "country": "Uzbekistan",
+      "cluster": "Central Asia",
+      "status": "Watch: emerging services/export niche",
+      "ef_2025": 429,
+      "ef_change_2024": -10,
+      "band": "Very low",
+      "ratings": {
+        "demand": 7,
+        "paid_conversion": 3,
+        "delivery": 7,
+        "distribution": 7,
+        "whitespace": 8,
+        "feasibility": 6,
+        "evidence_confidence": 8
+      },
+      "buyer": "Young IT outsourcing, BPO/KPO and mobility cohort; partner-led route.",
+      "target": "Remote-client English for IT support, BPO/KPO and IT-park partners.",
+      "supply": "Emerging IT training ecosystem; less mature app landscape than large markets.",
+      "risk": "Payment, language, willingness-to-pay and compliance research before launch.",
+      "demand_evidence": "Official IT-service export series shows rapid computer-software growth; $5bn policy export target is not actual forecast.",
+      "sources": [
+        "https://www.ef.com/ca/epi/regions/asia/uzbekistan/",
+        "https://siat.stat.uz/data/1504/?lang=en",
+        "https://gov.uz/en/news/view/160928"
+      ],
+      "derived": {
+        "launch_fit": 6.3
+      },
+      "dossier_markdown": "# Uzbekistan (UZB) - English-learning market dossier\n\n**Status:** Watch: emerging services/export niche\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 7 / 10 |\n| paid conversion | 3 / 10 |\n| delivery | 7 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 8 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Young IT outsourcing, BPO/KPO and mobility cohort; partner-led route.\n- **Most testable outcome:** Remote-client English for IT support, BPO/KPO and IT-park partners.\n- **Existing/substitute supply:** Emerging IT training ecosystem; less mature app landscape than large markets.\n- **Main risk:** Payment, language, willingness-to-pay and compliance research before launch.\n- **Evidence signal:** Official IT-service export series shows rapid computer-software growth; $5bn policy export target is not actual forecast.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Uzbek and Russian. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (429 in 2025, -10 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/ca/epi/regions/asia/uzbekistan/)\n- [Direct country source](https://siat.stat.uz/data/1504/?lang=en)\n- [Direct country source](https://gov.uz/en/news/view/160928)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "MAR",
+      "country": "Morocco",
+      "cluster": "MENA / Africa",
+      "status": "Tier 2: European services",
+      "ef_2025": 492,
+      "ef_change_2024": 13,
+      "band": "Low",
+      "ratings": {
+        "demand": 6,
+        "paid_conversion": 4,
+        "delivery": 7,
+        "distribution": 8,
+        "whitespace": 6,
+        "feasibility": 7,
+        "evidence_confidence": 8
+      },
+      "buyer": "Export BPO/ITO, tourism and professional learners; English is additive to French/Arabic.",
+      "target": "European/global customer service, tech support and tourism English.",
+      "supply": "Large outsourcing ecosystem; French-centric training is a material substitute.",
+      "risk": "English-only product narrative will not fit linguistic reality.",
+      "demand_evidence": "2023 outsourcing: 1,200+ firms, 141,000 jobs and MAD17.9bn exports; ministry figures.",
+      "sources": [
+        "https://www.ef.com/wwfr/epi/regions/africa/morocco/",
+        "https://www.mmsp.gov.ma/fr/nos-metiers/outsourcing-digital-export",
+        "https://www.mmsp.gov.ma/fr/actualites/madame-la-ministre-amal-el-fallah-seghrouchni-pr%C3%A9sid%C3%A9-%C3%A0-rabat-une-rencontre-consacr%C3%A9e-au-renouvellement-de-l%E2%80%99offre-offshoring-maroc"
+      ],
+      "derived": {
+        "launch_fit": 6.15
+      },
+      "dossier_markdown": "# Morocco (MAR) - English-learning market dossier\n\n**Status:** Tier 2: European services\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 6 / 10 |\n| paid conversion | 4 / 10 |\n| delivery | 7 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Export BPO/ITO, tourism and professional learners; English is additive to French/Arabic.\n- **Most testable outcome:** European/global customer service, tech support and tourism English.\n- **Existing/substitute supply:** Large outsourcing ecosystem; French-centric training is a material substitute.\n- **Main risk:** English-only product narrative will not fit linguistic reality.\n- **Evidence signal:** 2023 outsourcing: 1,200+ firms, 141,000 jobs and MAD17.9bn exports; ministry figures.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Arabic and French. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (492 in 2025, +13 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/wwfr/epi/regions/africa/morocco/)\n- [Direct country source](https://www.mmsp.gov.ma/fr/nos-metiers/outsourcing-digital-export)\n- [Direct country source](https://www.mmsp.gov.ma/fr/actualites/madame-la-ministre-amal-el-fallah-seghrouchni-pr%C3%A9sid%C3%A9-%C3%A0-rabat-une-rencontre-consacr%C3%A9e-au-renouvellement-de-l%E2%80%99offre-offshoring-maroc)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "TUN",
+      "country": "Tunisia",
+      "cluster": "MENA / Africa",
+      "status": "Tier 2: services/export niche",
+      "ef_2025": 498,
+      "ef_change_2024": 2,
+      "band": "Low",
+      "ratings": {
+        "demand": 6,
+        "paid_conversion": 4,
+        "delivery": 7,
+        "distribution": 7,
+        "whitespace": 6,
+        "feasibility": 6,
+        "evidence_confidence": 5
+      },
+      "buyer": "Export-services, tourism and professional learners; French/Arabic content context.",
+      "target": "Customer-service and digital-services English for European-facing employers.",
+      "supply": "Domestic training and French-oriented ecosystems are material.",
+      "risk": "Small opportunity; secure employer partner before localization.",
+      "demand_evidence": "Services accounted for 59% of projected 2025 jobs from declared investment; not English specific.",
+      "sources": [
+        "ef2025",
+        "https://tia.gov.tn/en/news-details/tunisie-croissance-de-393-des-investissements-declares-en-2025",
+        "https://documents1.worldbank.org/curated/en/099633201042411300/pdf/IDU17527e81d18c98144be18acb1c9fc0691b3c8.pdf"
+      ],
+      "derived": {
+        "launch_fit": 5.9
+      },
+      "dossier_markdown": "# Tunisia (TUN) - English-learning market dossier\n\n**Status:** Tier 2: services/export niche\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 6 / 10 |\n| paid conversion | 4 / 10 |\n| delivery | 7 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 5 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Export-services, tourism and professional learners; French/Arabic content context.\n- **Most testable outcome:** Customer-service and digital-services English for European-facing employers.\n- **Existing/substitute supply:** Domestic training and French-oriented ecosystems are material.\n- **Main risk:** Small opportunity; secure employer partner before localization.\n- **Evidence signal:** Services accounted for 59% of projected 2025 jobs from declared investment; not English specific.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Arabic and French. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (498 in 2025, +2 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://tia.gov.tn/en/news-details/tunisie-croissance-de-393-des-investissements-declares-en-2025)\n- [Direct country source](https://documents1.worldbank.org/curated/en/099633201042411300/pdf/IDU17527e81d18c98144be18acb1c9fc0691b3c8.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "PAK",
+      "country": "Pakistan",
+      "cluster": "South Asia",
+      "status": "Conditional B2B test",
+      "ef_2025": 493,
+      "ef_change_2024": 0,
+      "band": "Low",
+      "ratings": {
+        "demand": 7,
+        "paid_conversion": 2,
+        "delivery": 6,
+        "distribution": 7,
+        "whitespace": 7,
+        "feasibility": 5,
+        "evidence_confidence": 7
+      },
+      "buyer": "IT/ITeS employees, freelancers and export-oriented SMEs.",
+      "target": "Client-call and business communication for IT/ITeS/freelancers.",
+      "supply": "English tuition and freelancer training are widespread; local app snapshot pending.",
+      "risk": "Macro, payments and data-policy risk; local billing and employer pilots first.",
+      "demand_evidence": "FY25 ICT service exports rose 23.7% to $2.825bn in July-March period; sector proxy.",
+      "sources": [
+        "ef2025",
+        "https://www.finance.gov.pk/survey/chapter_25/15_Information_Technology.pdf"
+      ],
+      "derived": {
+        "launch_fit": 5.8
+      },
+      "dossier_markdown": "# Pakistan (PAK) - English-learning market dossier\n\n**Status:** Conditional B2B test\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 7 / 10 |\n| paid conversion | 2 / 10 |\n| delivery | 6 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 7 / 10 |\n| feasibility | 5 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** IT/ITeS employees, freelancers and export-oriented SMEs.\n- **Most testable outcome:** Client-call and business communication for IT/ITeS/freelancers.\n- **Existing/substitute supply:** English tuition and freelancer training are widespread; local app snapshot pending.\n- **Main risk:** Macro, payments and data-policy risk; local billing and employer pilots first.\n- **Evidence signal:** FY25 ICT service exports rose 23.7% to $2.825bn in July-March period; sector proxy.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Urdu plus regional languages. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (493 in 2025, +0 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.finance.gov.pk/survey/chapter_25/15_Information_Technology.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "PER",
+      "country": "Peru",
+      "cluster": "Latin America",
+      "status": "Selective B2B test",
+      "ef_2025": 519,
+      "ef_change_2024": 0,
+      "band": "Moderate",
+      "ratings": {
+        "demand": 6,
+        "paid_conversion": 5,
+        "delivery": 7,
+        "distribution": 5,
+        "whitespace": 6,
+        "feasibility": 7,
+        "evidence_confidence": 6
+      },
+      "buyer": "Professional, tourism, migration and digital-service learners.",
+      "target": "Tourism, professional services and export-related partner cohorts.",
+      "supply": "Existing education supply makes generic practice weakly differentiated.",
+      "risk": "Scale and B2B channel strength need paid pilot proof.",
+      "demand_evidence": "Government digitisation and digital-economy activity are rising; not a direct English signal.",
+      "sources": [
+        "ef2025",
+        "https://www.trade.gov/country-commercial-guides/peru-digital-economy",
+        "https://indicadores.digital.gob.pe/"
+      ],
+      "derived": {
+        "launch_fit": 5.75
+      },
+      "dossier_markdown": "# Peru (PER) - English-learning market dossier\n\n**Status:** Selective B2B test\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 6 / 10 |\n| paid conversion | 5 / 10 |\n| delivery | 7 / 10 |\n| distribution | 5 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 6 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Professional, tourism, migration and digital-service learners.\n- **Most testable outcome:** Tourism, professional services and export-related partner cohorts.\n- **Existing/substitute supply:** Existing education supply makes generic practice weakly differentiated.\n- **Main risk:** Scale and B2B channel strength need paid pilot proof.\n- **Evidence signal:** Government digitisation and digital-economy activity are rising; not a direct English signal.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Spanish. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (519 in 2025, +0 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.trade.gov/country-commercial-guides/peru-digital-economy)\n- [Direct country source](https://indicadores.digital.gob.pe/)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "PHL",
+      "country": "Philippines",
+      "cluster": "Southeast Asia",
+      "status": "Benchmark / specialised BPO",
+      "ef_2025": 569,
+      "ef_change_2024": -1,
+      "band": "High",
+      "ratings": {
+        "demand": 3,
+        "paid_conversion": 6,
+        "delivery": 8,
+        "distribution": 9,
+        "whitespace": 4,
+        "feasibility": 8,
+        "evidence_confidence": 8
+      },
+      "buyer": "BPO employers and specialist professionals, not basic English learners.",
+      "target": "BPO QA, customer handling, healthcare/financial-service English and AI coaching.",
+      "supply": "Deep BPO, tutor and language-training provision.",
+      "risk": "High proficiency raises quality bar and reduces remedial demand.",
+      "demand_evidence": "2025 IT-BPM revenue exceeded $40bn and employment reached 1.9m, attributed to IBPAP.",
+      "sources": [
+        "https://www.ef.com/saen/epi/regions/asia/philippines/",
+        "https://www.ibpap.org/knowledge-hub",
+        "https://qa.philstar.com/business/2026/01/29/2504140/it-bpm-revenues-breach-40-billion-mark"
+      ],
+      "derived": {
+        "launch_fit": 5.7
+      },
+      "dossier_markdown": "# Philippines (PHL) - English-learning market dossier\n\n**Status:** Benchmark / specialised BPO\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 3 / 10 |\n| paid conversion | 6 / 10 |\n| delivery | 8 / 10 |\n| distribution | 9 / 10 |\n| whitespace | 4 / 10 |\n| feasibility | 8 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** BPO employers and specialist professionals, not basic English learners.\n- **Most testable outcome:** BPO QA, customer handling, healthcare/financial-service English and AI coaching.\n- **Existing/substitute supply:** Deep BPO, tutor and language-training provision.\n- **Main risk:** High proficiency raises quality bar and reduces remedial demand.\n- **Evidence signal:** 2025 IT-BPM revenue exceeded $40bn and employment reached 1.9m, attributed to IBPAP.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Filipino/English. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (569 in 2025, -1 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/saen/epi/regions/asia/philippines/)\n- [Direct country source](https://www.ibpap.org/knowledge-hub)\n- [Direct country source](https://qa.philstar.com/business/2026/01/29/2504140/it-bpm-revenues-breach-40-billion-mark)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "ZAF",
+      "country": "South Africa",
+      "cluster": "Africa",
+      "status": "BPO benchmark / specialised enterprise",
+      "ef_2025": 602,
+      "ef_change_2024": 8,
+      "band": "High",
+      "ratings": {
+        "demand": 3,
+        "paid_conversion": 6,
+        "delivery": 8,
+        "distribution": 8,
+        "whitespace": 5,
+        "feasibility": 7,
+        "evidence_confidence": 7
+      },
+      "buyer": "GBS/BPO employers and specialist professionals, not remedial learners.",
+      "target": "Customer-experience QA, specialist communication and manager-led upskilling.",
+      "supply": "High proficiency and developed BPO provision.",
+      "risk": "Weak fit for entry-level ESL; benchmark/high-ACV niche only.",
+      "demand_evidence": "GBS sector added 8,180 international jobs and R2.3bn export revenue in Apr-Jun 2025.",
+      "sources": [
+        "ef2025",
+        "https://www.bpesa.org.za/news/699-latest-bpesa-gbs-job-creation-report-shows-positive-trends-across-most-areas.html"
+      ],
+      "derived": {
+        "launch_fit": 5.6
+      },
+      "dossier_markdown": "# South Africa (ZAF) - English-learning market dossier\n\n**Status:** BPO benchmark / specialised enterprise\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 3 / 10 |\n| paid conversion | 6 / 10 |\n| delivery | 8 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** GBS/BPO employers and specialist professionals, not remedial learners.\n- **Most testable outcome:** Customer-experience QA, specialist communication and manager-led upskilling.\n- **Existing/substitute supply:** High proficiency and developed BPO provision.\n- **Main risk:** Weak fit for entry-level ESL; benchmark/high-ACV niche only.\n- **Evidence signal:** GBS sector added 8,180 international jobs and R2.3bn export revenue in Apr-Jun 2025.\n\n## Delivery / localisation assumption\n\n- Begin validation in: English plus local languages. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (602 in 2025, +8 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.bpesa.org.za/news/699-latest-bpesa-gbs-job-creation-report-shows-positive-trends-across-most-areas.html)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "ARG",
+      "country": "Argentina",
+      "cluster": "Latin America",
+      "status": "Specialised remote-work B2B",
+      "ef_2025": 575,
+      "ef_change_2024": 13,
+      "band": "High",
+      "ratings": {
+        "demand": 5,
+        "paid_conversion": 4,
+        "delivery": 8,
+        "distribution": 7,
+        "whitespace": 5,
+        "feasibility": 5,
+        "evidence_confidence": 8
+      },
+      "buyer": "Knowledge-economy/global-service workers needing specialised communication.",
+      "target": "Leadership, client communication and professional speaking for export firms.",
+      "supply": "High existing English signal reduces remedial whitespace.",
+      "risk": "Macro and pricing volatility need local billing/short experiments.",
+      "demand_evidence": "Knowledge-economy exports reached $9.6bn in 2025 with 285,000+ formal jobs; official source.",
+      "sources": [
+        "https://www.ef.com/wwen/epi/regions/latin-america/argentina/",
+        "https://www.argentina.gob.ar/noticias/las-exportaciones-de-servicios-de-la-economia-del-conocimiento-registraron-un-crecimiento",
+        "https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/07/oecd-economic-surveys-argentina-2025_4a5ddf67/27dd6e27-en.pdf"
+      ],
+      "derived": {
+        "launch_fit": 5.5
+      },
+      "dossier_markdown": "# Argentina (ARG) - English-learning market dossier\n\n**Status:** Specialised remote-work B2B\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 5 / 10 |\n| paid conversion | 4 / 10 |\n| delivery | 8 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 5 / 10 |\n| feasibility | 5 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Knowledge-economy/global-service workers needing specialised communication.\n- **Most testable outcome:** Leadership, client communication and professional speaking for export firms.\n- **Existing/substitute supply:** High existing English signal reduces remedial whitespace.\n- **Main risk:** Macro and pricing volatility need local billing/short experiments.\n- **Evidence signal:** Knowledge-economy exports reached $9.6bn in 2025 with 285,000+ formal jobs; official source.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Spanish. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (575 in 2025, +13 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/wwen/epi/regions/latin-america/argentina/)\n- [Direct country source](https://www.argentina.gob.ar/noticias/las-exportaciones-de-servicios-de-la-economia-del-conocimiento-registraron-un-crecimiento)\n- [Direct country source](https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/07/oecd-economic-surveys-argentina-2025_4a5ddf67/27dd6e27-en.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "ECU",
+      "country": "Ecuador",
+      "cluster": "Latin America",
+      "status": "Small Spanish-speaking pilot",
+      "ef_2025": 466,
+      "ef_change_2024": 1,
+      "band": "Low",
+      "ratings": {
+        "demand": 6,
+        "paid_conversion": 4,
+        "delivery": 7,
+        "distribution": 5,
+        "whitespace": 6,
+        "feasibility": 6,
+        "evidence_confidence": 6
+      },
+      "buyer": "Urban professionals, tourism and export-linked SMEs.",
+      "target": "Job-interview and tourism/service English via college/employer partners.",
+      "supply": "Local schools and general apps; direct competitor snapshot pending.",
+      "risk": "Urban-rural access gaps and small market scale.",
+      "demand_evidence": "2025 official survey: 80.1% age 5+ internet use and 71.3% household access.",
+      "sources": [
+        "ef2025",
+        "https://www.ecuadorencifras.gob.ec/tecnologias-de-la-informacion-y-comunicacion-tic/",
+        "https://documents1.worldbank.org/curated/en/099957201262484042/pdf/IDU148619f7c191381405618db3115106df826f9.pdf"
+      ],
+      "derived": {
+        "launch_fit": 5.5
+      },
+      "dossier_markdown": "# Ecuador (ECU) - English-learning market dossier\n\n**Status:** Small Spanish-speaking pilot\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 6 / 10 |\n| paid conversion | 4 / 10 |\n| delivery | 7 / 10 |\n| distribution | 5 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 6 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Urban professionals, tourism and export-linked SMEs.\n- **Most testable outcome:** Job-interview and tourism/service English via college/employer partners.\n- **Existing/substitute supply:** Local schools and general apps; direct competitor snapshot pending.\n- **Main risk:** Urban-rural access gaps and small market scale.\n- **Evidence signal:** 2025 official survey: 80.1% age 5+ internet use and 71.3% household access.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Spanish. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (466 in 2025, +1 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.ecuadorencifras.gob.ec/tecnologias-de-la-informacion-y-comunicacion-tic/)\n- [Direct country source](https://documents1.worldbank.org/curated/en/099957201262484042/pdf/IDU148619f7c191381405618db3115106df826f9.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "LKA",
+      "country": "Sri Lanka",
+      "cluster": "South Asia",
+      "status": "Selective B2B/B2B2C",
+      "ef_2025": 486,
+      "ef_change_2024": 0,
+      "band": "Low",
+      "ratings": {
+        "demand": 5,
+        "paid_conversion": 4,
+        "delivery": 7,
+        "distribution": 6,
+        "whitespace": 6,
+        "feasibility": 7,
+        "evidence_confidence": 6
+      },
+      "buyer": "IT-BPM, tourism and professional-services cohorts.",
+      "target": "Customer-facing IT-BPM, tourism and professional speaking.",
+      "supply": "Existing English education and capable IT talent reduce generic need.",
+      "risk": "Small addressable base; prove partner volume first.",
+      "demand_evidence": "Investment agency reports IT exports above $1.5bn and 175,000+ professionals; directional.",
+      "sources": [
+        "ef2025",
+        "https://investsrilanka.com/home/why-sri-lanka/information_tech_subpage/"
+      ],
+      "derived": {
+        "launch_fit": 5.45
+      },
+      "dossier_markdown": "# Sri Lanka (LKA) - English-learning market dossier\n\n**Status:** Selective B2B/B2B2C\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 5 / 10 |\n| paid conversion | 4 / 10 |\n| delivery | 7 / 10 |\n| distribution | 6 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 7 / 10 |\n| evidence confidence | 6 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** IT-BPM, tourism and professional-services cohorts.\n- **Most testable outcome:** Customer-facing IT-BPM, tourism and professional speaking.\n- **Existing/substitute supply:** Existing English education and capable IT talent reduce generic need.\n- **Main risk:** Small addressable base; prove partner volume first.\n- **Evidence signal:** Investment agency reports IT exports above $1.5bn and 175,000+ professionals; directional.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Sinhala and Tamil. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (486 in 2025, +0 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://investsrilanka.com/home/why-sri-lanka/information_tech_subpage/)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "KEN",
+      "country": "Kenya",
+      "cluster": "Africa",
+      "status": "BPO / digital-services specialised test",
+      "ef_2025": 593,
+      "ef_change_2024": 12,
+      "band": "High",
+      "ratings": {
+        "demand": 3,
+        "paid_conversion": 4,
+        "delivery": 8,
+        "distribution": 8,
+        "whitespace": 6,
+        "feasibility": 6,
+        "evidence_confidence": 8
+      },
+      "buyer": "BPO, KPO, AI-data and technical-support cohorts; basic English is not need.",
+      "target": "Global-client communication, QA and AI-data/BPO role simulations.",
+      "supply": "Strong English/mobile-money and growing BPO/AI-data supply.",
+      "risk": "Do not equate BPO growth with beginner ESL demand.",
+      "demand_evidence": "Investment agency reports 9% GDP ICT contribution, 85% internet penetration and BPO growth.",
+      "sources": [
+        "ef2025",
+        "https://www.investkenya.go.ke/ict-and-bpo/",
+        "https://trade.go.ke/state-department-trade-leads-development-digital-services-export-strategy-partnership-state"
+      ],
+      "derived": {
+        "launch_fit": 5.3
+      },
+      "dossier_markdown": "# Kenya (KEN) - English-learning market dossier\n\n**Status:** BPO / digital-services specialised test\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 3 / 10 |\n| paid conversion | 4 / 10 |\n| delivery | 8 / 10 |\n| distribution | 8 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 8 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** BPO, KPO, AI-data and technical-support cohorts; basic English is not need.\n- **Most testable outcome:** Global-client communication, QA and AI-data/BPO role simulations.\n- **Existing/substitute supply:** Strong English/mobile-money and growing BPO/AI-data supply.\n- **Main risk:** Do not equate BPO growth with beginner ESL demand.\n- **Evidence signal:** Investment agency reports 9% GDP ICT contribution, 85% internet penetration and BPO growth.\n\n## Delivery / localisation assumption\n\n- Begin validation in: English and Swahili. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (593 in 2025, +12 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.investkenya.go.ke/ict-and-bpo/)\n- [Direct country source](https://trade.go.ke/state-department-trade-leads-development-digital-services-export-strategy-partnership-state)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "NPL",
+      "country": "Nepal",
+      "cluster": "South Asia",
+      "status": "Watch: export/mobility niche",
+      "ef_2025": 514,
+      "ef_change_2024": 2,
+      "band": "Moderate",
+      "ratings": {
+        "demand": 5,
+        "paid_conversion": 2,
+        "delivery": 6,
+        "distribution": 6,
+        "whitespace": 7,
+        "feasibility": 6,
+        "evidence_confidence": 7
+      },
+      "buyer": "IT freelancers, migration candidates, tourism and services workers.",
+      "target": "Remote-client English for IT freelancers and service exporters.",
+      "supply": "Small private training/freelancer ecosystem; paid-app data unavailable.",
+      "risk": "Small market and variable experience outside cities.",
+      "demand_evidence": "Digitally delivered services exceeded half of services exports by end-2023; sector proxy.",
+      "sources": [
+        "ef2025",
+        "https://documents1.worldbank.org/curated/en/099032125103030263/pdf/P179761-430153ad-672c-4418-89c5-ef3740c65113.pdf"
+      ],
+      "derived": {
+        "launch_fit": 5.05
+      },
+      "dossier_markdown": "# Nepal (NPL) - English-learning market dossier\n\n**Status:** Watch: export/mobility niche\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 5 / 10 |\n| paid conversion | 2 / 10 |\n| delivery | 6 / 10 |\n| distribution | 6 / 10 |\n| whitespace | 7 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** IT freelancers, migration candidates, tourism and services workers.\n- **Most testable outcome:** Remote-client English for IT freelancers and service exporters.\n- **Existing/substitute supply:** Small private training/freelancer ecosystem; paid-app data unavailable.\n- **Main risk:** Small market and variable experience outside cities.\n- **Evidence signal:** Digitally delivered services exceeded half of services exports by end-2023; sector proxy.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Nepali. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (514 in 2025, +2 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://documents1.worldbank.org/curated/en/099032125103030263/pdf/P179761-430153ad-672c-4418-89c5-ef3740c65113.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "NGA",
+      "country": "Nigeria",
+      "cluster": "Africa",
+      "status": "Specialised professional English",
+      "ef_2025": 568,
+      "ef_change_2024": 11,
+      "band": "High",
+      "ratings": {
+        "demand": 4,
+        "paid_conversion": 3,
+        "delivery": 7,
+        "distribution": 7,
+        "whitespace": 6,
+        "feasibility": 5,
+        "evidence_confidence": 7
+      },
+      "buyer": "Professional communication, sales and digital-work cohorts, not basic English.",
+      "target": "Workplace speaking/writing for tech, fintech and services.",
+      "supply": "English is official and widely used; market is communication effectiveness.",
+      "risk": "Income, power/connectivity and payment experience vary heavily by city.",
+      "demand_evidence": "ICT contributed 18.9% of GDP in 2024 per investment agency; sector proxy.",
+      "sources": [
+        "https://www.ef.com/saen/epi/regions/africa/nigeria/",
+        "https://nipc.gov.ng/sectors/ict"
+      ],
+      "derived": {
+        "launch_fit": 5.05
+      },
+      "dossier_markdown": "# Nigeria (NGA) - English-learning market dossier\n\n**Status:** Specialised professional English\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 4 / 10 |\n| paid conversion | 3 / 10 |\n| delivery | 7 / 10 |\n| distribution | 7 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 5 / 10 |\n| evidence confidence | 7 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Professional communication, sales and digital-work cohorts, not basic English.\n- **Most testable outcome:** Workplace speaking/writing for tech, fintech and services.\n- **Existing/substitute supply:** English is official and widely used; market is communication effectiveness.\n- **Main risk:** Income, power/connectivity and payment experience vary heavily by city.\n- **Evidence signal:** ICT contributed 18.9% of GDP in 2024 per investment agency; sector proxy.\n\n## Delivery / localisation assumption\n\n- Begin validation in: English plus local context. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (568 in 2025, +11 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [Direct country source](https://www.ef.com/saen/epi/regions/africa/nigeria/)\n- [Direct country source](https://nipc.gov.ng/sectors/ict)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "iso3": "BGD",
+      "country": "Bangladesh",
+      "cluster": "South Asia",
+      "status": "Watch: low-cost career cohort",
+      "ef_2025": 506,
+      "ef_change_2024": 6,
+      "band": "Moderate",
+      "ratings": {
+        "demand": 6,
+        "paid_conversion": 2,
+        "delivery": 5,
+        "distribution": 5,
+        "whitespace": 6,
+        "feasibility": 6,
+        "evidence_confidence": 5
+      },
+      "buyer": "Career, migration and digital-work learners; partner before direct subscription.",
+      "target": "Job-interview speaking for IT, export-services and overseas-work candidates.",
+      "supply": "Low-cost tuition and free content are strong substitutes.",
+      "risk": "Affordability and payment friction need evidence before launch.",
+      "demand_evidence": "79% of young people surveyed said English was important; not paid-demand evidence.",
+      "sources": [
+        "ef2025",
+        "https://www.britishcouncil.org/sites/default/files/ng_bangladesh_report_a4_rgb_aw4_22oct.pdf"
+      ],
+      "derived": {
+        "launch_fit": 4.9
+      },
+      "dossier_markdown": "# Bangladesh (BGD) - English-learning market dossier\n\n**Status:** Watch: low-cost career cohort\n\n**Scope:** AI-first spoken-English product with optional teacher escalation. This is a route hypothesis, not a market-size forecast.\n\n## Screening assessment\n\n| Dimension | Score |\n| --- | ---: |\n| demand | 6 / 10 |\n| paid conversion | 2 / 10 |\n| delivery | 5 / 10 |\n| distribution | 5 / 10 |\n| whitespace | 6 / 10 |\n| feasibility | 6 / 10 |\n| evidence confidence | 5 / 10 |\n\nScores are analyst assessments. Evidence confidence is separate from attractiveness.\n\n## Commercial reality\n\n- **Likely payer:** Career, migration and digital-work learners; partner before direct subscription.\n- **Most testable outcome:** Job-interview speaking for IT, export-services and overseas-work candidates.\n- **Existing/substitute supply:** Low-cost tuition and free content are strong substitutes.\n- **Main risk:** Affordability and payment friction need evidence before launch.\n- **Evidence signal:** 79% of young people surveyed said English was important; not paid-demand evidence.\n\n## Delivery / localisation assumption\n\n- Begin validation in: Bangla. This is a product-design assumption, not a measure of English demand. Test code-switching, speech recognition, payment preferences and trust language with local users.\n- Do not use the EF EPI score (506 in 2025, +6 vs 2024) as a national fluency or willingness-to-pay estimate. The EPI sample is self-selected online test takers.\n\n## First pilot to run\n\n1. Recruit one employer, college, training centre or other payer matching the stated target outcome.\n2. Offer a role-specific 4-6 week speaking path in the local onboarding language.\n3. Capture baseline and endline roleplay/assessment; instrument activation, D7/D30 retention, paid conversion, AI minutes, support and any human escalation.\n4. Compare fully loaded CAC and gross margin against a generic consumer-ad acquisition test.\n\n## Evidence links\n\n- [ef2025](https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf) - 2025/2024 English learner signal; medium; self-selected test takers\n- [Direct country source](https://www.britishcouncil.org/sites/default/files/ng_bangladesh_report_a4_rgb_aw4_22oct.pdf)\n\n## Explicitly unknown until fieldwork\n\n- Paid English-learning population and realistic price band for this target cohort.\n- Competitor conversion, retention, CAC, profit and customer lifetime value.\n- Relative performance of self-pay vs employer/college-paid distribution.\n- AI speech-quality and human-escalation demand for local accents/use cases.\n\n## Data hygiene\n\nRecord observation date, exact city/segment, original source and whether the conclusion is observed, derived or assessed. Update this dossier when a pilot replaces an assumption with cohort evidence.\n",
+      "image_url": "https://images.unsplash.com/photo-1585123334904-845d60e97b29?auto=format&fit=crop&w=1200&q=80"
+    }
+  ],
+  "competitor_data_policy": {
+    "status": "Not yet field-verified country by country",
+    "reason": "Store availability, price, rankings and ratings are time-, country-, platform- and account-dependent. Public financials are sparse.",
+    "collection_method": "Take dated Google Play and iOS snapshots plus official company pages; use filings and investor disclosures only for financial metrics.",
+    "categories": [
+      "free general apps",
+      "AI speaking apps",
+      "teacher/tutor marketplaces",
+      "language centres",
+      "B2B employer/college providers",
+      "public/free programs"
+    ]
+  },
+  "not_public_or_not_inferred": [
+    "paid English learner count by country",
+    "country-level app CAC",
+    "competitor profit",
+    "subscription conversion",
+    "retention",
+    "universal share of job posts requiring English"
+  ],
+  "next_required_extraction": [
+    "World Bank WDI values by indicator/year",
+    "Global Findex 2025 payment and account fields",
+    "ITU 2025 delivery fields",
+    "dated app-store competitor snapshots",
+    "first-party pilot metrics for price, conversion, retention and CAC"
+  ],
+  "india_competitor_intelligence": {
+    "as_of": "2026-10-27",
+    "warning": "Private-company metrics are unverified unless explicitly labelled. ARR is not profit; hiring or a fundraising report does not establish CAC or durable unit economics.",
+    "companies": [
+      {
+        "name": "Supernova",
+        "legal_entity": "L8 Cones Interactive Private Limited",
+        "model": "AI-first spoken English; Indic-language localisation",
+        "financials": [
+          {
+            "metric": "ARR",
+            "value": "about US$15m",
+            "as_of": "2026-09",
+            "evidence": "Mint reported this via one person familiar with the company; no filing/audit located",
+            "source_id": "supernova_mint_2026",
+            "confidence": "medium-low"
+          },
+          {
+            "metric": "fundraising",
+            "value": "reported talks to raise US$15m–20m",
+            "as_of": "2026-09",
+            "evidence": "A discussion, not confirmation of closed financing",
+            "source_id": "supernova_mint_2026",
+            "confidence": "medium-low"
+          },
+          {
+            "metric": "profit / EBITDA",
+            "value": "not publicly verified",
+            "as_of": "2026-10",
+            "confidence": "high that no figure is in this source set"
+          }
+        ],
+        "cac": {
+          "value": "not disclosed",
+          "reason": "No audited marketing spend and new-paid-customer cohort data located"
+        },
+        "public_signal": "LinkedIn lists 51–200 employees; a headcount band is not a financial metric.",
+        "source_ids": [
+          "supernova_mint_2026",
+          "https://www.getsupernova.ai/about",
+          "https://in.linkedin.com/company/supernovaai"
+        ]
+      },
+      {
+        "name": "MySivi",
+        "model": "AI speaking plus peer-practice layer",
+        "financials": [
+          {
+            "metric": "ARR",
+            "value": "US$1m+",
+            "as_of": "page undated; accessed 2026-10",
+            "evidence": "Company says it crossed $1m+ ARR",
+            "source_id": "mysivi_first_party",
+            "confidence": "low-medium"
+          },
+          {
+            "metric": "profitability",
+            "value": "company says profitable in October 2024",
+            "as_of": "2024-10",
+            "evidence": "No profit amount or audited accounts supplied",
+            "source_id": "mysivi_first_party",
+            "confidence": "low-medium"
+          },
+          {
+            "metric": "annual revenue",
+            "value": "over US$250k",
+            "as_of": "2024-04",
+            "evidence": "Inc42 reported 30k paid users, 200k MAU and 1m+ downloads, quoting company",
+            "source_id": "mysivi_inc42_2024",
+            "confidence": "medium"
+          }
+        ],
+        "pricing_as_reported": [
+          "INR 199/week",
+          "INR 399/month",
+          "INR 699/3 months",
+          "INR 1,399/year"
+        ],
+        "cac": {
+          "value": "not disclosed",
+          "reason": "Downloads, MAU and paid-user counts cannot yield CAC without attributable spend and new-paid cohorts"
+        },
+        "interpretation": "The peer layer may support engagement/referrals, but no public source proves it lowers CAC or improves retention.",
+        "source_ids": [
+          "mysivi_first_party",
+          "mysivi_inc42_2024"
+        ]
+      },
+      {
+        "name": "SpeakX",
+        "model": "AI-first voice English; local-language pathways",
+        "financials": [
+          {
+            "metric": "ARR",
+            "value": "US$7m",
+            "as_of": "2025-10",
+            "evidence": "Investor publication says $7m ARR and 200k+ paid subscribers",
+            "source_id": "speakx_elevation_2025",
+            "confidence": "medium"
+          },
+          {
+            "metric": "EBITDA run rate",
+            "value": "US$3m",
+            "as_of": "2025-07",
+            "evidence": "Mint reported a company claim",
+            "source_id": "speakx_mint_2025",
+            "confidence": "medium"
+          },
+          {
+            "metric": "funding",
+            "value": "US$16m reported October 2025; total funding databases differ",
+            "as_of": "2025-10",
+            "evidence": "Keep funding separate from operating earnings",
+            "source_id": "https://inc42.com/company/speakx/",
+            "confidence": "medium"
+          }
+        ],
+        "cac": {
+          "value": "not disclosed",
+          "reason": "No public fully loaded acquisition cost, cohort conversion or payback data located"
+        },
+        "interpretation": "The strongest publicly reported India benchmark in this set for paid scale; claims still require date/source labelling.",
+        "source_ids": [
+          "speakx_elevation_2025",
+          "speakx_mint_2025"
+        ]
+      },
+      {
+        "name": "Stimuler",
+        "model": "AI speaking coach; pronunciation, fluency and exam-practice positioning",
+        "financials": [
+          {
+            "metric": "revenue / profit / CAC",
+            "value": "not publicly verified in collected sources",
+            "as_of": "2026-10",
+            "confidence": "high that this pack does not support a number"
+          },
+          {
+            "metric": "downloads",
+            "value": "13m+ across 200+ countries",
+            "as_of": "directory page accessed 2026-10",
+            "evidence": "reported adoption, not verified India paid users",
+            "source_id": "stimuler_razorpay",
+            "confidence": "low-medium"
+          }
+        ],
+        "cac": {
+          "value": "not disclosed",
+          "reason": "No usable public financial cohort data located"
+        },
+        "source_ids": [
+          "stimuler_razorpay"
+        ]
+      }
+    ]
+  },
+  "cac_measurement_spec": {
+    "consumer": "Fully loaded CAC = attributable paid-media + creative/agency + influencer/affiliate commissions + growth payroll allocation, divided by first-time paid subscribers acquired in the same cohort. Track by channel, language, city/state and plan; do not use installs/downloads as the denominator.",
+    "b2b": "Fully loaded B2B CAC = marketing + sales + solution/onboarding labour attributable to closed accounts, divided by new accounts; pair with sales-cycle length, contract value, activation and renewal.",
+    "minimum_cohort_metrics": [
+      "install-to-activated learner",
+      "activated-to-trial",
+      "trial-to-paid",
+      "day-7/day-30/day-90 retention",
+      "monthly and annual plan mix",
+      "refunds/chargebacks",
+      "AI inference cost per active learner",
+      "teacher-escalation cost per active learner",
+      "gross margin",
+      "CAC payback months",
+      "renewal and expansion"
+    ],
+    "rule": "Do not infer CAC from Meta Ad Library creative counts, download totals, hiring, a funding round or social-media reach."
+  },
+  "application": {
+    "title": "Global ESL Market Atlas",
+    "version": "1.0.0",
+    "data_as_of": "2026-10-27",
+    "scope": "AI-first English-speaking learning with optional teacher escalation; B2B/B2B2C screening.",
+    "important_warning": "Scores are analyst assessments, not market-size forecasts. Observed evidence and unknowns stay visible.",
+    "metric_definitions": {
+      "demand": {
+        "label": "Outcome demand",
+        "type": "assessed",
+        "higher_is": "more credible job, mobility or service outcome pressure"
+      },
+      "paid_conversion": {
+        "label": "Paid conversion",
+        "type": "assessed",
+        "higher_is": "more plausible viable payer at intended price"
+      },
+      "delivery": {
+        "label": "Digital delivery",
+        "type": "assessed",
+        "higher_is": "more practical app access and use"
+      },
+      "distribution": {
+        "label": "Distribution / B2B",
+        "type": "assessed",
+        "higher_is": "more promising employer, college or partner channel"
+      },
+      "whitespace": {
+        "label": "Whitespace / supply gap",
+        "type": "assessed",
+        "higher_is": "more room to differentiate; not absence of competitors"
+      },
+      "feasibility": {
+        "label": "Operating feasibility",
+        "type": "assessed",
+        "higher_is": "lower localisation, payment, regulation and execution friction"
+      },
+      "evidence_confidence": {
+        "label": "Evidence confidence",
+        "type": "assessed",
+        "higher_is": "stronger direct evidence behind the assessment"
+      },
+      "launch_fit": {
+        "label": "Composite launch fit",
+        "type": "derived",
+        "formula": "0.30 demand + 0.20 paid conversion + 0.20 distribution + 0.15 whitespace + 0.10 delivery + 0.05 feasibility",
+        "higher_is": "more suitable for a first role-specific, partner-led test"
+      },
+      "ef_2025": {
+        "label": "EF EPI learner signal",
+        "type": "observed",
+        "higher_is": "higher score among self-selected online adult test takers; not willingness to pay"
+      }
+    },
+    "honorable_mentions": [
+      {
+        "country": "Costa Rica",
+        "iso3": "CRI",
+        "why": "Consider only for BPO/nearshore employer pilots; not yet scored in this evidence pack.",
+        "status": "Unscored watchlist"
+      },
+      {
+        "country": "Romania",
+        "iso3": "ROU",
+        "why": "Consider for specialised enterprise communication, not basic-English consumer volume; not yet scored.",
+        "status": "Unscored watchlist"
+      },
+      {
+        "country": "Kazakhstan",
+        "iso3": "KAZ",
+        "why": "Consider for mobility and export-service niches after local-language/payment validation; not yet scored.",
+        "status": "Unscored watchlist"
+      },
+      {
+        "country": "Poland",
+        "iso3": "POL",
+        "why": "Useful premium enterprise benchmark rather than a mass remedial-English bet; not yet scored.",
+        "status": "Unscored watchlist"
+      }
+    ]
+  }
+}

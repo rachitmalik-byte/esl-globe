@@ -3,12 +3,18 @@ import path from 'node:path';
 
 let cachedApiKey = null;
 
-async function getApiKey() {
-  if (cachedApiKey) return cachedApiKey;
-  if (process.env.GEMINI_API_KEY) {
-    cachedApiKey = process.env.GEMINI_API_KEY;
-    return cachedApiKey;
+async function getApiKey(req) {
+  // 1. Check custom header sent by client (if user entered key in UI)
+  const headerKey = req?.headers?.['x-gemini-key'] || req?.headers?.['x-api-key'];
+  if (headerKey && typeof headerKey === 'string' && headerKey.trim()) {
+    return headerKey.trim();
   }
+  // 2. Check process.env.GEMINI_API_KEY (configured in Vercel or environment)
+  if (process.env.GEMINI_API_KEY) {
+    return process.env.GEMINI_API_KEY.trim();
+  }
+  if (cachedApiKey) return cachedApiKey;
+  // 3. Check local .env files
   const envPaths = [
     path.join(process.cwd(), '.env'),
     path.join(process.cwd(), '..', '.env'),
@@ -34,7 +40,9 @@ let cachedData = null;
 async function getData() {
   if (cachedData) return cachedData;
   const candidates = [
+    new URL('./market-data.json', import.meta.url),
     new URL('../app/dist/market-data.json', import.meta.url),
+    path.join(process.cwd(), 'api', 'market-data.json'),
     path.join(process.cwd(), 'app', 'dist', 'market-data.json'),
     path.join(process.cwd(), 'dist', 'market-data.json'),
     path.join(process.cwd(), 'market-data.json')
@@ -135,47 +143,66 @@ export default async function handler(req, res) {
       parts: [{ text: message }]
     });
 
-    const apiKey = await getApiKey();
+    const apiKey = await getApiKey(req);
     if (!apiKey) {
       return res.status(500).json({ error: 'GEMINI_API_KEY is not configured. Please set the GEMINI_API_KEY environment variable.' });
     }
 
-    let response;
-    let errText = '';
-    for (let attempt = 0; attempt < 3; attempt++) {
-      try {
-        response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: systemInstruction }] },
-            contents,
-            generationConfig: {
-              temperature: 0.35,
-              maxOutputTokens: 1200
-            }
-          })
-        });
-        if (response.ok) break;
-        if ((response.status === 503 || response.status === 429) && attempt < 2) {
-          await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
-          continue;
+    const candidateModels = [
+      'gemini-2.5-flash',
+      'gemini-flash-latest',
+      'gemini-3.5-flash',
+      'gemini-3.8-flash'
+    ];
+
+    let response = null;
+    let successfulModel = '';
+    let lastErrText = '';
+
+    for (const model of candidateModels) {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemInstruction }] },
+              contents,
+              generationConfig: {
+                temperature: 0.35,
+                maxOutputTokens: 1200
+              }
+            })
+          });
+
+          if (response.ok) {
+            successfulModel = model;
+            break;
+          }
+
+          if ((response.status === 503 || response.status === 429) && attempt === 0) {
+            await new Promise(r => setTimeout(r, 800));
+            continue;
+          }
+
+          lastErrText = await response.text();
+          break; // Try next candidate model
+        } catch (e) {
+          lastErrText = e.message;
+          if (attempt === 0) {
+            await new Promise(r => setTimeout(r, 500));
+            continue;
+          }
+          break;
         }
-        errText = await response.text();
-        break;
-      } catch (e) {
-        if (attempt < 2) {
-          await new Promise(r => setTimeout(r, 1000));
-          continue;
-        }
-        throw e;
       }
+      if (response && response.ok) break;
     }
 
     if (!response || !response.ok) {
       return res.status(response ? response.status : 500).json({
         error: `Gemini API error: ${response ? response.status : 'network'}`,
-        details: errText
+        details: lastErrText
       });
     }
 
@@ -185,7 +212,7 @@ export default async function handler(req, res) {
     return res.status(200).json({
       ok: true,
       reply,
-      model: 'gemini-2.5-flash',
+      model: successfulModel || 'gemini-2.5-flash',
       contextCountry: contextCountry || 'GLOBAL'
     });
   } catch (error) {
