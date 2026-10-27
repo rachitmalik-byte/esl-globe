@@ -1190,3 +1190,467 @@ body[data-theme='ops'] .article-pill-accent {
   background: rgba(0,0,0,0.85);
   border-color: #fff;
 }
+
+/* =====================================================
+   Screening Assessment Scorecard & Methodology Styles
+   ===================================================== */
+.screening-section {
+  margin: 32px 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-2);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+.screening-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.screening-title {
+  font-size: 20px;
+  font-weight: 850;
+  color: var(--text);
+  margin: 2px 0 4px;
+}
+.screening-desc {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Formula Callout Card */
+.formula-callout-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+.formula-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.formula-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.formula-score-big {
+  font-size: 34px;
+  font-weight: 850;
+  color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.formula-denom {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.formula-tier-badge {
+  font-size: 12px;
+  font-weight: 750;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tier-priority {
+  background: rgba(5, 150, 105, 0.12);
+  color: #059669;
+  border: 1px solid rgba(5, 150, 105, 0.3);
+}
+.tier-selective {
+  background: rgba(217, 119, 6, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+}
+.tier-watchlist {
+  background: rgba(100, 116, 139, 0.12);
+  color: var(--muted);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+}
+.formula-equation {
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  border: 1px solid var(--line);
+}
+.formula-math-header {
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.formula-math {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: var(--surface-3);
+  padding: 7px 11px;
+  border-radius: 6px;
+  color: var(--accent);
+  font-weight: 650;
+  margin: 6px 0;
+  overflow-x: auto;
+  font-size: 12px;
+}
+.formula-calculation {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-top: 6px;
+}
+
+/* Scorecards Grid */
+.scorecards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.dimension-scorecard-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: all 0.2s ease;
+}
+.dimension-scorecard-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.scorecard-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.scorecard-card-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+}
+.dim-icon {
+  font-size: 22px;
+  line-height: 1.2;
+}
+.dim-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+.dim-title {
+  font-size: 15px;
+  font-weight: 750;
+  margin: 0;
+  color: var(--text);
+}
+.dim-weight-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--surface-3);
+  color: var(--accent);
+}
+.badge-diagnostic {
+  background: rgba(147, 51, 234, 0.12);
+  color: #9333ea;
+  border: 1px solid rgba(147, 51, 234, 0.25);
+}
+.dim-definition {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.45;
+}
+.scorecard-score-box {
+  text-align: right;
+  min-width: 65px;
+}
+.score-number {
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1;
+}
+.score-denom {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.score-high { color: #059669; }
+.score-mid  { color: #d97706; }
+.score-low  { color: #e11d48; }
+
+.score-bar-track {
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.fill-green { background: linear-gradient(90deg, #10b981, #059669); }
+.fill-amber { background: linear-gradient(90deg, #fbbf24, #d97706); }
+.fill-rose  { background: linear-gradient(90deg, #f43f5e, #e11d48); }
+.fill-teal  { background: linear-gradient(90deg, #14b8a6, #0d9488); }
+
+/* Rubric Details Accordion */
+.rubric-details {
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+  margin-top: 6px;
+}
+.rubric-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+  user-select: none;
+}
+.rubric-summary::-webkit-details-marker {
+  display: none;
+}
+.rubric-summary:hover {
+  text-decoration: underline;
+}
+.rubric-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+.rubric-details[open] .rubric-arrow {
+  transform: rotate(180deg);
+}
+.rubric-content {
+  padding-top: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.rubric-signals {
+  background: var(--surface-2);
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  color: var(--text-dim);
+}
+.rubric-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.rubric-tier {
+  padding: 5px 9px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  font-size: 11.5px;
+}
+.rubric-tier.tier-high {
+  border-color: #059669;
+  background: rgba(5, 150, 105, 0.06);
+}
+.rubric-tier.tier-mid {
+  border-color: #d97706;
+  background: rgba(217, 119, 6, 0.06);
+}
+.rubric-tier.tier-low {
+  border-color: #e11d48;
+  background: rgba(225, 29, 72, 0.06);
+}
+.tier-tag {
+  font-weight: 750;
+  margin-right: 4px;
+}
+
+/* Confidence Diagnostic Card */
+.confidence-diagnostic-card {
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.confidence-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.confidence-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+}
+.confidence-score-badge {
+  text-align: right;
+  min-width: 65px;
+}
+.conf-score-num {
+  font-size: 22px;
+  font-weight: 850;
+  color: #0d9488;
+}
+.conf-score-denom {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.confidence-note {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+/* Methodology Modal */
+.methodology-modal-container {
+  max-width: 960px;
+}
+.methodology-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+}
+.methodology-header-content h2 {
+  margin: 4px 0 6px;
+  font-size: 24px;
+  font-weight: 850;
+  color: var(--text);
+}
+.methodology-header-content p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-dim);
+  max-width: 780px;
+}
+.methodology-scroll-body {
+  padding: 28px 32px 40px;
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+}
+.methodology-section {
+  margin-bottom: 36px;
+}
+.methodology-section:last-child {
+  margin-bottom: 0;
+}
+.methodology-section h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.methodology-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.methodology-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.methodology-card h4 {
+  font-size: 15px;
+  font-weight: 750;
+  margin: 0;
+  color: var(--text);
+}
+.methodology-card p {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+.methodology-rubric-mini {
+  background: var(--surface-2);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11.5px;
+}
+.methodology-rubric-mini strong {
+  color: var(--text);
+}
+
+/* Guardrail callout boxes */
+.guardrail-box {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.guardrail-box h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 750;
+  color: var(--text);
+}
+.guardrail-box p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+/* Theme overrides */
+body[data-theme='ops'] .dim-weight-badge {
+  color: #38ef7d;
+  background: rgba(56, 239, 125, 0.12);
+}
+body[data-theme='ops'] .formula-math {
+  color: #38ef7d;
+  background: rgba(0, 0, 0, 0.6);
+}
+body[data-theme='cyberpunk'] .dim-weight-badge {
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
+}
+body[data-theme='cyberpunk'] .formula-math {
+  color: #ff007f;
+  background: rgba(0, 0, 0, 0.6);
+}

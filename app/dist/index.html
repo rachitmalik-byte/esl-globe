@@ -24,6 +24,7 @@
         <button class="theme-btn" data-theme="ops" type="button" title="Tactical Military HUD">🪖 Call of Duty</button>
         <button class="theme-btn" data-theme="cyberpunk" type="button" title="Synthwave Neon Radar">⚡ Cyberpunk</button>
       </div>
+      <button id="methodologyHeaderBtn" class="btn btn-mini" type="button" title="View Scoring Methodology, Metric Definitions & Rubric">📊 Methodology & Terms</button>
       <button id="readModeHeaderBtn" class="btn btn-mini" type="button">📖 Read Mode</button>
       <button id="exportButton" class="btn btn-mini" type="button">Export Filtered JSON</button>
     </div>
@@ -197,6 +198,7 @@
             <div class="modal-nav-group">
               <button id="articlePrevBtn" class="btn-modal-nav" type="button">← Prev Market</button>
               <button id="articleNextBtn" class="btn-modal-nav" type="button">Next Market →</button>
+              <button id="articleMethodologyBtn" class="btn-modal-nav" type="button" title="View Scoring Rubric & Methodology">📊 Terms & Scoring Guide</button>
             </div>
             <button id="closeArticleBtn" class="btn-close-modal" type="button" aria-label="Close article">✕</button>
           </div>
@@ -213,6 +215,21 @@
           </div>
         </div>
         <div class="article-scroll-body" id="articleBody"></div>
+      </div>
+    </div>
+
+    <!-- Methodology & Scoring Glossary Modal -->
+    <div id="methodologyModal" class="article-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="article-modal-container methodology-modal-container">
+        <div class="methodology-modal-header">
+          <div class="methodology-header-content">
+            <span class="eyebrow">RESEARCH FRAMEWORK & RUBRIC</span>
+            <h2>Expansion Methodology & Terms Reference</h2>
+            <p>Definitions, mathematical weighting, 1–10 scoring rubrics, and commercial guardrails for ESL screening.</p>
+          </div>
+          <button id="closeMethodologyBtn" class="btn-close-modal" type="button" aria-label="Close methodology modal">✕</button>
+        </div>
+        <div class="article-scroll-body methodology-scroll-body" id="methodologyBody"></div>
       </div>
     </div>
   </main>

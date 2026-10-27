@@ -18,6 +18,100 @@ const RATING_LABELS = {
 
 const COMPARE_KEYS = ["demand", "paid_conversion", "distribution", "whitespace", "delivery", "feasibility"];
 
+const DIMENSION_META = {
+  demand: {
+    title: "Outcome Demand",
+    icon: "💼",
+    weight: "30% Weight",
+    weightNum: 0.30,
+    definition: "Urgent, career-critical necessity of professional spoken English for domestic employment, corporate promotion, MNC hiring, and IT/BPO outsourcing.",
+    metricsTracked: "BPO / tech outsourcing sector scale, MNC white-collar employment, bilingual hiring salary differentials (2–4× wage jump).",
+    rubric: {
+      high: "8–10: English directly unlocks 2–4× higher salaries or is mandatory for tech/BPO hiring. Severe career penalty for non-fluency.",
+      mid: "5–7: Valued in corporate management and multinational hubs, but large domestic economy operates in local language.",
+      low: "1–4: English is primarily academic or recreational with negligible immediate wage return in local job market."
+    }
+  },
+  paid_conversion: {
+    title: "Paid Conversion",
+    icon: "💳",
+    weight: "20% Weight",
+    weightNum: 0.20,
+    definition: "Capacity and demonstrated willingness to pay recurring monthly SaaS subscription fees ($15–$100+/mo) rather than relying exclusively on free ad-supported apps.",
+    metricsTracked: "Digital payment & credit card penetration, recurring subscription adoption (Netflix/Spotify/SaaS ARPU), disposable income per capita.",
+    rubric: {
+      high: "8–10: Established consumer subscription culture ($15–$100+/mo), high card penetration, corporate L&D subsidies readily accessible.",
+      mid: "5–7: Willing to pay for guaranteed outcomes or one-off exam prep ($5–$25), but high price sensitivity to recurring auto-renewals.",
+      low: "1–4: High tolerance for ads; default expectation of free digital content (YouTube/freemium apps); friction on recurring billing."
+    }
+  },
+  distribution: {
+    title: "Distribution / B2B Fit",
+    icon: "🏢",
+    weight: "20% Weight",
+    weightNum: 0.20,
+    definition: "Access to scalable institutional channels (enterprises, university placement cells, BPO academies) to acquire learners efficiently without high consumer ad CAC.",
+    metricsTracked: "Corporate training market maturity, BPO corporate training spend, university-to-corporate hiring pipelines.",
+    rubric: {
+      high: "8–10: Receptive enterprise L&D buyers, formal procurement channels, staffing agencies eager to co-finance upskilling.",
+      mid: "5–7: Semi-receptive corporate training market, but fragmented procurement cycles and relationship-heavy sales.",
+      low: "1–4: Atomized consumer-only market; minimal enterprise training spend; extreme dependence on Meta/Google paid social ads."
+    }
+  },
+  whitespace: {
+    title: "Whitespace Gap",
+    icon: "🧭",
+    weight: "15% Weight",
+    weightNum: 0.15,
+    definition: "Market room for a differentiated, role-specific spoken voice AI product against incumbents and direct substitutes.",
+    metricsTracked: "Voice AI competitor density, 1-on-1 human tutoring market share, offline cram school market structure.",
+    rubric: {
+      high: "8–10: Unserved voice AI greenfield; dominated by legacy grammar test crammers with no interactive spoken roleplay.",
+      mid: "5–7: Moderate competition from 1-on-1 human tutoring platforms (Cambly, NativeCamp), but voice AI roleplay remains differentiated.",
+      low: "1–4: Saturated red ocean with aggressive funded voice AI competitors (e.g. Speak, Elsa, Duolingo Max) heavily bidding on ads."
+    }
+  },
+  delivery: {
+    title: "Digital Delivery",
+    icon: "⚡",
+    weight: "10% Weight",
+    weightNum: 0.10,
+    definition: "Network and technological infrastructure quality for real-time, low-latency (<800ms) WebRTC voice interaction and seamless checkout.",
+    metricsTracked: "4G/5G mobile data coverage & reliability, WebRTC roundtrip latency, local instant payment rails (UPI, Pix, Apple Pay).",
+    rubric: {
+      high: "8–10: Ubiquitous high-speed 4G/5G, reliable <800ms WebRTC voice turnaround, seamless 1-click mobile checkout.",
+      mid: "5–7: Good connectivity in major metros, but occasional audio latency spikes or payment drop-offs in secondary cities.",
+      low: "1–4: High mobile data costs, spotty coverage outside capital, audio streaming lag, cumbersome payment checkout."
+    }
+  },
+  feasibility: {
+    title: "Operating Feasibility",
+    icon: "⚖️",
+    weight: "5% Weight",
+    weightNum: 0.05,
+    definition: "Practical ease of localizing voice recognition models, complying with local digital taxation, data sovereignty, and foreign remittances.",
+    metricsTracked: "Local accent acoustic diversity, data privacy/localization laws, cross-border remittance taxes, entity setup requirements.",
+    rubric: {
+      high: "8–10: Frictionless cross-border SaaS operation, standard card processing, standard English dialect models work out-of-the-box.",
+      mid: "5–7: Requires localized speech acoustic tuning (heavy L1 transfer / code-switching) or local digital services tax compliance.",
+      low: "1–4: Strict data localization (must host in-country), stringent foreign exchange controls, or mandatory local joint venture."
+    }
+  },
+  evidence_confidence: {
+    title: "Evidence Confidence",
+    icon: "🛡️",
+    weight: "Diagnostic Index",
+    weightNum: 0,
+    definition: "Empirical verification depth and citation quality backing this dossier (e.g. primary enterprise interviews, statutory filings, census data vs desk proxies).",
+    metricsTracked: "Independent primary citations, audited corporate filings, government labor statistics, multilateral reports.",
+    rubric: {
+      high: "8–10: Verified by primary corporate buyer interviews, statutory disclosures, and authoritative national economic data.",
+      mid: "5–7: Sourced from reputable secondary industry reports (EF EPI, Statista, global bank research) and cross-regional comparisons.",
+      low: "1–4: Inferred from regional proxies or preliminary desk assumptions. Requires field validation before committing capital."
+    }
+  }
+};
+
 const $ = id => document.getElementById(id);
 
 const state = {
@@ -78,12 +172,396 @@ function formatInline(str) {
   return s;
 }
 
-function parseMarkdownToHtml(md) {
+function renderScreeningScorecard(market) {
+  const ratings = market.ratings || {};
+  const fitScore = market.derived ? market.derived.launch_fit : 0;
+
+  let tierLabel = "Tier 3: Watchlist";
+  let tierClass = "tier-watchlist";
+  if (fitScore >= 7.5) {
+    tierLabel = "🟢 Tier 1: Priority Launch";
+    tierClass = "tier-priority";
+  } else if (fitScore >= 6.0) {
+    tierLabel = "🟡 Tier 2: Selective Expansion";
+    tierClass = "tier-selective";
+  }
+
+  const weightedKeys = ["demand", "paid_conversion", "distribution", "whitespace", "delivery", "feasibility"];
+
+  const cardsHtml = weightedKeys.map(k => {
+    const meta = DIMENSION_META[k];
+    const score = ratings[k] ?? 0;
+    const scoreColorClass = score >= 8 ? "score-high" : score >= 5 ? "score-mid" : "score-low";
+    const fillColorClass = score >= 8 ? "fill-green" : score >= 5 ? "fill-amber" : "fill-rose";
+
+    return `
+      <article class="dimension-scorecard-card">
+        <div class="scorecard-card-header">
+          <div class="scorecard-card-title-group">
+            <span class="dim-icon">${meta.icon}</span>
+            <div>
+              <div class="dim-title-row">
+                <h4 class="dim-title">${esc(meta.title)}</h4>
+                <span class="dim-weight-badge">${meta.weight}</span>
+              </div>
+              <p class="dim-definition">${esc(meta.definition)}</p>
+            </div>
+          </div>
+          <div class="scorecard-score-box">
+            <span class="score-number ${scoreColorClass}">${score}</span>
+            <span class="score-denom">/ 10</span>
+          </div>
+        </div>
+
+        <div class="score-bar-track">
+          <div class="score-bar-fill ${fillColorClass}" style="width: ${score * 10}%;"></div>
+        </div>
+
+        <details class="rubric-details">
+          <summary class="rubric-summary">
+            <span>📐 View Metric Signals & Scoring Rubric</span>
+            <span class="rubric-arrow">▾</span>
+          </summary>
+          <div class="rubric-content">
+            <div class="rubric-signals">
+              <strong>Metrics Evaluated:</strong> ${esc(meta.metricsTracked)}
+            </div>
+            <div class="rubric-tiers">
+              <div class="rubric-tier tier-high">
+                <span class="tier-tag">8–10 (High):</span>
+                <span>${esc(meta.rubric.high)}</span>
+              </div>
+              <div class="rubric-tier tier-mid">
+                <span class="tier-tag">5–7 (Moderate):</span>
+                <span>${esc(meta.rubric.mid)}</span>
+              </div>
+              <div class="rubric-tier tier-low">
+                <span class="tier-tag">1–4 (Low):</span>
+                <span>${esc(meta.rubric.low)}</span>
+              </div>
+            </div>
+          </div>
+        </details>
+      </article>
+    `;
+  }).join("");
+
+  const confScore = ratings.evidence_confidence ?? 0;
+  const confColorClass = confScore >= 8 ? "score-high" : confScore >= 5 ? "score-mid" : "score-low";
+  const confFillClass = confScore >= 8 ? "fill-teal" : confScore >= 5 ? "fill-amber" : "fill-rose";
+  const confMeta = DIMENSION_META.evidence_confidence;
+
+  return `
+    <div class="screening-section">
+      <div class="screening-section-header">
+        <div class="screening-header-text">
+          <span class="eyebrow">SCREENING ASSESSMENT SCORECARD</span>
+          <h3 class="screening-title">Strategic Launch Fit & Dimension Ratings</h3>
+          <p class="screening-desc">Evaluated across 6 weighted operational dimensions to determine expansion viability, plus 1 diagnostic evidence confidence index.</p>
+        </div>
+        <button class="btn btn-mini open-methodology-btn" type="button">📊 Methodology & Terms Guide</button>
+      </div>
+
+      <!-- Formula & Live Score Callout -->
+      <div class="formula-callout-card">
+        <div class="formula-topline">
+          <div>
+            <span class="formula-label">COMPOSITE LAUNCH FIT SCORE</span>
+            <div class="formula-score-big">${fitScore} <span class="formula-denom">/ 10</span></div>
+          </div>
+          <div class="formula-tier-badge ${tierClass}">${tierLabel}</div>
+        </div>
+        <div class="formula-equation">
+          <div class="formula-math-header">Mathematical Weighting Formula:</div>
+          <code class="formula-math">Fit = (0.30 × Demand) + (0.20 × Paid) + (0.20 × B2B) + (0.15 × Whitespace) + (0.10 × Delivery) + (0.05 × Feasibility)</code>
+          <div class="formula-calculation">
+            <strong>Substituted calculation for ${esc(market.country)}:</strong><br>
+            <code>(${ratings.demand ?? 0} × 0.30) + (${ratings.paid_conversion ?? 0} × 0.20) + (${ratings.distribution ?? 0} × 0.20) + (${ratings.whitespace ?? 0} × 0.15) + (${ratings.delivery ?? 0} × 0.10) + (${ratings.feasibility ?? 0} × 0.05) = <strong>${fitScore} / 10</strong></code>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 Weighted Dimension Scorecards -->
+      <div class="scorecards-grid">
+        ${cardsHtml}
+      </div>
+
+      <!-- Evidence Confidence Diagnostic Card -->
+      <div class="confidence-diagnostic-card">
+        <div class="confidence-topline">
+          <div class="confidence-info">
+            <span class="dim-icon">${confMeta.icon}</span>
+            <div>
+              <div class="dim-title-row">
+                <h4 class="dim-title">${esc(confMeta.title)} (Empirical Verification Rigor)</h4>
+                <span class="dim-weight-badge badge-diagnostic">${confMeta.weight}</span>
+              </div>
+              <p class="dim-definition">${esc(confMeta.definition)}</p>
+            </div>
+          </div>
+          <div class="confidence-score-badge">
+            <span class="score-number ${confColorClass}">${confScore}</span>
+            <span class="score-denom">/ 10</span>
+          </div>
+        </div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill ${confFillClass}" style="width: ${confScore * 10}%;"></div>
+        </div>
+        <details class="rubric-details">
+          <summary class="rubric-summary">
+            <span>📐 View Evidence Verification Benchmarks</span>
+            <span class="rubric-arrow">▾</span>
+          </summary>
+          <div class="rubric-content">
+            <div class="rubric-signals">
+              <strong>Metrics Evaluated:</strong> ${esc(confMeta.metricsTracked)}
+            </div>
+            <div class="rubric-tiers">
+              <div class="rubric-tier tier-high">
+                <span class="tier-tag">8–10 (High):</span>
+                <span>${esc(confMeta.rubric.high)}</span>
+              </div>
+              <div class="rubric-tier tier-mid">
+                <span class="tier-tag">5–7 (Moderate):</span>
+                <span>${esc(confMeta.rubric.mid)}</span>
+              </div>
+              <div class="rubric-tier tier-low">
+                <span class="tier-tag">1–4 (Low):</span>
+                <span>${esc(confMeta.rubric.low)}</span>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div class="confidence-note">
+          💡 <em>Analytical Guardrail:</em> Evidence Confidence is kept strictly separate from Launch Fit so high-potential markets with early-stage data are flagged for validation interviews rather than unfairly penalized.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderMethodologyContent() {
+  return `
+    <div class="methodology-section">
+      <span class="eyebrow">STRATEGIC PREMISE & THESIS</span>
+      <h3>🎯 Purpose: AI-First Spoken English with Teacher Escalation</h3>
+      <p>
+        The <strong>Global ESL Market Atlas</strong> screens 30 high-priority international markets to evaluate their suitability for launching an <strong>AI-first spoken-English learning platform with optional human mentor escalation</strong>.
+      </p>
+      <div class="guardrail-box">
+        <h4>⚠️ The Vanity Metric Trap: Downloads ≠ Willingness to Pay</h4>
+        <p>
+          Consumer language learning apps often report massive download volumes in emerging markets. However, high app store installs and poor national fluency do <strong>not</strong> prove consumer subscription willingness. Users in price-sensitive geographies frequently churn after free trials or rely exclusively on ad-supported freemium tiers. This Atlas evaluates commercial monetization reality, not vanity engagement.
+        </p>
+      </div>
+      <p>
+        <strong>Why Spoken English?</strong> Fluency and confidence in professional settings (interviews, MNC client meetings, engineering standups) cannot be acquired through passive multiple-choice quizzes (Duolingo style) or rote grammar translation. Our model leverages voice AI to handle 85%+ of situational roleplay, accent tuning, and fluency drills at near-zero marginal cost, while reserving live human mentors for high-stakes interview prep and executive escalations.
+      </p>
+    </div>
+
+    <div class="methodology-section">
+      <span class="eyebrow">MATHEMATICAL MODEL</span>
+      <h3>📐 Composite Launch Fit Formula & Strategic Tiers</h3>
+      <p>
+        Every market is scored from <strong>1 to 10</strong> across six weighted operational dimensions. The Composite Launch Fit score synthesizes economic necessity, purchasing power, and channel scalability:
+      </p>
+      <div class="formula-equation" style="margin: 16px 0;">
+        <code class="formula-math">Composite Launch Fit = (0.30 × Demand) + (0.20 × Paid Conversion) + (0.20 × Distribution) + (0.15 × Whitespace) + (0.10 × Delivery) + (0.05 × Feasibility)</code>
+      </div>
+      <div class="methodology-grid">
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>🟢 Tier 1: Priority Launch</h4>
+            <span class="formula-tier-badge tier-priority">Score ≥ 7.5</span>
+          </div>
+          <p>Exceptional convergence of urgent job-driven need, established subscription buying power, and viable B2B distribution rails. Immediate priority for market entry, localized pilots, and GTM spend.</p>
+        </div>
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>🟡 Tier 2: Selective Expansion</h4>
+            <span class="formula-tier-badge tier-selective">Score 6.0 – 7.4</span>
+          </div>
+          <p>Strong underlying demand but gated by specific operational hurdles (e.g., lower D2C price tolerance, intense local competitors, or need for localized voice acoustic tuning). Best approached via corporate partnerships.</p>
+        </div>
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>⚪ Tier 3: Watchlist / Opportunistic</h4>
+            <span class="formula-tier-badge tier-watchlist">Score &lt; 6.0</span>
+          </div>
+          <p>Unfavorable commercial unit economics: prohibitive consumer acquisition CAC, high digital payment friction, or strict foreign exchange / digital services tax penalties. Monitored for regulatory inflection points.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="methodology-section">
+      <span class="eyebrow">METRIC GLOSSARY & RUBRIC</span>
+      <h3>📊 The 7 Evaluation Dimensions & Scoring Criteria</h3>
+      <p>
+        Ratings are assigned by research analysts utilizing public verified datasets, corporate financial disclosures, and primary enterprise interviews.
+      </p>
+      <div class="methodology-grid">
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>💼 Outcome Demand</h4>
+            <span class="dim-weight-badge">30% Weight</span>
+          </div>
+          <p><strong>Definition:</strong> Urgent economic necessity of professional spoken English for job placement, corporate promotions, MNC hiring, and IT/BPO outsourcing.</p>
+          <div class="methodology-rubric-mini">
+            <strong>Rubric:</strong><br>
+            • <strong>8–10:</strong> Mandatory for hiring; unlocks 2–4× wage jump.<br>
+            • <strong>5–7:</strong> Career advantage in MNCs; local language still dominates.<br>
+            • <strong>1–4:</strong> Purely academic or recreational; negligible wage lift.<br>
+            <strong>Signals:</strong> BPO headcount, multinational hiring, bilingual wage differentials.
+          </div>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>💳 Paid Conversion</h4>
+            <span class="dim-weight-badge">20% Weight</span>
+          </div>
+          <p><strong>Definition:</strong> Proven consumer and enterprise willingness to pay recurring monthly subscription fees ($15–$100+/mo) rather than relying on free ad-supported apps.</p>
+          <div class="methodology-rubric-mini">
+            <strong>Rubric:</strong><br>
+            • <strong>8–10:</strong> Routine SaaS subscription habit; high credit card penetration.<br>
+            • <strong>5–7:</strong> Willing to pay one-time fees ($5–$25); churn risk on auto-renewal.<br>
+            • <strong>1–4:</strong> Default expectation of free learning; pirated/YouTube materials.<br>
+            <strong>Signals:</strong> EdTech ARPU benchmarks, digital payment adoption, disposable income.
+          </div>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>🏢 Distribution / B2B Fit</h4>
+            <span class="dim-weight-badge">20% Weight</span>
+          </div>
+          <p><strong>Definition:</strong> Access to scalable institutional channels (enterprises, universities, placement agencies) to bypass high consumer ad CAC.</p>
+          <div class="methodology-rubric-mini">
+            <strong>Rubric:</strong><br>
+            • <strong>8–10:</strong> Centralized enterprise L&D budgets, university placement partnerships.<br>
+            • <strong>5–7:</strong> Fragmented corporate training; long relationship-driven sales.<br>
+            • <strong>1–4:</strong> Atomized consumer-only market; pure reliance on Meta/Google ads.<br>
+            <strong>Signals:</strong> Corporate L&D spend, corporate English mandates, university-to-job pipelines.
+          </div>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>🧭 Whitespace Gap</h4>
+            <span class="dim-weight-badge">15% Weight</span>
+          </div>
+          <p><strong>Definition:</strong> Room for an AI-first spoken English product without competing in an oversaturated red ocean against aggressive incumbents.</p>
+          <div class="methodology-rubric-mini">
+            <strong>Rubric:</strong><br>
+            • <strong>8–10:</strong> Greenfield; incumbents only offer passive text/cram school prep.<br>
+            • <strong>5–7:</strong> Human 1-on-1 tutoring exists; voice AI roleplay remains open.<br>
+            • <strong>1–4:</strong> Saturated by heavily funded voice AI apps (Speak, Elsa, Duolingo Max).<br>
+            <strong>Signals:</strong> Voice AI app store rankings, tutoring density, cram school penetration.
+          </div>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>⚡ Digital Delivery</h4>
+            <span class="dim-weight-badge">10% Weight</span>
+          </div>
+          <p><strong>Definition:</strong> Mobile network speed and stability for sub-800ms WebRTC voice AI streaming and friction-free mobile checkout.</p>
+          <div class="methodology-rubric-mini">
+            <strong>Rubric:</strong><br>
+            • <strong>8–10:</strong> Ubiquitous 4G/5G, sub-800ms voice turnaround, 1-click mobile payments.<br>
+            • <strong>5–7:</strong> Metro connectivity is strong; occasional latency in Tier 2/3 cities.<br>
+            • <strong>1–4:</strong> High data costs, frequent packet loss, severe checkout drop-offs.<br>
+            <strong>Signals:</strong> Median mobile broadband speeds, WebRTC latency, instant payment rails.
+          </div>
+        </div>
+
+        <div class="methodology-card">
+          <div class="methodology-card-header">
+            <h4>⚖️ Operating Feasibility</h4>
+            <span class="dim-weight-badge">5% Weight</span>
+          </div>
+          <p><strong>Definition:</strong> Practical ease of speech recognition localization (accent tuning), data privacy compliance, foreign remittances, and corporate taxation.</p>
+          <div class="methodology-rubric-mini">
+            <strong>Rubric:</strong><br>
+            • <strong>8–10:</strong> Frictionless cross-border SaaS operation, standard English ASR models.<br>
+            • <strong>5–7:</strong> Requires local speech acoustic tuning or local digital services tax.<br>
+            • <strong>1–4:</strong> Strict data localization laws, mandatory local entity, currency controls.<br>
+            <strong>Signals:</strong> Ease of doing business, digital services tax (DST), ASR phonetic transfer.
+          </div>
+        </div>
+
+        <div class="methodology-card" style="grid-column: 1 / -1; border-style: dashed;">
+          <div class="methodology-card-header">
+            <h4>🛡️ Evidence Confidence (Diagnostic Index)</h4>
+            <span class="dim-weight-badge badge-diagnostic">Diagnostic (Not Weighted in Fit)</span>
+          </div>
+          <p><strong>Definition:</strong> Empirical verification rigor and citation coverage backing this country's market dossier. Kept independent from Launch Fit to avoid conflating data availability with market potential.</p>
+          <div class="methodology-rubric-mini">
+            <strong>Rubric:</strong><br>
+            • <strong>8–10:</strong> Verified by primary corporate buyer interviews, audited financial disclosures, and official national census data.<br>
+            • <strong>5–7:</strong> Sourced from reputable secondary industry research (EF EPI, World Bank, Statista, local trade body reports).<br>
+            • <strong>1–4:</strong> Extrapolated from regional proxies or preliminary desk assumptions. Requires field validation before capital allocation.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="methodology-section">
+      <span class="eyebrow">DATA INTEGRITY & GUARDRAILS</span>
+      <h3>🛡️ Critical Research Guardrails</h3>
+      <div class="guardrail-box">
+        <h4>1. Why EF EPI is NOT National English Fluency</h4>
+        <p>
+          The <strong>EF English Proficiency Index (EF EPI)</strong> is an unrepresentative, self-selected internet test taken by individuals who choose to take an online test. It does <strong>not</strong> measure true national workforce fluency or commercial market size. In fact, countries with low EF EPI scores (e.g., India, Japan, Mexico) often represent the <em>highest</em> commercial demand because working professionals urgently need spoken English to qualify for multinational careers.
+        </p>
+      </div>
+      <div class="guardrail-box">
+        <h4>2. Strict Zero-Hallucination Policy on Competitor CAC & Conversion</h4>
+        <p>
+          Competitor customer acquisition cost (CAC), LTV/CAC ratios, and app conversion rates are closely guarded proprietary data. This Atlas adheres to a strict policy: <strong>we do not invent or hallucinate private competitor metrics</strong>. Where public first-party evidence is absent, we explicitly state that the metric is unobserved and evaluate proxy willingness-to-pay signals instead.
+        </p>
+      </div>
+      <div class="guardrail-box">
+        <h4>3. B2B / Institutional Channel Insulation</h4>
+        <p>
+          Consumer digital ad auctions on Meta and Google have become prohibitively expensive for language apps, with Blended CACs often exceeding $60–$120 in competitive markets. By prioritizing B2B corporate training contracts and university placement partnerships, expansion capital is preserved and customer retention is reinforced by employer mandates.
+        </p>
+      </div>
+    </div>
+  `;
+}
+
+function openMethodologyModal() {
+  const body = $("methodologyBody");
+  if (body && !body.innerHTML.trim()) {
+    body.innerHTML = renderMethodologyContent();
+  }
+  const modal = $("methodologyModal");
+  if (modal) {
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeMethodologyModal() {
+  const modal = $("methodologyModal");
+  if (modal) {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    if (!$("articleModal").classList.contains("open")) {
+      document.body.style.overflow = "";
+    }
+  }
+}
+
+function parseMarkdownToHtml(md, market) {
   if (!md) return "<p>Detailed executive dossier not found for this market.</p>";
   const lines = md.split("\n");
   let html = "";
   let inList = false;
   let inTable = false;
+  let inScreeningSection = false;
 
   for (let line of lines) {
     line = line.trim();
@@ -92,6 +570,26 @@ function parseMarkdownToHtml(md) {
       if (inTable) { html += "</tbody></table>"; inTable = false; }
       continue;
     }
+
+    if (line.toLowerCase().startsWith("## screening assessment")) {
+      if (inList) { html += inList === "ol" ? "</ol>" : "</ul>"; inList = false; }
+      if (inTable) { html += "</tbody></table>"; inTable = false; }
+      if (market) {
+        html += renderScreeningScorecard(market);
+        inScreeningSection = true;
+        continue;
+      }
+    }
+
+    if (inScreeningSection) {
+      if (line.startsWith("#")) {
+        inScreeningSection = false;
+      } else {
+        // Skip raw markdown table & boilerplate since scorecard rendered everything with full context
+        continue;
+      }
+    }
+
     if (line.startsWith("# ")) { html += `<h2>${formatInline(line.slice(2))}</h2>`; continue; }
     if (line.startsWith("## ")) { html += `<h2>${formatInline(line.slice(3))}</h2>`; continue; }
     if (line.startsWith("### ")) { html += `<h3>${formatInline(line.slice(4))}</h3>`; continue; }
@@ -140,7 +638,7 @@ function openArticle(iso) {
   $("articleFitBadge").textContent = `Launch Fit: ${market.derived.launch_fit} / 10`;
   $("articleEfBadge").textContent = `EF EPI 2025: ${market.ef_2025}`;
 
-  $("articleBody").innerHTML = parseMarkdownToHtml(market.dossier_markdown);
+  $("articleBody").innerHTML = parseMarkdownToHtml(market.dossier_markdown, market);
 
   $("articleModal").classList.add("open");
   $("articleModal").setAttribute("aria-hidden", "false");
@@ -280,8 +778,10 @@ function renderDetail() {
   const dimensionRows = COMPARE_KEYS.map(k => {
     const val = market.ratings[k];
     const pct = val * 10;
+    const meta = DIMENSION_META[k];
+    const tip = meta ? `${meta.title} (${meta.weight}): ${meta.definition}` : "";
     return `
-      <div class="dimension-row">
+      <div class="dimension-row" title="${esc(tip)}" style="cursor:help;">
         <span class="dim-label">${esc(RATING_LABELS[k])}</span>
         <div class="dim-track"><div class="dim-fill" style="width: ${pct}%;"></div></div>
         <span class="dim-val">${val}</span>
@@ -316,10 +816,13 @@ function renderDetail() {
 
     <!-- 6 Assessment Dimensions -->
     <div class="info-block">
-      <h4>Evaluation Dimensions</h4>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h4 style="margin:0;">Evaluation Dimensions</h4>
+        <button class="btn btn-mini open-methodology-btn" type="button" style="font-size:11px;padding:2px 8px;">📊 Scoring Rubric</button>
+      </div>
       <div class="detail-dimensions">
         ${dimensionRows}
-        <div class="dimension-row" style="margin-top:4px;">
+        <div class="dimension-row" style="margin-top:4px;cursor:help;" title="${esc(DIMENSION_META.evidence_confidence.definition)}">
           <span class="dim-label">🛡️ Evidence Conf.</span>
           <div class="dim-track"><div class="dim-fill" style="width: ${market.ratings.evidence_confidence * 10}%; background: var(--accent-2);"></div></div>
           <span class="dim-val">${market.ratings.evidence_confidence}</span>
@@ -581,9 +1084,34 @@ function setupEvents() {
   $("articleModal").addEventListener("click", e => {
     if (e.target === $("articleModal")) closeArticle();
   });
+
+  // Methodology & Terms Modal Navigation
+  $("methodologyHeaderBtn").addEventListener("click", openMethodologyModal);
+  if ($("articleMethodologyBtn")) {
+    $("articleMethodologyBtn").addEventListener("click", openMethodologyModal);
+  }
+  $("closeMethodologyBtn").addEventListener("click", closeMethodologyModal);
+  $("methodologyModal").addEventListener("click", e => {
+    if (e.target === $("methodologyModal")) closeMethodologyModal();
+  });
+
+  // Delegated handler for any ".open-methodology-btn" buttons inside articles or panels
+  document.addEventListener("click", e => {
+    const btn = e.target.closest(".open-methodology-btn");
+    if (btn) {
+      e.preventDefault();
+      openMethodologyModal();
+    }
+  });
+
+  // Global ESC key handling for modals
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && $("articleModal").classList.contains("open")) {
-      closeArticle();
+    if (e.key === "Escape") {
+      if ($("methodologyModal") && $("methodologyModal").classList.contains("open")) {
+        closeMethodologyModal();
+      } else if ($("articleModal") && $("articleModal").classList.contains("open")) {
+        closeArticle();
+      }
     }
   });
 
