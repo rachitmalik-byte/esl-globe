@@ -25,6 +25,7 @@
         <button class="theme-btn" data-theme="cyberpunk" type="button" title="Synthwave Neon Radar">⚡ Cyberpunk</button>
       </div>
       <button id="methodologyHeaderBtn" class="btn btn-mini" type="button" title="View Scoring Methodology, Metric Definitions & Rubric">📊 Methodology & Terms</button>
+      <button id="openAiHeaderBtn" class="btn btn-mini btn-ai-sparkle" type="button" title="Ask AI Market Copilot">✨ Ask AI</button>
       <button id="readModeHeaderBtn" class="btn btn-mini" type="button">📖 Read Mode</button>
       <button id="exportButton" class="btn btn-mini" type="button">Export Filtered JSON</button>
     </div>
@@ -199,6 +200,7 @@
               <button id="articlePrevBtn" class="btn-modal-nav" type="button">← Prev Market</button>
               <button id="articleNextBtn" class="btn-modal-nav" type="button">Next Market →</button>
               <button id="articleMethodologyBtn" class="btn-modal-nav" type="button" title="View Scoring Rubric & Methodology">📊 Terms & Scoring Guide</button>
+              <button id="articleAskAiBtn" class="btn-modal-nav btn-ai-sparkle" type="button" title="Ask AI about this market">✨ Ask AI</button>
             </div>
             <button id="closeArticleBtn" class="btn-close-modal" type="button" aria-label="Close article">✕</button>
           </div>
@@ -232,6 +234,69 @@
         <div class="article-scroll-body methodology-scroll-body" id="methodologyBody"></div>
       </div>
     </div>
+
+    <!-- Floating AI Copilot Trigger Button -->
+    <button id="aiLauncherBtn" class="ai-floating-trigger" type="button" aria-label="Open Atlas AI Market Copilot">
+      <span class="ai-sparkle-icon">✨</span>
+      <span class="ai-trigger-label">Ask Atlas AI</span>
+      <span id="aiTriggerContextBadge" class="ai-trigger-context">IND</span>
+    </button>
+
+    <!-- Floating AI Chat Popup Widget -->
+    <aside id="aiChatWidget" class="ai-chat-widget" role="dialog" aria-modal="false" aria-hidden="true" hidden>
+      <header class="ai-chat-header">
+        <div class="ai-header-brand">
+          <div class="ai-avatar">✨</div>
+          <div>
+            <div class="ai-title-row">
+              <h3>Atlas AI Copilot</h3>
+              <span class="ai-status-dot" title="Gemini 2.5 Flash Online"></span>
+            </div>
+            <p class="ai-subtitle">Grounded in 30 markets · Gemini 2.5 Flash</p>
+          </div>
+        </div>
+        <div class="ai-header-actions">
+          <button id="aiClearHistoryBtn" class="ai-header-btn" type="button" title="Clear chat history">🗑️</button>
+          <button id="aiCloseBtn" class="ai-header-btn" type="button" aria-label="Close AI chat">✕</button>
+        </div>
+      </header>
+
+      <!-- Active Context Bar -->
+      <div class="ai-context-bar">
+        <div class="ai-context-indicator">
+          <span style="font-size:12px;color:var(--muted)">📍 Context:</span>
+          <span id="aiActiveContextPill" class="ai-context-pill">India (IND)</span>
+        </div>
+        <button id="aiToggleContextBtn" class="ai-context-switch-btn" type="button">Switch to Global</button>
+      </div>
+
+      <!-- Messages Body -->
+      <div id="aiChatMessages" class="ai-messages-container"></div>
+
+      <!-- Typing Indicator -->
+      <div id="aiTypingIndicator" class="ai-typing-indicator" hidden>
+        <span class="ai-typing-dot"></span>
+        <span class="ai-typing-dot"></span>
+        <span class="ai-typing-dot"></span>
+        <span style="font-size:11px;color:var(--muted);margin-left:4px;">Analyzing evidence pack...</span>
+      </div>
+
+      <!-- Contextual Quick Chips -->
+      <div id="aiQuickChips" class="ai-quick-chips"></div>
+
+      <!-- Input Footer -->
+      <footer class="ai-chat-footer">
+        <form id="aiChatForm" class="ai-input-form">
+          <textarea id="aiChatInput" placeholder="Ask about Launch Fit, B2B routes, risks, or compare..." rows="1" autocomplete="off"></textarea>
+          <button id="aiSendBtn" class="ai-send-btn" type="submit" aria-label="Send message">
+            <span>➤</span>
+          </button>
+        </form>
+        <div class="ai-disclaimer">
+          Responses grounded in 30 sourced market dossiers and scoring rubric.
+        </div>
+      </footer>
+    </aside>
   </main>
 
   <footer>

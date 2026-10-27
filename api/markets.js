@@ -5,9 +5,19 @@ let cachedData = null;
 
 async function getData() {
   if (cachedData) return cachedData;
-  const filePath = path.join(process.cwd(), 'app', 'dist', 'market-data.json');
-  cachedData = JSON.parse(await readFile(filePath, 'utf8'));
-  return cachedData;
+  const candidates = [
+    new URL('../app/dist/market-data.json', import.meta.url),
+    path.join(process.cwd(), 'app', 'dist', 'market-data.json'),
+    path.join(process.cwd(), 'dist', 'market-data.json'),
+    path.join(process.cwd(), 'market-data.json')
+  ];
+  for (const candidate of candidates) {
+    try {
+      cachedData = JSON.parse(await readFile(candidate, 'utf8'));
+      return cachedData;
+    } catch (e) {}
+  }
+  throw new Error('Unable to find market-data.json in any expected location');
 }
 
 export default async function handler(req, res) {

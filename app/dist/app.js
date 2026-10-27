@@ -860,15 +860,21 @@ function renderDetail() {
         📥 Export (.json)
       </button>
     </div>
-    <button id="openArticleBtn" class="btn btn-primary" style="width:100%;margin-top:8px;" type="button">
-      📖 Read Full Market Dossier & Blueprint
-    </button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+      <button id="detailAskAiBtn" class="btn btn-ai-sparkle" type="button" title="Ask AI Copilot about ${esc(market.country)}">
+        ✨ Ask AI Copilot
+      </button>
+      <button id="openArticleBtn" class="btn btn-primary" type="button">
+        📖 Read Dossier
+      </button>
+    </div>
   `;
 
   $("emptyDetail").hidden = true;
   $("marketDetail").hidden = false;
 
   $("openArticleBtn").addEventListener("click", () => openArticle(market.iso3));
+  $("detailAskAiBtn").addEventListener("click", () => openAiChat(market.iso3));
   $("compareBtn").addEventListener("click", () => toggleCompare(market.iso3));
   $("exportCountryBtn").addEventListener("click", () => {
     download(`esl-market-${market.iso3.toLowerCase()}.json`, JSON.stringify(market, null, 2), "application/json");
@@ -1003,6 +1009,12 @@ function selectMarket(iso, scroll = false) {
   renderMap();
   renderDetail();
   renderTable();
+  if (typeof updateAiContextDisplay === "function") {
+    if (aiState.contextCountry !== null) {
+      aiState.contextCountry = iso;
+    }
+    updateAiContextDisplay();
+  }
   if (scroll) {
     $("detailPanel").scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
@@ -1107,10 +1119,74 @@ function setupEvents() {
   // Global ESC key handling for modals
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") {
-      if ($("methodologyModal") && $("methodologyModal").classList.contains("open")) {
+      if (aiState.isOpen) {
+        closeAiChat();
+      } else if ($("methodologyModal") && $("methodologyModal").classList.contains("open")) {
         closeMethodologyModal();
       } else if ($("articleModal") && $("articleModal").classList.contains("open")) {
         closeArticle();
+      }
+    }
+  });
+
+  // AI Copilot Integration
+  if ($("openAiHeaderBtn")) {
+    $("openAiHeaderBtn").addEventListener("click", () => toggleAiChat());
+  }
+  if ($("aiLauncherBtn")) {
+    $("aiLauncherBtn").addEventListener("click", () => toggleAiChat());
+  }
+  if ($("aiCloseBtn")) {
+    $("aiCloseBtn").addEventListener("click", () => closeAiChat());
+  }
+  if ($("articleAskAiBtn")) {
+    $("articleAskAiBtn").addEventListener("click", () => openAiChat(state.selected));
+  }
+  if ($("aiToggleContextBtn")) {
+    $("aiToggleContextBtn").addEventListener("click", () => {
+      aiState.contextCountry = aiState.contextCountry ? null : state.selected;
+      updateAiContextDisplay();
+      renderAiMessages();
+    });
+  }
+  if ($("aiClearHistoryBtn")) {
+    $("aiClearHistoryBtn").addEventListener("click", () => {
+      aiState.history = [];
+      renderAiMessages();
+    });
+  }
+  if ($("aiChatForm")) {
+    $("aiChatForm").addEventListener("submit", e => {
+      e.preventDefault();
+      sendAiMessage();
+    });
+  }
+  if ($("aiChatInput")) {
+    $("aiChatInput").addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendAiMessage();
+      }
+    });
+  }
+
+  // Delegated clicks for AI prompt chips and copy buttons
+  document.addEventListener("click", e => {
+    const promptBtn = e.target.closest(".ai-prompt-chip, .ai-mini-chip");
+    if (promptBtn && promptBtn.dataset.prompt) {
+      e.preventDefault();
+      sendAiMessage(promptBtn.dataset.prompt);
+      return;
+    }
+    const copyBtn = e.target.closest(".ai-copy-btn");
+    if (copyBtn) {
+      const idx = Number(copyBtn.dataset.copyIdx);
+      const msg = aiState.history[idx];
+      if (msg) {
+        navigator.clipboard.writeText(msg.content).then(() => {
+          copyBtn.textContent = "✓ Copied!";
+          setTimeout(() => { copyBtn.textContent = "📋 Copy"; }, 2000);
+        });
       }
     }
   });
@@ -1145,6 +1221,288 @@ function download(filename, content, type) {
   link.download = filename;
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* =====================================================
+   Atlas AI Copilot Client Implementation
+   ===================================================== */
+const GEMINI_CLIENT_KEY = window.GEMINI_API_KEY || localStorage.getItem("GEMINI_API_KEY") || "";
+
+const aiState = {
+  isOpen: false,
+  contextCountry: "IND",
+  history: [],
+  isGenerating: false
+};
+
+function formatAiMarkdown(text) {
+  if (!text) return "";
+  let s = esc(text);
+  s = s.replace(/```([a-z]*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+  s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  s = s.replace(/^[-*•]\s+(.+)$/gm, '<li>$1</li>');
+  s = s.replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>');
+  s = s.replace(/<\/ul>\s*<ul>/g, '');
+  s = s.replace(/^\d+\.\s+(.+)$/gm, '<ol-item>$1</ol-item>');
+  s = s.replace(/(<ol-item>[\s\S]*?<\/ol-item>)/g, '<ol>$1</ol>');
+  s = s.replace(/<ol-item>/g, '<li>').replace(/<\/ol-item>/g, '</li>');
+  s = s.replace(/<\/ol>\s*<ol>/g, '');
+  const paragraphs = s.split(/\n\n+/).map(p => {
+    p = p.trim();
+    if (!p) return "";
+    if (p.startsWith("<ul") || p.startsWith("<ol") || p.startsWith("<pre")) return p;
+    return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+  }).filter(Boolean);
+
+  return paragraphs.join("");
+}
+
+function updateAiContextDisplay() {
+  const badge = $("aiTriggerContextBadge");
+  const pill = $("aiActiveContextPill");
+  const toggleBtn = $("aiToggleContextBtn");
+  const chips = $("aiQuickChips");
+
+  if (!badge || !pill) return;
+
+  if (aiState.contextCountry) {
+    const market = markets ? markets.find(m => m.iso3 === aiState.contextCountry) : null;
+    const countryName = market ? market.country : aiState.contextCountry;
+    badge.textContent = aiState.contextCountry;
+    pill.textContent = `${flag(aiState.contextCountry)} ${countryName} (${aiState.contextCountry})`;
+    if (toggleBtn) toggleBtn.textContent = "Switch to Global";
+
+    if (chips) {
+      chips.innerHTML = `
+        <button class="ai-mini-chip" type="button" data-prompt="What is ${countryName}'s Launch Fit score and why?">🎯 Launch Fit</button>
+        <button class="ai-mini-chip" type="button" data-prompt="Explain ${countryName}'s likely payer reality and willingness to pay.">💳 Buyer Reality</button>
+        <button class="ai-mini-chip" type="button" data-prompt="What are the biggest distribution channels and risks for ${countryName}?">🏢 B2B & Risks</button>
+        <button class="ai-mini-chip" type="button" data-prompt="Compare ${countryName} with Japan and Mexico.">⚖️ Compare</button>
+      `;
+    }
+  } else {
+    badge.textContent = "ALL";
+    pill.textContent = "🌐 Global Universe (All 30 Markets)";
+    if (toggleBtn) toggleBtn.textContent = `Focus on ${state.selected}`;
+
+    if (chips) {
+      chips.innerHTML = `
+        <button class="ai-mini-chip" type="button" data-prompt="Which markets are Tier 1 Priority Launch candidates?">🏆 Top Markets</button>
+        <button class="ai-mini-chip" type="button" data-prompt="Explain the difference between Demand and Paid Conversion with examples.">📊 Demand vs Paid</button>
+        <button class="ai-mini-chip" type="button" data-prompt="Why is EF EPI separated from market demand in this Atlas?">🛡️ EF EPI Caveat</button>
+        <button class="ai-mini-chip" type="button" data-prompt="Compare Latin America vs Southeast Asia expansion readiness.">🌎 Regional Comparison</button>
+      `;
+    }
+  }
+}
+
+function renderAiMessages() {
+  const container = $("aiChatMessages");
+  if (!container) return;
+
+  if (aiState.history.length === 0) {
+    const activeMarket = markets ? markets.find(m => m.iso3 === aiState.contextCountry) : null;
+    const countryName = activeMarket ? activeMarket.country : "India";
+    container.innerHTML = `
+      <div class="ai-welcome-card">
+        <h4>✨ Welcome to Atlas AI Copilot</h4>
+        <p>I am your dedicated research assistant, grounded in 30 sourced market dossiers and analytical scoring rubrics. Ask me anything about expansion priorities, buyer realities, or metric calculations.</p>
+        <div class="ai-sample-prompts">
+          <button class="ai-prompt-chip" type="button" data-prompt="Why is Japan ranked #1 in Launch Fit while India is 6.7?">
+            <span>🎯</span> <span>Why is Japan ranked #1 in Launch Fit while India is 6.7?</span>
+          </button>
+          <button class="ai-prompt-chip" type="button" data-prompt="What is the recommended B2B strategy for ${countryName}?">
+            <span>💼</span> <span>What is the recommended B2B strategy for ${countryName}?</span>
+          </button>
+          <button class="ai-prompt-chip" type="button" data-prompt="Which markets have high Outcome Demand but low Paid Conversion?">
+            <span>💰</span> <span>Which markets have high Outcome Demand but low Paid Conversion?</span>
+          </button>
+          <button class="ai-prompt-chip" type="button" data-prompt="Explain the 6 weighted evaluation dimensions and Launch Fit formula.">
+            <span>📐</span> <span>Explain the 6 weighted evaluation dimensions and Launch Fit formula.</span>
+          </button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = aiState.history.map((msg, idx) => {
+    const isUser = msg.role === "user";
+    const formattedContent = isUser ? `<p>${esc(msg.content)}</p>` : formatAiMarkdown(msg.content);
+    const copyButton = !isUser ? `
+      <div class="ai-bubble-footer">
+        <button class="ai-copy-btn" data-copy-idx="${idx}" type="button" title="Copy response">📋 Copy</button>
+      </div>` : "";
+
+    return `
+      <div class="ai-message ${isUser ? 'user' : 'assistant'}">
+        <div class="ai-bubble">
+          ${formattedContent}
+          ${copyButton}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  container.scrollTop = container.scrollHeight;
+}
+
+function openAiChat(contextIso) {
+  if (contextIso) {
+    aiState.contextCountry = contextIso;
+  } else if (!aiState.contextCountry && state.selected) {
+    aiState.contextCountry = state.selected;
+  }
+
+  aiState.isOpen = true;
+  const widget = $("aiChatWidget");
+  if (widget) {
+    widget.hidden = false;
+    updateAiContextDisplay();
+    renderAiMessages();
+    setTimeout(() => {
+      const input = $("aiChatInput");
+      if (input) input.focus();
+    }, 100);
+  }
+}
+
+function closeAiChat() {
+  aiState.isOpen = false;
+  const widget = $("aiChatWidget");
+  if (widget) widget.hidden = true;
+}
+
+function toggleAiChat(contextIso) {
+  if (aiState.isOpen && (!contextIso || contextIso === aiState.contextCountry)) {
+    closeAiChat();
+  } else {
+    openAiChat(contextIso);
+  }
+}
+
+async function sendAiMessage(promptText) {
+  const text = (promptText || ($("aiChatInput") ? $("aiChatInput").value : "") || "").trim();
+  if (!text || aiState.isGenerating) return;
+
+  aiState.history.push({ role: "user", content: text });
+  aiState.isGenerating = true;
+
+  const input = $("aiChatInput");
+  const sendBtn = $("aiSendBtn");
+  const indicator = $("aiTypingIndicator");
+
+  if (input) input.value = "";
+  if (sendBtn) sendBtn.disabled = true;
+  if (indicator) indicator.hidden = false;
+
+  renderAiMessages();
+
+  try {
+    let reply = "";
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: text,
+          history: aiState.history.slice(0, -1),
+          contextCountry: aiState.contextCountry
+        })
+      });
+      if (res.ok) {
+        const json = await res.json();
+        reply = json.reply;
+      }
+    } catch (serverErr) {
+      console.warn("Local /api/chat unreachable, falling back to direct client Gemini API call", serverErr);
+    }
+
+    if (!reply) {
+      reply = await callGeminiDirect(text, aiState.history.slice(0, -1), aiState.contextCountry);
+    }
+
+    aiState.history.push({ role: "assistant", content: reply });
+  } catch (err) {
+    aiState.history.push({
+      role: "assistant",
+      content: `⚠️ **Unable to complete request:** ${err.message || "Failed to reach Gemini API"}. Please check your connection or try again.`
+    });
+  } finally {
+    aiState.isGenerating = false;
+    if (sendBtn) sendBtn.disabled = false;
+    if (indicator) indicator.hidden = true;
+    renderAiMessages();
+    if (input) input.focus();
+  }
+}
+
+async function callGeminiDirect(message, history, contextCountry) {
+  const summary = (markets || []).map(m => {
+    const tier = m.derived.launch_fit >= 7.5 ? 'Tier 1 Priority' : m.derived.launch_fit >= 6.0 ? 'Tier 2 Selective' : 'Tier 3 Watchlist';
+    return `${m.country} (${m.iso3}): Launch Fit=${m.derived.launch_fit}/10 [${tier}], Cluster=${m.cluster}, Status=${m.status}, EF EPI 2025=${m.ef_2025}, Ratings: [Demand:${m.ratings.demand}/10, Paid:${m.ratings.paid_conversion}/10, B2B:${m.ratings.distribution}/10, Whitespace:${m.ratings.whitespace}/10, Delivery:${m.ratings.delivery}/10, Feasibility:${m.ratings.feasibility}/10, Evidence:${m.ratings.evidence_confidence}/10]. Payer: "${m.buyer}". Target: "${m.target}". Incumbents: "${m.supply}". Risk: "${m.risk}".`;
+  }).join('\n');
+
+  let activeFocus = '';
+  if (contextCountry && markets) {
+    const active = markets.find(m => m.iso3 === contextCountry);
+    if (active) {
+      activeFocus = `\nCURRENTLY VIEWED MARKET BY USER:\nCountry: ${active.country} (${active.iso3}), Status: ${active.status}, Fit: ${active.derived.launch_fit}/10, EF EPI: ${active.ef_2025}, Target: ${active.target}, Buyer: ${active.buyer}, Risk: ${active.risk}\nDossier Summary: ${(active.dossier_markdown || '').slice(0, 1200)}`;
+    }
+  }
+
+  const systemInstruction = `You are the expert Global ESL Market Atlas AI Analyst & Copilot. Answer questions strictly based on the following verified 30-market dataset:\n\n${summary}\n${activeFocus}\n\nRULES: Ratings are 1-10 assessments across Demand (30%), Paid Conversion (20%), Distribution (20%), Whitespace (15%), Delivery (10%), Feasibility (5%), plus Evidence Confidence (Diagnostic). Downloads != Willingness to Pay. EF EPI is a self-selected online test signal, not national fluency. Never hallucinate private competitor CAC. Be concise, structured, and factual.`;
+
+  const contents = [];
+  for (const h of history.slice(-6)) {
+    contents.push({
+      role: h.role === "assistant" ? "model" : "user",
+      parts: [{ text: String(h.content) }]
+    });
+  }
+  contents.push({ role: "user", parts: [{ text: message }] });
+
+  if (!GEMINI_CLIENT_KEY) {
+    throw new Error("AI server endpoint (/api/chat) is unreachable. If running in static preview, set window.GEMINI_API_KEY.");
+  }
+
+  let response;
+  let errText = "";
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_CLIENT_KEY}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemInstruction }] },
+          contents,
+          generationConfig: { temperature: 0.35, maxOutputTokens: 1000 }
+        })
+      });
+      if (response.ok) break;
+      if ((response.status === 503 || response.status === 429) && attempt < 2) {
+        await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+        continue;
+      }
+      errText = await response.text();
+      break;
+    } catch (e) {
+      if (attempt < 2) {
+        await new Promise(r => setTimeout(r, 1000));
+        continue;
+      }
+      throw e;
+    }
+  }
+
+  if (!response || !response.ok) {
+    throw new Error(`Gemini API returned ${response ? response.status : "network error"}: ${errText.slice(0, 100)}`);
+  }
+
+  const json = await response.json();
+  return json.candidates?.[0]?.content?.parts?.[0]?.text || "No response received.";
 }
 
 function showTooltip(event, f) {
@@ -1270,6 +1628,8 @@ async function init() {
   renderTable();
   renderDetail();
   renderCompare();
+  updateAiContextDisplay();
+  renderAiMessages();
   await createMap();
 }
 

@@ -2,6 +2,7 @@ import http from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import chatHandler from "../api/chat.js";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, "dist");
@@ -28,6 +29,23 @@ const server = http.createServer(async (req, res) => {
       const minimumEvidence = Number(url.searchParams.get("minimum_evidence") || 0);
       const records = pack.market_records.filter(m => (!cluster || m.cluster === cluster) && m.ratings.evidence_confidence >= minimumEvidence);
       return send(res, 200, {as_of:pack.as_of,count:records.length,markets:records});
+    }
+    if (pathname === "/api/chat") {
+      let body = {};
+      if (req.method === "POST") {
+        let raw = "";
+        for await (const chunk of req) raw += chunk;
+        try { body = raw ? JSON.parse(raw) : {}; } catch(e) {}
+      }
+      const mockReq = { method: req.method, body, headers: req.headers };
+      const mockRes = {
+        statusCode: 200,
+        setHeader(k, v) { res.setHeader(k, v); return this; },
+        status(code) { this.statusCode = code; return this; },
+        json(data) { send(res, this.statusCode, data); },
+        end() { res.end(); }
+      };
+      return chatHandler(mockReq, mockRes);
     }
     const match = pathname.match(/^\/api\/markets\/([A-Za-z]{3})$/);
     if (match) {

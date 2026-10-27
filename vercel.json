@@ -5,7 +5,8 @@
   "rewrites": [
     { "source": "/api/market-data", "destination": "/market-data.json" },
     { "source": "/api/health", "destination": "/api/health" },
-    { "source": "/api/markets", "destination": "/api/markets" }
+    { "source": "/api/markets", "destination": "/api/markets" },
+    { "source": "/api/chat", "destination": "/api/chat" }
   ],
   "headers": [
     {
