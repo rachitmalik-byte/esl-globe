@@ -1343,17 +1343,42 @@ function setupEvents() {
 
   // AI Copilot Integration
   if ($("openAiHeaderBtn")) {
-    $("openAiHeaderBtn").addEventListener("click", () => toggleAiChat());
+    $("openAiHeaderBtn").addEventListener("click", e => {
+      e.stopPropagation();
+      toggleAiChat();
+    });
   }
   if ($("aiLauncherBtn")) {
-    $("aiLauncherBtn").addEventListener("click", () => toggleAiChat());
+    $("aiLauncherBtn").addEventListener("click", e => {
+      e.stopPropagation();
+      toggleAiChat();
+    });
   }
   if ($("aiCloseBtn")) {
-    $("aiCloseBtn").addEventListener("click", () => closeAiChat());
+    $("aiCloseBtn").addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeAiChat();
+    });
   }
   if ($("articleAskAiBtn")) {
-    $("articleAskAiBtn").addEventListener("click", () => openAiChat(state.selected));
+    $("articleAskAiBtn").addEventListener("click", e => {
+      e.stopPropagation();
+      openAiChat(state.selected);
+    });
   }
+
+  // Click outside to dismiss AI widget
+  document.addEventListener("click", e => {
+    if (!aiState.isOpen) return;
+    const widget = $("aiChatWidget");
+    if (!widget) return;
+    const clickedInside = widget.contains(e.target);
+    const clickedLauncher = e.target.closest("#aiLauncherBtn, #openAiHeaderBtn, #articleAskAiBtn, .btn-ai-sparkle");
+    if (!clickedInside && !clickedLauncher) {
+      closeAiChat();
+    }
+  });
   if ($("aiToggleContextBtn")) {
     $("aiToggleContextBtn").addEventListener("click", () => {
       aiState.contextCountry = aiState.contextCountry ? null : state.selected;
@@ -1562,7 +1587,7 @@ function renderAiMessages() {
 }
 
 function openAiChat(contextIso) {
-  if (contextIso) {
+  if (contextIso && markets && markets.some(m => m.iso3 === contextIso)) {
     aiState.contextCountry = contextIso;
   } else if (!aiState.contextCountry && state.selected) {
     aiState.contextCountry = state.selected;
@@ -1572,19 +1597,25 @@ function openAiChat(contextIso) {
   const widget = $("aiChatWidget");
   if (widget) {
     widget.hidden = false;
+    widget.classList.add("open");
+    widget.setAttribute("aria-hidden", "false");
     updateAiContextDisplay();
     renderAiMessages();
     setTimeout(() => {
       const input = $("aiChatInput");
       if (input) input.focus();
-    }, 100);
+    }, 120);
   }
 }
 
 function closeAiChat() {
   aiState.isOpen = false;
   const widget = $("aiChatWidget");
-  if (widget) widget.hidden = true;
+  if (widget) {
+    widget.classList.remove("open");
+    widget.setAttribute("aria-hidden", "true");
+    widget.hidden = true;
+  }
 }
 
 function toggleAiChat(contextIso) {
