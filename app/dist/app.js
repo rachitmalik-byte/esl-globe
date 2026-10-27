@@ -643,11 +643,24 @@ function hideTooltip() {
   $("mapTooltip").hidden = true;
 }
 
+async function fetchWithFallback(urls) {
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) return res;
+    } catch (_) {}
+  }
+  throw new Error("Could not fetch resource from: " + urls.join(", "));
+}
+
 async function createMap() {
   mapSvg = d3.select("#worldMap");
   try {
-    const res = await fetch("./world-countries-geo.json");
-    if (!res.ok) throw new Error("Could not load world map geojson");
+    const res = await fetchWithFallback([
+      "./world-countries-geo.json",
+      "/world-countries-geo.json",
+      "world-countries-geo.json"
+    ]);
     const geoData = await res.json();
     worldGeoFeatures = geoData.features;
 
@@ -713,14 +726,12 @@ function resizeMap() {
 }
 
 async function init() {
-  let response;
-  try {
-    response = await fetch("/api/market-data");
-    if (!response.ok) throw new Error();
-  } catch {
-    response = await fetch("./market-data.json");
-  }
-  if (!response.ok) throw new Error("Market intelligence pack could not be loaded");
+  const response = await fetchWithFallback([
+    "/api/market-data",
+    "./market-data.json",
+    "/market-data.json",
+    "market-data.json"
+  ]);
 
   data = await response.json();
   markets = data.market_records;

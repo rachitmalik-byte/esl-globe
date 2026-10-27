@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "outputDirectory": "app/dist",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/market-data", "destination": "/market-data.json" },
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/api/markets", "destination": "/api/markets" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/(.*).(json|js|css)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}
