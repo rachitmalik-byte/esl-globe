@@ -3,306 +3,481 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Global ESL Market Atlas - AI-first English learning expansion intelligence.">
+  <meta name="description" content="Global ESL Market Atlas - Strategic Expansion Intelligence for AI-first spoken English.">
   <title>Global ESL Market Atlas</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body data-theme="briefing">
-  <header class="app-header">
-    <div class="brand">
-      <div class="brand-mark" aria-hidden="true">◌</div>
-      <div>
-        <p class="eyebrow">MARKET INTELLIGENCE</p>
-        <h1>Global ESL Market Atlas</h1>
-      </div>
-    </div>
-    <div class="header-right">
-      <div class="theme-switcher" role="radiogroup" aria-label="Visual Theme">
-        <button class="theme-btn active" data-theme="briefing" type="button" title="Executive Light Briefing">☀️ Simple</button>
-        <button class="theme-btn" data-theme="field" type="button" title="Dark Mode Field View">🌙 Dark</button>
-        <button class="theme-btn" data-theme="satellite" type="button" title="Deep Oceanic Satellite View">🛰️ Satellite</button>
-        <button class="theme-btn" data-theme="ops" type="button" title="Tactical Military HUD">🪖 Call of Duty</button>
-        <button class="theme-btn" data-theme="cyberpunk" type="button" title="Synthwave Neon Radar">⚡ Cyberpunk</button>
-      </div>
-      <button id="methodologyHeaderBtn" class="btn btn-mini" type="button" title="View Scoring Methodology, Metric Definitions & Rubric">📊 Methodology & Terms</button>
-      <button id="openAiHeaderBtn" class="btn btn-mini btn-ai-sparkle" type="button" title="Ask AI Market Copilot">✨ Ask AI</button>
-      <button id="readModeHeaderBtn" class="btn btn-mini" type="button">📖 Read Mode</button>
-      <button id="exportButton" class="btn btn-mini" type="button">Export Filtered JSON</button>
-    </div>
-  </header>
-
-  <main class="app-shell">
-    <!-- Top KPI Strip -->
-    <section class="kpi-strip" aria-label="Key Performance Indicators">
-      <div class="kpi-card">
-        <span class="kpi-label">Active Heatmap Metric</span>
-        <div class="kpi-value kpi-highlight" id="kpiMetricName">Launch Fit</div>
-        <div class="kpi-sub" id="kpiLeader">Top: Japan (8.15 / 10)</div>
-      </div>
-      <div class="kpi-card">
-        <span class="kpi-label">Selected Market</span>
-        <div class="kpi-value" id="kpiSelectedCountry">India 🇮🇳</div>
-        <div class="kpi-sub" id="kpiSelectedRoute">Home-market validation</div>
-      </div>
-      <div class="kpi-card">
-        <span class="kpi-label">Market Coverage</span>
-        <div class="kpi-value"><span id="kpiShownCount">30</span> <span style="font-size:14px;font-weight:600;color:var(--muted)">/ 30 markets</span></div>
-        <div class="kpi-sub">7 strategic clusters screened</div>
-      </div>
-      <div class="kpi-card kpi-warning">
-        <span class="kpi-label">Strategic Reality Check</span>
-        <div style="font-size:12px;font-weight:700;color:var(--text);margin-top:2px;">Downloads ≠ Willingness to Pay</div>
-        <div class="kpi-sub">Low English proficiency does not prove consumer subscription intent.</div>
-      </div>
-    </section>
-
-    <!-- Quick Metric Switcher Chips -->
-    <nav class="metric-chips-bar" aria-label="Metric Switcher">
-      <span class="metric-chips-label">Heatmap Metric:</span>
-      <button class="metric-chip active" data-metric="launch_fit" type="button">🎯 Composite Launch Fit</button>
-      <button class="metric-chip" data-metric="paid_conversion" type="button">💰 Paid Conversion</button>
-      <button class="metric-chip" data-metric="demand" type="button">🔥 Outcome Demand</button>
-      <button class="metric-chip" data-metric="distribution" type="button">🏢 Distribution / B2B</button>
-      <button class="metric-chip" data-metric="whitespace" type="button">🧭 Whitespace Gap</button>
-      <button class="metric-chip" data-metric="feasibility" type="button">⚡ Operating Feasibility</button>
-      <button class="metric-chip" data-metric="evidence_confidence" type="button">🛡️ Evidence Confidence</button>
-      <button class="metric-chip" data-metric="ef_2025" type="button">🌐 EF EPI 2025 Signal</button>
-    </nav>
-
-    <!-- Main Workspace (Map + Detail Panel) -->
-    <section class="workspace">
-      <!-- Interactive World Map Card -->
-      <article class="map-card">
-        <div class="map-topline">
-          <div class="map-meta">
-            <span class="eyebrow" id="metricTypeBadge">DERIVED COMPOSITE</span>
-            <h2 id="metricTitle">Composite Launch Fit</h2>
-            <p id="metricDefinition">Weighted score: demand, paid conversion, B2B fit, whitespace & feasibility</p>
-          </div>
-          <div class="map-tools">
-            <button id="zoomIn" class="icon-btn" type="button" title="Zoom in">+</button>
-            <button id="zoomOut" class="icon-btn" type="button" title="Zoom out">−</button>
-            <button id="zoomReset" class="icon-btn" type="button" title="Reset view">⌂</button>
-          </div>
-        </div>
-
-        <div id="mapWrap" class="map-wrap">
-          <svg id="worldMap" role="img" aria-label="Interactive world map showing 30 ESL expansion markets"></svg>
-          <div id="mapTooltip" class="map-tooltip" hidden></div>
-        </div>
-
-        <!-- Overhauled Dynamic Legend -->
-        <div class="legend-container">
-          <div class="legend-scale">
-            <div class="legend-bar-wrap">
-              <div id="legendBar" class="legend-bar"></div>
-              <div id="legendPointer" class="legend-pointer" style="left: 50%;"></div>
-            </div>
-            <div class="legend-ticks">
-              <span id="legendMin">Min</span>
-              <span id="legendQ1">25%</span>
-              <span id="legendMid">Median</span>
-              <span id="legendQ3">75%</span>
-              <span id="legendMax">Max</span>
-            </div>
-          </div>
-          <div class="legend-info">
-            <span id="legendNote">Scores are 1–10 assessments. Click any market for full evidence dossier.</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Country Detail Panel -->
-      <aside class="detail-panel" id="detailPanel">
-        <div id="emptyDetail" class="detail-empty">
-          <div class="detail-orb">◎</div>
-          <h3>Select a Market</h3>
-          <p>Click any highlighted country on the map or in the table below to inspect its buyer, role outcome, supply reality, and cited sources.</p>
-        </div>
-        <div id="marketDetail" hidden></div>
-      </aside>
-    </section>
-
-    <!-- Lower Controls Bar -->
-    <section class="controls-bar">
-      <div class="cluster-tabs" id="clusterTabs">
-        <button class="cluster-tab active" data-cluster="all" type="button">All Regions</button>
-        <button class="cluster-tab" data-cluster="South Asia" type="button">South Asia</button>
-        <button class="cluster-tab" data-cluster="Southeast Asia" type="button">Southeast Asia</button>
-        <button class="cluster-tab" data-cluster="Latin America" type="button">Latin America</button>
-        <button class="cluster-tab" data-cluster="Gulf / MENA" type="button">Gulf / MENA</button>
-        <button class="cluster-tab" data-cluster="MENA / Africa" type="button">MENA & Africa</button>
-        <button class="cluster-tab" data-cluster="East Asia" type="button">East Asia</button>
-      </div>
-
-      <div class="search-box">
-        <span style="color:var(--muted)">🔍</span>
-        <input type="search" id="searchInput" placeholder="Search India, Japan, Mexico..." autocomplete="off">
-      </div>
-    </section>
-
-    <!-- Lower Section: Table & Watchlist -->
-    <section class="lower-grid">
-      <article class="table-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
+  <div class="app-layout">
+    <!-- Left Navigation Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-brand">
+          <div class="brand-logo-icon">🌐</div>
           <div>
-            <h3 style="margin:0;font-size:17px;">Filtered Market Universe</h3>
-            <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Click any country row to highlight on map. Click columns to sort.</p>
+            <h1 class="sidebar-brand-title">Global ESL Market Atlas</h1>
+            <p class="sidebar-brand-sub">Strategic Expansion Intelligence</p>
           </div>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col" data-sort="country">Market</th>
-                <th scope="col" data-sort="status">Strategic Route</th>
-                <th scope="col" data-sort="currentMetric" class="th-current-metric" id="thMetricLabel">Score</th>
-                <th scope="col" data-sort="demand">Demand</th>
-                <th scope="col" data-sort="paid">Paid</th>
-                <th scope="col" data-sort="b2b">B2B</th>
-                <th scope="col" data-sort="whitespace">Gap</th>
-                <th scope="col" data-sort="evidence">Confidence</th>
-                <th scope="col">Compare</th>
-              </tr>
-            </thead>
-            <tbody id="marketRows"></tbody>
-          </table>
-        </div>
-      </article>
 
-      <aside class="watchlist-card">
-        <span class="eyebrow">HONORABLE MENTIONS</span>
-        <h3 style="margin:4px 0 0;font-size:16px;">Unscored Watchlist</h3>
-        <p style="margin:4px 0 0;font-size:12px;color:var(--muted)">Held outside heatmaps until equivalent empirical evidence is gathered.</p>
-        <ul id="watchlist"></ul>
-      </aside>
-    </section>
-
-    <!-- Comparison Tray -->
-    <section id="compareSection" class="compare-section" hidden>
-      <div class="compare-header">
-        <div>
-          <span class="eyebrow">BENCHMARK MATRIX</span>
-          <h3 style="margin:2px 0 0;font-size:18px;">Direct Market Comparison</h3>
-        </div>
-        <button id="clearCompare" class="btn btn-mini" type="button">Clear Comparison</button>
+        <nav class="sidebar-nav" aria-label="Main Navigation">
+          <a href="#overviewSection" class="sidebar-nav-item active" id="navOverview">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Overview</span>
+          </a>
+          <a href="#mapSection" class="sidebar-nav-item" id="navScreening">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-label">Market Screening</span>
+          </a>
+          <a href="#compareSection" class="sidebar-nav-item" id="navCompare">
+            <span class="nav-icon">⚖️</span>
+            <span class="nav-label">Market Comparison</span>
+          </a>
+          <a href="#tableSection" class="sidebar-nav-item" id="navDeepDives">
+            <span class="nav-icon">🌍</span>
+            <span class="nav-label">Country Deep Dives</span>
+          </a>
+          <a href="#insightsSection" class="sidebar-nav-item" id="navEvidence">
+            <span class="nav-icon">📚</span>
+            <span class="nav-label">Evidence & Sources</span>
+          </a>
+          <button type="button" class="sidebar-nav-item" id="navMethodology">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Methodology</span>
+          </button>
+        </nav>
       </div>
-      <div id="comparisonGrid" class="comparison-grid"></div>
-    </section>
-    <!-- Read Mode Article Modal -->
-    <div id="articleModal" class="article-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="article-modal-container">
-        <div class="article-modal-header">
-          <img id="articleHeroImg" class="article-hero-img" src="" alt="Country landscape" loading="eager">
-          <div class="article-hero-gradient"></div>
-          <div class="article-top-nav">
-            <div class="modal-nav-group">
-              <button id="articlePrevBtn" class="btn-modal-nav" type="button">← Prev Market</button>
-              <button id="articleNextBtn" class="btn-modal-nav" type="button">Next Market →</button>
-              <button id="articleMethodologyBtn" class="btn-modal-nav" type="button" title="View Scoring Rubric & Methodology">📊 Terms & Scoring Guide</button>
-              <button id="articleAskAiBtn" class="btn-modal-nav btn-ai-sparkle" type="button" title="Ask AI about this market">✨ Ask AI</button>
-            </div>
-            <button id="closeArticleBtn" class="btn-close-modal" type="button" aria-label="Close article">✕</button>
-          </div>
-          <div class="article-hero-content">
-            <div class="article-title-wrap">
-              <span class="eyebrow" id="articleClusterBadge" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.8);">REGION</span>
-              <h2 id="articleCountryTitle">Country Name</h2>
-            </div>
-            <div class="article-pills">
-              <span id="articleRouteBadge" class="article-pill article-pill-accent">Route</span>
-              <span id="articleFitBadge" class="article-pill">Launch Fit: —</span>
-              <span id="articleEfBadge" class="article-pill">EF EPI: —</span>
-            </div>
-          </div>
-        </div>
-        <div class="article-scroll-body" id="articleBody"></div>
+
+      <div class="sidebar-bottom">
+        <p class="sidebar-tagline">Global market insights for ESL expansion.</p>
       </div>
-    </div>
+    </aside>
 
-    <!-- Methodology & Scoring Glossary Modal -->
-    <div id="methodologyModal" class="article-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="article-modal-container methodology-modal-container">
-        <div class="methodology-modal-header">
-          <div class="methodology-header-content">
-            <span class="eyebrow">RESEARCH FRAMEWORK & RUBRIC</span>
-            <h2>Expansion Methodology & Terms Reference</h2>
-            <p>Definitions, mathematical weighting, 1–10 scoring rubrics, and commercial guardrails for ESL screening.</p>
-          </div>
-          <button id="closeMethodologyBtn" class="btn-close-modal" type="button" aria-label="Close methodology modal">✕</button>
+    <!-- Main Content Area -->
+    <div class="app-main-content">
+      <!-- Top Navigation Header -->
+      <header class="main-topbar">
+        <div class="topbar-search">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="topSearchInput" placeholder="Search markets (e.g., India, Japan, Mexico)..." autocomplete="off">
         </div>
-        <div class="article-scroll-body methodology-scroll-body" id="methodologyBody"></div>
-      </div>
-    </div>
 
-    <!-- Floating AI Copilot Trigger Button -->
-    <button id="aiLauncherBtn" class="ai-floating-trigger" type="button" aria-label="Open Atlas AI Market Copilot">
-      <span class="ai-sparkle-icon">✨</span>
-      <span class="ai-trigger-label">Ask Atlas AI</span>
-      <span id="aiTriggerContextBadge" class="ai-trigger-context">IND</span>
-    </button>
-
-    <!-- Floating AI Chat Popup Widget -->
-    <aside id="aiChatWidget" class="ai-chat-widget" role="dialog" aria-modal="false" aria-hidden="true" hidden>
-      <header class="ai-chat-header">
-        <div class="ai-header-brand">
-          <div class="ai-avatar">✨</div>
-          <div>
-            <div class="ai-title-row">
-              <h3>Atlas AI Copilot</h3>
-              <span class="ai-status-dot" title="Gemini 2.5 Flash Online"></span>
-            </div>
-            <p class="ai-subtitle">Grounded in 30 markets · Gemini 2.5 Flash</p>
+        <div class="topbar-actions">
+          <div class="theme-switcher" role="radiogroup" aria-label="Visual Theme">
+            <button class="theme-btn active" data-theme="briefing" type="button" title="Executive Light Briefing">☀️ Simple</button>
+            <button class="theme-btn" data-theme="field" type="button" title="Dark Mode Field View">🌙 Dark</button>
+            <button class="theme-btn" data-theme="satellite" type="button" title="Deep Oceanic Satellite View">🛰️ Satellite</button>
+            <button class="theme-btn" data-theme="ops" type="button" title="Tactical Military HUD">🪖 Call of Duty</button>
+            <button class="theme-btn" data-theme="cyberpunk" type="button" title="Synthwave Neon Radar">⚡ Cyberpunk</button>
           </div>
-        </div>
-        <div class="ai-header-actions">
-          <button id="aiClearHistoryBtn" class="ai-header-btn" type="button" title="Clear chat history">🗑️</button>
-          <button id="aiCloseBtn" class="ai-header-btn" type="button" aria-label="Close AI chat">✕</button>
+          <button id="methodologyHeaderBtn" class="btn btn-mini" type="button" title="View Scoring Methodology, Metric Definitions & Rubric">📊 Methodology / Terms</button>
+          <button id="openAiHeaderBtn" class="btn btn-mini btn-ai-sparkle" type="button" title="Ask AI Market Copilot">✨ Ask AI</button>
+          <button id="readModeHeaderBtn" class="btn btn-mini" type="button">📖 Read Mode</button>
+          <button id="exportButton" class="btn btn-mini" type="button">📥 Export Filtered JSON</button>
         </div>
       </header>
 
-      <!-- Active Context Bar -->
-      <div class="ai-context-bar">
-        <div class="ai-context-indicator">
-          <span style="font-size:12px;color:var(--muted)">📍 Context:</span>
-          <span id="aiActiveContextPill" class="ai-context-pill">India (IND)</span>
-        </div>
-        <button id="aiToggleContextBtn" class="ai-context-switch-btn" type="button">Switch to Global</button>
-      </div>
+      <!-- Main Body Container -->
+      <main class="main-body" id="overviewSection">
+        <!-- Top KPI Strip -->
+        <section class="kpi-strip" aria-label="Key Performance Indicators">
+          <div class="kpi-card">
+            <div class="kpi-card-inner">
+              <span class="kpi-icon-wrap blue-icon">🌐</span>
+              <div>
+                <span class="kpi-label">ACTIVE HEATMAP METRIC</span>
+                <div class="kpi-value kpi-highlight" id="kpiMetricName">Composite Launch Fit</div>
+                <div class="kpi-sub" id="kpiLeader">Top: Japan (8.15 / 10) ▾</div>
+              </div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card-inner">
+              <span class="kpi-icon-wrap green-icon">🎯</span>
+              <div>
+                <span class="kpi-label">SELECTED MARKET</span>
+                <div class="kpi-value" id="kpiSelectedCountry">India (IN)</div>
+                <div class="kpi-sub" id="kpiSelectedRoute">🇮🇳 Home-market validation</div>
+              </div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card-inner">
+              <span class="kpi-icon-wrap purple-icon">📊</span>
+              <div>
+                <span class="kpi-label">MARKET COVERAGE</span>
+                <div class="kpi-value"><span id="kpiShownCount">30</span> <span style="font-size:14px;font-weight:600;color:var(--muted)">/ 30 markets</span></div>
+                <div class="kpi-sub">7 strategic clusters screened</div>
+              </div>
+            </div>
+          </div>
+          <div class="kpi-card kpi-warning-card">
+            <div class="kpi-card-inner">
+              <span class="kpi-icon-wrap amber-icon">⚡</span>
+              <div>
+                <span class="kpi-label">STRATEGIC REALITY CHECK</span>
+                <div class="kpi-value-warning">Downloads ≠ Willingness to Pay</div>
+                <div class="kpi-sub">Low English proficiency does not prove consumer subscription intent.</div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <!-- Messages Body -->
-      <div id="aiChatMessages" class="ai-messages-container"></div>
+        <!-- Quick Metric Switcher Chips -->
+        <nav class="metric-chips-bar" aria-label="Heatmap Metric Switcher">
+          <span class="metric-chips-label">HEATMAP METRIC:</span>
+          <button class="metric-chip active" data-metric="launch_fit" type="button">🎯 Composite Launch Fit</button>
+          <button class="metric-chip" data-metric="paid_conversion" type="button">💳 Paid Conversion</button>
+          <button class="metric-chip" data-metric="demand" type="button">🔥 Outcome Demand</button>
+          <button class="metric-chip" data-metric="distribution" type="button">🏢 Distribution / B2B</button>
+          <button class="metric-chip" data-metric="whitespace" type="button">🧭 Whitespace Gap</button>
+          <button class="metric-chip" data-metric="delivery" type="button">⚡ Digital Delivery</button>
+          <button class="metric-chip" data-metric="feasibility" type="button">⚖️ Operating Feasibility</button>
+          <button class="metric-chip" data-metric="evidence_confidence" type="button">🛡️ Evidence Confidence</button>
+          <button class="metric-chip" data-metric="ef_2025" type="button">🌐 EF EPI 2025</button>
+        </nav>
 
-      <!-- Typing Indicator -->
-      <div id="aiTypingIndicator" class="ai-typing-indicator" hidden>
-        <span class="ai-typing-dot"></span>
-        <span class="ai-typing-dot"></span>
-        <span class="ai-typing-dot"></span>
-        <span style="font-size:11px;color:var(--muted);margin-left:4px;">Analyzing evidence pack...</span>
-      </div>
+        <!-- Main Map Card with Floating Overlay Detail -->
+        <section class="map-section-card" id="mapSection">
+          <div class="map-card-header">
+            <div class="map-card-title-group">
+              <h2 class="map-card-title">Global ESL Market Opportunity</h2>
+              <p class="map-card-subtitle">Composite Launch Fit score (1–10). Click a country to view details, compare markets, or see evidence.</p>
+            </div>
+            <div class="map-card-controls">
+              <select id="mapRegionSelect" class="select-control" aria-label="Filter Map by Region">
+                <option value="all">All Regions</option>
+                <option value="South Asia">South Asia</option>
+                <option value="Southeast Asia">Southeast Asia</option>
+                <option value="Latin America">Latin America</option>
+                <option value="Gulf / MENA">Gulf / MENA</option>
+                <option value="MENA / Africa">MENA & Africa</option>
+                <option value="East Asia">East Asia</option>
+              </select>
+              <div class="map-zoom-btns">
+                <button id="zoomOut" class="map-btn-tool" type="button" title="Zoom out">−</button>
+                <button id="zoomIn" class="map-btn-tool" type="button" title="Zoom in">+</button>
+                <button id="zoomReset" class="map-btn-tool" type="button" title="Reset view">⤢</button>
+              </div>
+            </div>
+          </div>
 
-      <!-- Contextual Quick Chips -->
-      <div id="aiQuickChips" class="ai-quick-chips"></div>
+          <div id="mapWrap" class="map-wrap">
+            <svg id="worldMap" role="img" aria-label="Interactive world map showing 30 ESL expansion markets"></svg>
+            <div id="mapTooltip" class="map-tooltip" hidden></div>
 
-      <!-- Input Footer -->
-      <footer class="ai-chat-footer">
-        <form id="aiChatForm" class="ai-input-form">
-          <textarea id="aiChatInput" placeholder="Ask about Launch Fit, B2B routes, risks, or compare..." rows="1" autocomplete="off"></textarea>
-          <button id="aiSendBtn" class="ai-send-btn" type="submit" aria-label="Send message">
-            <span>➤</span>
-          </button>
-        </form>
-        <div class="ai-disclaimer">
-          Responses grounded in 30 sourced market dossiers and scoring rubric.
-        </div>
+            <!-- Overhauled Dynamic Legend in bottom-left corner of the map -->
+            <div class="map-corner-legend">
+              <div class="legend-bar-wrap">
+                <div id="legendBar" class="legend-bar"></div>
+                <div id="legendPointer" class="legend-pointer" style="left: 50%;"></div>
+              </div>
+              <div class="legend-ticks">
+                <span id="legendMin">4.9</span>
+                <span id="legendQ1">5.7</span>
+                <span id="legendMid">6.5</span>
+                <span id="legendQ3">7.3</span>
+                <span id="legendMax">8.2</span>
+              </div>
+            </div>
+
+            <!-- Floating Overlay Detail Card (Top-Right inside Map) -->
+            <aside id="floatingMarketCard" class="floating-market-card">
+              <div class="floating-card-header">
+                <div class="floating-country-info">
+                  <span id="floatingFlag" class="floating-flag">🇮🇳</span>
+                  <div>
+                    <h3 id="floatingCountryName">India (IN)</h3>
+                    <p id="floatingCountryRegion">South Asia</p>
+                  </div>
+                </div>
+                <button id="closeFloatingCardBtn" class="floating-close-btn" type="button" aria-label="Close detail card">✕</button>
+              </div>
+
+              <div class="floating-score-section">
+                <div class="floating-score-label">Composite Launch Fit</div>
+                <div class="floating-score-value">
+                  <span id="floatingScoreBig">6.7</span>
+                  <span class="floating-score-denom">/ 10</span>
+                </div>
+                <div class="floating-bar-track">
+                  <div id="floatingScoreBar" class="floating-bar-fill" style="width: 67%;"></div>
+                </div>
+              </div>
+
+              <div class="floating-dimensions-list" id="floatingDimensionsList">
+                <!-- Injected dynamically for active market -->
+              </div>
+
+              <button id="floatingViewProfileBtn" class="btn btn-primary floating-action-btn" type="button">
+                View Full Market Profile →
+              </button>
+            </aside>
+          </div>
+        </section>
+
+        <!-- Lower Section: Filtered Market Universe (Left) & Watchlist (Right) -->
+        <section class="lower-grid" id="tableSection">
+          <!-- Filtered Market Universe Table Card -->
+          <article class="table-card">
+            <div class="table-card-topbar">
+              <div>
+                <h3 class="section-title">Filtered Market Universe</h3>
+                <p class="section-subtitle">Click any country to view on map. Sort by any column. Use filters to narrow your analysis.</p>
+              </div>
+            </div>
+
+            <!-- Multi-Filter Toolbar -->
+            <div class="table-filters-toolbar">
+              <div class="table-search-input">
+                <span>🔍</span>
+                <input type="search" id="tableSearchInput" placeholder="Search markets..." autocomplete="off">
+              </div>
+              <select id="filterRegion" class="select-control filter-select">
+                <option value="all">All Regions</option>
+                <option value="South Asia">South Asia</option>
+                <option value="Southeast Asia">Southeast Asia</option>
+                <option value="Latin America">Latin America</option>
+                <option value="Gulf / MENA">Gulf / MENA</option>
+                <option value="MENA / Africa">MENA & Africa</option>
+                <option value="East Asia">East Asia</option>
+              </select>
+              <select id="filterRoute" class="select-control filter-select">
+                <option value="all">All Strategic Routes</option>
+                <option value="enterprise">Enterprise / Premium</option>
+                <option value="nearshoring">Nearshoring B2B</option>
+                <option value="bpo">BPO / Digital Services</option>
+                <option value="validation">Home-market Validation</option>
+              </select>
+              <select id="filterScore" class="select-control filter-select">
+                <option value="all">All Scores</option>
+                <option value="tier1">Tier 1 (≥ 7.5)</option>
+                <option value="tier2">Tier 2 (6.0 – 7.4)</option>
+                <option value="tier3">Tier 3 (&lt; 6.0)</option>
+              </select>
+              <button id="filterResetBtn" class="btn btn-mini btn-reset" type="button">🔄 Reset</button>
+            </div>
+
+            <!-- Table Wrapper -->
+            <div class="table-wrap">
+              <table class="market-universe-table">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width:36px;">#</th>
+                    <th scope="col" data-sort="country">MARKET<br><span style="font-size:10px;color:var(--muted)">Country / Region</span></th>
+                    <th scope="col" data-sort="status">STRATEGIC ROUTE</th>
+                    <th scope="col" data-sort="currentMetric" class="th-current-metric" id="thMetricLabel">COMPOSITE<br>LAUNCH FIT</th>
+                    <th scope="col" data-sort="demand">DEMAND</th>
+                    <th scope="col" data-sort="paid">PAID</th>
+                    <th scope="col" data-sort="b2b">B2B</th>
+                    <th scope="col" data-sort="whitespace">GAP</th>
+                    <th scope="col" data-sort="delivery">DELIVERY</th>
+                    <th scope="col" data-sort="feasibility">FEASIBILITY</th>
+                    <th scope="col" data-sort="evidence">EVIDENCE</th>
+                    <th scope="col" style="text-align:center;">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="marketRows"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <!-- Honorable Mentions Watchlist Card -->
+          <aside class="watchlist-card">
+            <span class="eyebrow">HONORABLE MENTIONS</span>
+            <h3 class="section-title" style="margin-top:2px;">Unscored Watchlist</h3>
+            <p class="section-subtitle">Held outside heatmaps until equivalent empirical evidence is gathered.</p>
+            <ul id="watchlist" class="watchlist-items-list"></ul>
+            <button id="viewAllWatchlistBtn" class="btn btn-link watchlist-footer-btn" type="button">
+              View All Watchlist Markets →
+            </button>
+          </aside>
+        </section>
+
+        <!-- Direct Market Comparison Section -->
+        <section id="compareSection" class="compare-section-card">
+          <div class="compare-header">
+            <div>
+              <h3 class="section-title">Direct Market Comparison</h3>
+              <p class="section-subtitle">Compare key markets side by side. Scores are 1–10 across 6 weighted dimensions.</p>
+            </div>
+            <button id="clearCompare" class="btn btn-mini" type="button">Clear Comparison</button>
+          </div>
+          <div id="comparisonGrid" class="comparison-grid"></div>
+        </section>
+
+        <!-- Strategic Insights & Next Actions Card (Matching Reference UI) -->
+        <section class="insights-card" id="insightsSection">
+          <div class="insights-header">
+            <div>
+              <h3 class="section-title">Strategic Insights & Next Actions</h3>
+              <p class="section-subtitle">AI-assisted analysis based on market scores, regional trends and evidence confidence.</p>
+            </div>
+            <button id="insightsMethodologyBtn" class="btn btn-mini" type="button">📊 View Methodology & Scoring Guide</button>
+          </div>
+
+          <div class="insights-grid">
+            <!-- Column 1: Top Expansion Candidates -->
+            <div class="insight-column">
+              <div class="insight-col-header">
+                <span class="insight-col-icon">🎯</span>
+                <h4 class="insight-col-title">Top Expansion Candidates</h4>
+                <span class="insight-badge-green">Highest Potential</span>
+              </div>
+              <div class="top-candidates-list" id="topCandidatesList">
+                <!-- Rendered dynamically -->
+              </div>
+              <a href="#tableSection" class="insight-link" id="viewFullRankedList">View full ranked list →</a>
+            </div>
+
+            <!-- Column 2: Key Strategic Takeaways -->
+            <div class="insight-column">
+              <div class="insight-col-header">
+                <span class="insight-col-icon">📊</span>
+                <h4 class="insight-col-title">Key Strategic Takeaways</h4>
+              </div>
+              <ul class="takeaways-list">
+                <li><strong>Japan and Mexico</strong> show strongest composite launch fit based on demand, paid conversion and B2B potential.</li>
+                <li><strong>India</strong> offers massive long-term scale and high B2B distribution (9/10), but lower consumer paid conversion (3/10).</li>
+                <li>Focus initial GTM on <strong>enterprise and nearshoring segments</strong> where evidence confidence and employer subsidies are highest.</li>
+                <li>Monitor <strong>unscored watchlist markets</strong> (Costa Rica, Kazakhstan) as secondary expansion options once local validation is verified.</li>
+              </ul>
+            </div>
+
+            <!-- Column 3: Recommended Next Steps -->
+            <div class="insight-column">
+              <div class="insight-col-header">
+                <span class="insight-col-icon">⚡</span>
+                <h4 class="insight-col-title">Recommended Next Steps</h4>
+              </div>
+              <ol class="next-steps-list">
+                <li><strong>Deep dive into top 3 markets</strong> (Japan, Saudi Arabia, Mexico) using detailed evidence dossiers.</li>
+                <li><strong>Review evidence dossiers</strong> and regional acoustic/payment nuances before launching localized pilots.</li>
+                <li><strong>Validate segmentation and GTM</strong> for enterprise vs. direct-to-consumer routes to insulate unit CAC.</li>
+                <li><strong>Build pilot plan and success metrics</strong> with local enterprise partners for initial cohorts.</li>
+                <li><strong>Export filtered data</strong> for executive briefings and cross-functional review.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- App Footer -->
+      <footer class="app-footer">
+        <span>Global ESL Market Atlas · Strategic Expansion Intelligence</span>
+        <span>Sourced evidence pack · Private screening tool</span>
       </footer>
-    </aside>
-  </main>
+    </div>
+  </div>
 
-  <footer>
-    <span>Global ESL Market Atlas · Strategic Expansion Intelligence</span>
-    <span>Sourced evidence pack · Private screening tool</span>
-  </footer>
+  <!-- Read Mode Article Modal -->
+  <div id="articleModal" class="article-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="article-modal-container">
+      <div class="article-modal-header">
+        <img id="articleHeroImg" class="article-hero-img" src="" alt="Country landscape" loading="eager">
+        <div class="article-hero-gradient"></div>
+        <div class="article-top-nav">
+          <div class="modal-nav-group">
+            <button id="articlePrevBtn" class="btn-modal-nav" type="button">← Prev Market</button>
+            <button id="articleNextBtn" class="btn-modal-nav" type="button">Next Market →</button>
+            <button id="articleMethodologyBtn" class="btn-modal-nav" type="button" title="View Scoring Rubric & Methodology">📊 Terms & Scoring Guide</button>
+            <button id="articleAskAiBtn" class="btn-modal-nav btn-ai-sparkle" type="button" title="Ask AI about this market">✨ Ask AI</button>
+          </div>
+          <button id="closeArticleBtn" class="btn-close-modal" type="button" aria-label="Close article">✕</button>
+        </div>
+        <div class="article-hero-content">
+          <div class="article-title-wrap">
+            <span class="eyebrow" id="articleClusterBadge" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.8);">REGION</span>
+            <h2 id="articleCountryTitle">Country Name</h2>
+          </div>
+          <div class="article-pills">
+            <span id="articleRouteBadge" class="article-pill article-pill-accent">Route</span>
+            <span id="articleFitBadge" class="article-pill">Launch Fit: —</span>
+            <span id="articleEfBadge" class="article-pill">EF EPI: —</span>
+          </div>
+        </div>
+      </div>
+      <div class="article-scroll-body" id="articleBody"></div>
+    </div>
+  </div>
+
+  <!-- Methodology & Scoring Glossary Modal -->
+  <div id="methodologyModal" class="article-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="article-modal-container methodology-modal-container">
+      <div class="methodology-modal-header">
+        <div class="methodology-header-content">
+          <span class="eyebrow">RESEARCH FRAMEWORK & RUBRIC</span>
+          <h2>Expansion Methodology & Terms Reference</h2>
+          <p>Definitions, mathematical weighting, 1–10 scoring rubrics, and commercial guardrails for ESL screening.</p>
+        </div>
+        <button id="closeMethodologyBtn" class="btn-close-modal" type="button" aria-label="Close methodology modal">✕</button>
+      </div>
+      <div class="article-scroll-body methodology-scroll-body" id="methodologyBody"></div>
+    </div>
+  </div>
+
+  <!-- Floating AI Copilot Trigger Button -->
+  <button id="aiLauncherBtn" class="ai-floating-trigger" type="button" aria-label="Open Atlas AI Market Copilot">
+    <span class="ai-sparkle-icon">✨</span>
+    <span class="ai-trigger-label">Ask Atlas AI</span>
+    <span id="aiTriggerContextBadge" class="ai-trigger-context">IND</span>
+  </button>
+
+  <!-- Floating AI Chat Popup Widget -->
+  <aside id="aiChatWidget" class="ai-chat-widget" role="dialog" aria-modal="false" aria-hidden="true" hidden>
+    <header class="ai-chat-header">
+      <div class="ai-header-brand">
+        <div class="ai-avatar">✨</div>
+        <div>
+          <div class="ai-title-row">
+            <h3>Atlas AI Copilot</h3>
+            <span class="ai-status-dot" title="Gemini 2.5 Flash Online"></span>
+          </div>
+          <p class="ai-subtitle">Grounded in 30 markets · Gemini 2.5 Flash</p>
+        </div>
+      </div>
+      <div class="ai-header-actions">
+        <button id="aiClearHistoryBtn" class="ai-header-btn" type="button" title="Clear chat history">🗑️</button>
+        <button id="aiCloseBtn" class="ai-header-btn" type="button" aria-label="Close AI chat">✕</button>
+      </div>
+    </header>
+
+    <!-- Active Context Bar -->
+    <div class="ai-context-bar">
+      <div class="ai-context-indicator">
+        <span style="font-size:12px;color:var(--muted)">📍 Context:</span>
+        <span id="aiActiveContextPill" class="ai-context-pill">India (IND)</span>
+      </div>
+      <button id="aiToggleContextBtn" class="ai-context-switch-btn" type="button">Switch to Global</button>
+    </div>
+
+    <!-- Messages Body -->
+    <div id="aiChatMessages" class="ai-messages-container"></div>
+
+    <!-- Typing Indicator -->
+    <div id="aiTypingIndicator" class="ai-typing-indicator" hidden>
+      <span class="ai-typing-dot"></span>
+      <span class="ai-typing-dot"></span>
+      <span class="ai-typing-dot"></span>
+      <span style="font-size:11px;color:var(--muted);margin-left:4px;">Analyzing evidence pack...</span>
+    </div>
+
+    <!-- Contextual Quick Chips -->
+    <div id="aiQuickChips" class="ai-quick-chips"></div>
+
+    <!-- Input Footer -->
+    <footer class="ai-chat-footer">
+      <form id="aiChatForm" class="ai-input-form">
+        <textarea id="aiChatInput" placeholder="Ask about Launch Fit, B2B routes, risks, or compare..." rows="1" autocomplete="off"></textarea>
+        <button id="aiSendBtn" class="ai-send-btn" type="submit" aria-label="Send message">
+          <span>➤</span>
+        </button>
+      </form>
+      <div class="ai-disclaimer">
+        Responses grounded in 30 sourced market dossiers and scoring rubric.
+      </div>
+    </footer>
+  </aside>
 
   <script src="./d3.min.js"></script>
   <script type="module" src="./app.js"></script>

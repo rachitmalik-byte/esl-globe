@@ -3,7 +3,8 @@ const d3 = window.d3;
 const ISO2 = {
   IND:"IN",BGD:"BD",PAK:"PK",LKA:"LK",NPL:"NP",IDN:"ID",VNM:"VN",THA:"TH",MYS:"MY",PHL:"PH",
   SAU:"SA",ARE:"AE",EGY:"EG",MAR:"MA",TUR:"TR",TUN:"TN",MEX:"MX",COL:"CO",BRA:"BR",PER:"PE",
-  CHL:"CL",ARG:"AR",ECU:"EC",NGA:"NG",ZAF:"ZA",KEN:"KE",JPN:"JP",KOR:"KR",CHN:"CN",UZB:"UZ"
+  CHL:"CL",ARG:"AR",ECU:"EC",NGA:"NG",ZAF:"ZA",KEN:"KE",JPN:"JP",KOR:"KR",CHN:"CN",UZB:"UZ",
+  CRI:"CR",ROU:"RO",KAZ:"KZ",POL:"PL"
 };
 
 const RATING_LABELS = {
@@ -16,7 +17,7 @@ const RATING_LABELS = {
   evidence_confidence: "Evidence Confidence"
 };
 
-const COMPARE_KEYS = ["demand", "paid_conversion", "distribution", "whitespace", "delivery", "feasibility"];
+const COMPARE_KEYS = ["demand", "paid_conversion", "distribution", "whitespace", "delivery", "feasibility", "evidence_confidence"];
 
 const DIMENSION_META = {
   demand: {
@@ -118,6 +119,7 @@ const state = {
   metric: "launch_fit",
   cluster: "all",
   route: "all",
+  scoreTier: "all",
   minimumEvidence: 0,
   query: "",
   selected: "IND",
@@ -148,11 +150,54 @@ function metricLabel() {
 function matchingMarkets() {
   const query = state.query.trim().toLowerCase();
   return markets.filter(m => {
-    const matchCluster = state.cluster === "all" || m.cluster.toLowerCase().includes(state.cluster.toLowerCase());
-    const matchRoute = state.route === "all" || m.status === state.route;
-    const matchConfidence = m.ratings.evidence_confidence >= state.minimumEvidence;
-    const matchQuery = !query || (m.country + " " + m.iso3 + " " + m.cluster + " " + m.status + " " + m.buyer + " " + m.target).toLowerCase().includes(query);
-    return matchCluster && matchRoute && matchConfidence && matchQuery;
+    // Cluster / Region filter
+    let matchCluster = true;
+    if (state.cluster !== "all") {
+      const c = state.cluster.toLowerCase();
+      const mc = (m.cluster || "").toLowerCase();
+      if (c === "mena / africa") {
+        matchCluster = mc.includes("mena") || mc.includes("africa");
+      } else {
+        matchCluster = mc.includes(c);
+      }
+    }
+
+    // Route filter
+    let matchRoute = true;
+    if (state.route !== "all") {
+      const s = (m.status || "").toLowerCase();
+      if (state.route === "enterprise") {
+        matchRoute = s.includes("enterprise") || s.includes("premium");
+      } else if (state.route === "nearshoring") {
+        matchRoute = s.includes("nearshor") || s.includes("remote-work");
+      } else if (state.route === "bpo") {
+        matchRoute = s.includes("bpo") || s.includes("services");
+      } else if (state.route === "validation") {
+        matchRoute = s.includes("validation") || s.includes("home");
+      } else {
+        matchRoute = s.includes(state.route.toLowerCase());
+      }
+    }
+
+    // Score Tier filter
+    let matchScore = true;
+    const fit = m.derived ? m.derived.launch_fit : 0;
+    if (state.scoreTier === "tier1") {
+      matchScore = fit >= 7.5;
+    } else if (state.scoreTier === "tier2") {
+      matchScore = fit >= 6.0 && fit < 7.5;
+    } else if (state.scoreTier === "tier3") {
+      matchScore = fit < 6.0;
+    }
+
+    // Confidence
+    const matchConfidence = (m.ratings?.evidence_confidence ?? 0) >= state.minimumEvidence;
+
+    // Search query
+    const iso2Code = (ISO2[m.iso3] || "").toLowerCase();
+    const matchQuery = !query || (m.country + " " + m.iso3 + " " + iso2Code + " " + m.cluster + " " + m.status + " " + m.buyer + " " + m.target).toLowerCase().includes(query);
+
+    return matchCluster && matchRoute && matchScore && matchConfidence && matchQuery;
   });
 }
 
@@ -745,145 +790,85 @@ function renderMap() {
 }
 
 function renderKPIs(shown) {
-  $("kpiShownCount").textContent = shown.length;
-  $("kpiMetricName").textContent = metricLabel();
+  if ($("kpiShownCount")) $("kpiShownCount").textContent = shown.length;
+  if ($("kpiMetricName")) $("kpiMetricName").textContent = metricLabel();
 
   const sorted = shown.slice().sort((a, b) => metricValue(b) - metricValue(a));
   const leader = sorted[0];
-  if (leader) {
-    $("kpiLeader").textContent = `Top: ${leader.country} (${metricValue(leader)}${state.metric === "ef_2025" ? "" : " / 10"})`;
-  } else {
+  if (leader && $("kpiLeader")) {
+    $("kpiLeader").textContent = `Top: ${leader.country} (${metricValue(leader)}${state.metric === "ef_2025" ? "" : " / 10"}) ▾`;
+  } else if ($("kpiLeader")) {
     $("kpiLeader").textContent = "—";
   }
 
   const selectedMarket = markets.find(m => m.iso3 === state.selected);
   if (selectedMarket) {
-    $("kpiSelectedCountry").textContent = `${selectedMarket.country} ${flag(selectedMarket.iso3)}`;
-    $("kpiSelectedRoute").textContent = selectedMarket.status;
+    const iso2Code = ISO2[selectedMarket.iso3] || selectedMarket.iso3;
+    if ($("kpiSelectedCountry")) $("kpiSelectedCountry").textContent = `${selectedMarket.country} (${iso2Code})`;
+    if ($("kpiSelectedRoute")) $("kpiSelectedRoute").textContent = `${flag(selectedMarket.iso3)} ${selectedMarket.status}`;
+  }
+}
+
+function renderFloatingDetail(market) {
+  if (!market) {
+    market = markets.find(m => m.iso3 === state.selected) || markets[0];
+  }
+  const card = $("floatingMarketCard");
+  if (!card) return;
+  if (!market) {
+    card.style.display = "none";
+    return;
+  }
+  card.style.display = "block";
+
+  const iso2Code = ISO2[market.iso3] || market.iso3;
+  if ($("floatingFlag")) $("floatingFlag").textContent = flag(market.iso3);
+  if ($("floatingCountryName")) $("floatingCountryName").textContent = `${market.country} (${iso2Code})`;
+  if ($("floatingCountryRegion")) $("floatingCountryRegion").textContent = market.cluster;
+
+  const fitScore = market.derived ? market.derived.launch_fit : 0;
+  if ($("floatingScoreBig")) $("floatingScoreBig").textContent = fitScore;
+  if ($("floatingScoreBar")) $("floatingScoreBar").style.width = `${Math.min(100, fitScore * 10)}%`;
+
+  const dimList = $("floatingDimensionsList");
+  if (dimList) {
+    const dimDefs = [
+      { key: "demand", label: "Demand", weight: "30%" },
+      { key: "paid_conversion", label: "Paid Conversion", weight: "20%" },
+      { key: "distribution", label: "B2B Fit", weight: "20%" },
+      { key: "whitespace", label: "Whitespace", weight: "15%" },
+      { key: "delivery", label: "Delivery", weight: "10%" },
+      { key: "feasibility", label: "Feasibility", weight: "5%" },
+      { key: "evidence_confidence", label: "Evidence Conf.", weight: "Diag" }
+    ];
+    dimList.innerHTML = dimDefs.map(d => {
+      const val = market.ratings ? (market.ratings[d.key] ?? 0) : 0;
+      const pct = Math.min(100, val * 10);
+      const color = val >= 8 ? "#10b981" : val >= 5 ? "#2563eb" : "#f59e0b";
+      return `
+        <div class="floating-dim-row" title="${esc(DIMENSION_META[d.key]?.title || d.label)} (${d.weight}): ${val}/10">
+          <span class="floating-dim-label">${esc(d.label)}</span>
+          <div class="floating-dim-track">
+            <div class="floating-dim-fill" style="width: ${pct}%; background: ${color};"></div>
+          </div>
+          <span class="floating-dim-val">${val}</span>
+        </div>
+      `;
+    }).join("");
   }
 }
 
 function renderDetail() {
   const market = markets.find(m => m.iso3 === state.selected);
-  if (!market) {
-    $("marketDetail").hidden = true;
-    $("emptyDetail").hidden = false;
-    return;
-  }
-
-  const def = data.application.metric_definitions[state.metric];
-  const curVal = metricValue(market);
-  const isCompared = state.compare.includes(market.iso3);
-
-  const dimensionRows = COMPARE_KEYS.map(k => {
-    const val = market.ratings[k];
-    const pct = val * 10;
-    const meta = DIMENSION_META[k];
-    const tip = meta ? `${meta.title} (${meta.weight}): ${meta.definition}` : "";
-    return `
-      <div class="dimension-row" title="${esc(tip)}" style="cursor:help;">
-        <span class="dim-label">${esc(RATING_LABELS[k])}</span>
-        <div class="dim-track"><div class="dim-fill" style="width: ${pct}%;"></div></div>
-        <span class="dim-val">${val}</span>
-      </div>`;
-  }).join("");
-
-  const sourcesMarkup = market.sources.map(ref => {
-    const s = sourceFor(ref);
-    return `<a class="source-pill" href="${esc(s.url)}" target="_blank" rel="noreferrer" title="${esc(s.use)}">🔗 ${esc(s.id.replaceAll("_", " "))} ↗</a>`;
-  }).join("");
-
-  $("marketDetail").innerHTML = `
-    <div class="detail-header">
-      <div class="detail-title">
-        <span class="detail-flag">${flag(market.iso3)}</span>
-        <div>
-          <h3>${esc(market.country)}</h3>
-          <p>${esc(market.cluster)} · ISO: <strong>${esc(market.iso3)}</strong></p>
-        </div>
-      </div>
-      <span class="route-badge">${esc(market.status)}</span>
-    </div>
-
-    <!-- Active Metric Spotlight -->
-    <div class="metric-spotlight">
-      <div class="spotlight-info">
-        <h4>${esc(def.label)}</h4>
-        <p>${esc(def.higher_is)}</p>
-      </div>
-      <div class="spotlight-score">${esc(curVal)}${state.metric === "ef_2025" ? "" : "<span style='font-size:16px;font-weight:600;color:var(--muted)'>/10</span>"}</div>
-    </div>
-
-    <!-- 6 Assessment Dimensions -->
-    <div class="info-block">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <h4 style="margin:0;">Evaluation Dimensions</h4>
-        <button class="btn btn-mini open-methodology-btn" type="button" style="font-size:11px;padding:2px 8px;">📊 Scoring Rubric</button>
-      </div>
-      <div class="detail-dimensions">
-        ${dimensionRows}
-        <div class="dimension-row" style="margin-top:4px;cursor:help;" title="${esc(DIMENSION_META.evidence_confidence.definition)}">
-          <span class="dim-label">🛡️ Evidence Conf.</span>
-          <div class="dim-track"><div class="dim-fill" style="width: ${market.ratings.evidence_confidence * 10}%; background: var(--accent-2);"></div></div>
-          <span class="dim-val">${market.ratings.evidence_confidence}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Commercial Deep Dive -->
-    <div class="info-block">
-      <h4>🎯 Target Role & Outcome</h4>
-      <p>${esc(market.target)}</p>
-    </div>
-
-    <div class="info-block">
-      <h4>💳 Likely Payer Reality</h4>
-      <p>${esc(market.buyer)}</p>
-    </div>
-
-    <div class="info-block">
-      <h4>⚔️ Incumbent Supply & Risk</h4>
-      <p style="margin-bottom:6px;"><strong>Supply:</strong> ${esc(market.supply)}</p>
-      <p><strong>Main Risk:</strong> ${esc(market.risk)}</p>
-    </div>
-
-    <div class="info-block">
-      <h4>📚 Verified Evidence Sources</h4>
-      <div class="source-pills">${sourcesMarkup}</div>
-    </div>
-
-    <div class="detail-actions">
-      <button id="compareBtn" class="btn ${isCompared ? 'btn-primary' : ''}" type="button">
-        ${isCompared ? "✓ Compared" : "+ Compare"}
-      </button>
-      <button id="exportCountryBtn" class="btn" type="button">
-        📥 Export (.json)
-      </button>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-      <button id="detailAskAiBtn" class="btn btn-ai-sparkle" type="button" title="Ask AI Copilot about ${esc(market.country)}">
-        ✨ Ask AI Copilot
-      </button>
-      <button id="openArticleBtn" class="btn btn-primary" type="button">
-        📖 Read Dossier
-      </button>
-    </div>
-  `;
-
-  $("emptyDetail").hidden = true;
-  $("marketDetail").hidden = false;
-
-  $("openArticleBtn").addEventListener("click", () => openArticle(market.iso3));
-  $("detailAskAiBtn").addEventListener("click", () => openAiChat(market.iso3));
-  $("compareBtn").addEventListener("click", () => toggleCompare(market.iso3));
-  $("exportCountryBtn").addEventListener("click", () => {
-    download(`esl-market-${market.iso3.toLowerCase()}.json`, JSON.stringify(market, null, 2), "application/json");
-  });
+  renderFloatingDetail(market);
 }
 
 function renderTable() {
   let list = matchingMarkets().slice();
-  $("thMetricLabel").textContent = metricLabel();
+  if ($("thMetricLabel")) {
+    const label = metricLabel();
+    $("thMetricLabel").innerHTML = esc(label).toUpperCase().replace(/\s+/, "<br>");
+  }
 
   list.sort((a, b) => {
     let va, vb;
@@ -894,6 +879,8 @@ function renderTable() {
       case "paid": va = a.ratings.paid_conversion; vb = b.ratings.paid_conversion; break;
       case "b2b": va = a.ratings.distribution; vb = b.ratings.distribution; break;
       case "whitespace": va = a.ratings.whitespace; vb = b.ratings.whitespace; break;
+      case "delivery": va = a.ratings.delivery; vb = b.ratings.delivery; break;
+      case "feasibility": va = a.ratings.feasibility; vb = b.ratings.feasibility; break;
       case "evidence": va = a.ratings.evidence_confidence; vb = b.ratings.evidence_confidence; break;
       case "currentMetric":
       default:
@@ -905,88 +892,186 @@ function renderTable() {
     return state.sortAsc ? va - vb : vb - va;
   });
 
-  $("marketRows").innerHTML = list.map(m => {
-    const curVal = metricValue(m);
+  const rows = list.map((m, idx) => {
     const isCompared = state.compare.includes(m.iso3);
     const isSelected = m.iso3 === state.selected;
+    const curVal = metricValue(m);
+    const iso2Code = ISO2[m.iso3] || m.iso3;
+
     return `
-      <tr class="${isSelected ? 'tr-selected' : ''}">
+      <tr class="${isSelected ? 'selected' : ''}" data-row-select="${m.iso3}" style="cursor:pointer;">
+        <td style="color:var(--muted);font-weight:700;font-size:11px;">${idx + 1}</td>
         <td>
-          <div class="td-country" data-select="${m.iso3}">
-            <span style="font-size:18px;">${flag(m.iso3)}</span>
+          <div class="table-market-cell">
+            <span class="table-market-flag">${flag(m.iso3)}</span>
             <div>
-              <strong>${esc(m.country)}</strong>
-              <div style="font-size:11px;color:var(--muted);">${esc(m.cluster)}</div>
+              <div class="table-market-name">${esc(m.country)} <span style="font-weight:600;font-size:11px;color:var(--muted)">(${iso2Code})</span></div>
+              <div class="table-market-sub">${esc(m.cluster)}</div>
             </div>
           </div>
         </td>
         <td><span class="td-route">${esc(m.status)}</span></td>
-        <td class="td-score td-current">${esc(curVal)}</td>
-        <td class="td-score">${m.ratings.demand}</td>
-        <td class="td-score">${m.ratings.paid_conversion}</td>
-        <td class="td-score">${m.ratings.distribution}</td>
-        <td class="td-score">${m.ratings.whitespace}</td>
-        <td class="td-score">${m.ratings.evidence_confidence}</td>
-        <td>
-          <button class="btn-mini ${isCompared ? 'active' : ''}" data-compare="${m.iso3}" type="button">
+        <td class="score-bold">${curVal}</td>
+        <td>${m.ratings.demand}</td>
+        <td>${m.ratings.paid_conversion}</td>
+        <td>${m.ratings.distribution}</td>
+        <td>${m.ratings.whitespace}</td>
+        <td>${m.ratings.delivery}</td>
+        <td>${m.ratings.feasibility}</td>
+        <td>${m.ratings.evidence_confidence}</td>
+        <td style="text-align:center;">
+          <button class="btn-table-action ${isCompared ? 'btn-table-added' : 'btn-table-compare'}" data-compare="${m.iso3}" type="button">
             ${isCompared ? "Added" : "+ Compare"}
           </button>
-          <button class="btn-mini" data-read-article="${m.iso3}" type="button" title="Read Market Dossier">📖</button>
         </td>
-      </tr>`;
-  }).join("") || `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--muted);">No markets match current filters.</td></tr>`;
+      </tr>
+    `;
+  }).join("");
 
-  document.querySelectorAll("[data-select]").forEach(el => {
-    el.addEventListener("click", () => selectMarket(el.dataset.select, true));
+  $("marketRows").innerHTML = rows || `<tr><td colspan="12" style="text-align:center;padding:24px;color:var(--muted);">No markets match current filters.</td></tr>`;
+
+  document.querySelectorAll("[data-row-select]").forEach(tr => {
+    tr.addEventListener("click", e => {
+      if (e.target.closest("[data-compare]")) return;
+      selectMarket(tr.dataset.rowSelect, false);
+    });
   });
 
-  document.querySelectorAll("[data-compare]").forEach(el => {
-    el.addEventListener("click", () => toggleCompare(el.dataset.compare));
-  });
-
-  document.querySelectorAll("[data-read-article]").forEach(el => {
-    el.addEventListener("click", () => openArticle(el.dataset.readArticle));
+  document.querySelectorAll("[data-compare]").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      toggleCompare(btn.dataset.compare);
+    });
   });
 }
 
 function renderWatchlist() {
-  $("watchlist").innerHTML = data.application.honorable_mentions.map(w => `
-    <li>
-      <strong>${flag(w.iso3)} ${esc(w.country)} <span class="route-badge">${esc(w.iso3)}</span></strong>
-      <span>${esc(w.why)}</span>
-    </li>
-  `).join("");
+  if (!data?.application?.honorable_mentions || !$("watchlist")) return;
+  $("watchlist").innerHTML = data.application.honorable_mentions.map(w => {
+    const iso2Code = ISO2[w.iso3] || w.iso3;
+    return `
+      <li class="watchlist-item" data-watchlist="${w.iso3}">
+        <span class="watchlist-flag">${flag(w.iso3)}</span>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span class="watchlist-title">${esc(w.country)}</span>
+            <span class="watchlist-iso">${esc(w.iso3)}</span>
+          </div>
+          <div class="watchlist-why">${esc(w.why)}</div>
+        </div>
+      </li>
+    `;
+  }).join("");
 }
 
 function renderCompare() {
   const selected = state.compare.map(iso => markets.find(m => m.iso3 === iso)).filter(Boolean);
-  $("compareSection").hidden = selected.length === 0;
+  const container = $("comparisonGrid");
+  if (!container) return;
 
-  $("comparisonGrid").innerHTML = selected.map(m => {
-    const bars = COMPARE_KEYS.map(k => `
-      <div class="dimension-row" style="margin-bottom:5px;">
-        <span class="dim-label" style="width:85px;font-size:11px;">${esc(RATING_LABELS[k])}</span>
-        <div class="dim-track"><div class="dim-fill" style="width: ${m.ratings[k] * 10}%;"></div></div>
-        <span class="dim-val" style="font-size:11px;">${m.ratings[k]}</span>
-      </div>`).join("");
+  if (selected.length === 0) {
+    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:28px;color:var(--muted);background:var(--surface-2);border-radius:10px;">No markets selected for comparison. Click "+ Compare" on any market in the table to add up to 3 side-by-side.</div>`;
+    return;
+  }
+
+  container.innerHTML = selected.map(m => {
+    const fitScore = m.derived ? m.derived.launch_fit : 0;
+    const iso2Code = ISO2[m.iso3] || m.iso3;
+    const dimRows = [
+      { key: "demand", label: "Demand" },
+      { key: "paid_conversion", label: "Paid Conversion" },
+      { key: "distribution", label: "B2B Fit" },
+      { key: "whitespace", label: "Whitespace" },
+      { key: "delivery", label: "Delivery" },
+      { key: "feasibility", label: "Feasibility" },
+      { key: "evidence_confidence", label: "Evidence" }
+    ].map(d => {
+      const val = m.ratings ? (m.ratings[d.key] ?? 0) : 0;
+      const pct = Math.min(100, val * 10);
+      const color = val >= 8 ? "#10b981" : val >= 5 ? "#2563eb" : "#f59e0b";
+      return `
+        <div class="comp-dim-row">
+          <span class="comp-dim-label">${esc(d.label)}</span>
+          <div class="comp-dim-track">
+            <div class="comp-dim-fill" style="width: ${pct}%; background: ${color};"></div>
+          </div>
+          <span class="comp-dim-val">${val}</span>
+        </div>
+      `;
+    }).join("");
 
     return `
       <article class="comparison-card">
-        <header>
-          <h4>${flag(m.iso3)} ${esc(m.country)}</h4>
-          <button class="btn-mini" data-remove-compare="${m.iso3}" type="button">✕</button>
-        </header>
-        <div class="comp-route">${esc(m.status)}</div>
-        <div style="margin-bottom:12px;">${bars}</div>
-        <button class="btn btn-mini" style="width:100%;" data-select="${m.iso3}" type="button">Inspect Market</button>
-      </article>`;
+        <div class="comp-card-header">
+          <span class="comp-flag">${flag(m.iso3)}</span>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h4 class="comp-card-title">${esc(m.country)} (${iso2Code})</h4>
+              <button class="btn-mini btn-comp-remove" data-remove-compare="${m.iso3}" type="button" title="Remove from comparison" style="padding:2px 7px;font-size:11px;cursor:pointer;">✕</button>
+            </div>
+            <div class="comp-route">${esc(m.status)}</div>
+          </div>
+        </div>
+
+        <div class="comp-score-section">
+          <div class="comp-score-row">
+            <span class="comp-score-label">Launch Fit</span>
+            <span class="comp-score-val">${fitScore} <span style="font-size:12px;color:var(--muted)">/ 10</span></span>
+          </div>
+          <div class="floating-bar-track">
+            <div class="floating-bar-fill" style="width: ${fitScore * 10}%;"></div>
+          </div>
+        </div>
+
+        <div class="comp-dimensions-list">
+          ${dimRows}
+        </div>
+
+        <div class="comp-card-actions">
+          <button class="btn btn-mini btn-primary" data-comp-profile="${m.iso3}" type="button" style="width:100%;">
+            View Full Profile →
+          </button>
+        </div>
+      </article>
+    `;
   }).join("");
 
   document.querySelectorAll("[data-remove-compare]").forEach(btn => {
-    btn.addEventListener("click", () => toggleCompare(btn.dataset.removeCompare));
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      toggleCompare(btn.dataset.removeCompare);
+    });
   });
-  document.querySelectorAll(".comparison-card [data-select]").forEach(btn => {
-    btn.addEventListener("click", () => selectMarket(btn.dataset.select, true));
+
+  document.querySelectorAll("[data-comp-profile]").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      selectMarket(btn.dataset.compProfile, false);
+      openArticle(btn.dataset.compProfile);
+    });
+  });
+}
+
+function renderInsights() {
+  const container = $("topCandidatesList");
+  if (!container || !markets) return;
+  const top3 = markets.slice().sort((a, b) => (b.derived?.launch_fit || 0) - (a.derived?.launch_fit || 0)).slice(0, 3);
+
+  container.innerHTML = top3.map((m, idx) => `
+    <div class="top-candidate-item" style="cursor:pointer;" data-select-candidate="${m.iso3}">
+      <span class="top-candidate-num">${idx + 1}.</span>
+      <span style="font-size:16px;">${flag(m.iso3)}</span>
+      <span class="top-candidate-name">${esc(m.country)}</span>
+      <span class="top-candidate-route">· ${esc(m.cluster)}</span>
+      <span class="top-candidate-score">${m.derived.launch_fit} / 10</span>
+    </div>
+  `).join("");
+
+  document.querySelectorAll("[data-select-candidate]").forEach(el => {
+    el.addEventListener("click", () => {
+      selectMarket(el.dataset.selectCandidate, false);
+      openArticle(el.dataset.selectCandidate);
+    });
   });
 }
 
@@ -1001,14 +1086,17 @@ function toggleCompare(iso) {
   }
   renderCompare();
   renderTable();
-  renderDetail();
 }
 
 function selectMarket(iso, scroll = false) {
   state.selected = iso;
+  const m = markets.find(x => x.iso3 === iso);
+  if (m) {
+    renderFloatingDetail(m);
+  }
   renderMap();
-  renderDetail();
   renderTable();
+  renderKPIs(matchingMarkets());
   if (typeof updateAiContextDisplay === "function") {
     if (aiState.contextCountry !== null) {
       aiState.contextCountry = iso;
@@ -1016,16 +1104,15 @@ function selectMarket(iso, scroll = false) {
     updateAiContextDisplay();
   }
   if (scroll) {
-    $("detailPanel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    const tableRow = document.querySelector(`[data-row-select="${iso}"]`);
+    if (tableRow) {
+      tableRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
   }
 }
 
 function setMetric(metricKey) {
   state.metric = metricKey;
-  const def = data.application.metric_definitions[metricKey];
-  $("metricTitle").textContent = def.label;
-  $("metricDefinition").textContent = def.higher_is;
-  $("metricTypeBadge").textContent = (def.type || "ASSESSED").toUpperCase();
 
   document.querySelectorAll(".metric-chip").forEach(chip => {
     chip.classList.toggle("active", chip.dataset.metric === metricKey);
@@ -1033,7 +1120,8 @@ function setMetric(metricKey) {
 
   renderMap();
   renderTable();
-  renderDetail();
+  renderKPIs(matchingMarkets());
+  renderFloatingDetail();
 }
 
 function setTheme(themeKey) {
@@ -1058,54 +1146,178 @@ function setupEvents() {
     chip.addEventListener("click", () => setMetric(chip.dataset.metric));
   });
 
-  // Cluster Filter Tabs
-  document.querySelectorAll(".cluster-tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      document.querySelectorAll(".cluster-tab").forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      state.cluster = tab.dataset.cluster;
+  // Top Search Input & Table Search Input Sync
+  if ($("topSearchInput")) {
+    $("topSearchInput").addEventListener("input", e => {
+      state.query = e.target.value;
+      if ($("tableSearchInput")) $("tableSearchInput").value = state.query;
       renderMap();
       renderTable();
       renderKPIs(matchingMarkets());
     });
+  }
+
+  if ($("tableSearchInput")) {
+    $("tableSearchInput").addEventListener("input", e => {
+      state.query = e.target.value;
+      if ($("topSearchInput")) $("topSearchInput").value = state.query;
+      renderMap();
+      renderTable();
+      renderKPIs(matchingMarkets());
+    });
+  }
+
+  // Region / Cluster Selects Sync
+  if ($("mapRegionSelect")) {
+    $("mapRegionSelect").addEventListener("change", e => {
+      state.cluster = e.target.value;
+      if ($("filterRegion")) $("filterRegion").value = state.cluster;
+      renderMap();
+      renderTable();
+      renderKPIs(matchingMarkets());
+    });
+  }
+
+  if ($("filterRegion")) {
+    $("filterRegion").addEventListener("change", e => {
+      state.cluster = e.target.value;
+      if ($("mapRegionSelect")) $("mapRegionSelect").value = state.cluster;
+      renderMap();
+      renderTable();
+      renderKPIs(matchingMarkets());
+    });
+  }
+
+  // Strategic Route Filter
+  if ($("filterRoute")) {
+    $("filterRoute").addEventListener("change", e => {
+      state.route = e.target.value;
+      renderMap();
+      renderTable();
+      renderKPIs(matchingMarkets());
+    });
+  }
+
+  // Score Tier Filter
+  if ($("filterScore")) {
+    $("filterScore").addEventListener("change", e => {
+      state.scoreTier = e.target.value;
+      renderMap();
+      renderTable();
+      renderKPIs(matchingMarkets());
+    });
+  }
+
+  // Filter Reset Button
+  if ($("filterResetBtn")) {
+    $("filterResetBtn").addEventListener("click", () => {
+      state.query = "";
+      state.cluster = "all";
+      state.route = "all";
+      state.scoreTier = "all";
+      if ($("topSearchInput")) $("topSearchInput").value = "";
+      if ($("tableSearchInput")) $("tableSearchInput").value = "";
+      if ($("mapRegionSelect")) $("mapRegionSelect").value = "all";
+      if ($("filterRegion")) $("filterRegion").value = "all";
+      if ($("filterRoute")) $("filterRoute").value = "all";
+      if ($("filterScore")) $("filterScore").value = "all";
+      renderMap();
+      renderTable();
+      renderKPIs(matchingMarkets());
+    });
+  }
+
+  // Clear Comparison Button
+  if ($("clearCompare")) {
+    $("clearCompare").addEventListener("click", () => {
+      state.compare = [];
+      renderCompare();
+      renderTable();
+    });
+  }
+
+  // Floating Market Detail Card Controls
+  if ($("closeFloatingCardBtn")) {
+    $("closeFloatingCardBtn").addEventListener("click", () => {
+      if ($("floatingMarketCard")) $("floatingMarketCard").style.display = "none";
+    });
+  }
+
+  if ($("floatingViewProfileBtn")) {
+    $("floatingViewProfileBtn").addEventListener("click", () => {
+      openArticle(state.selected);
+    });
+  }
+
+  // Insights Methodology & View All Links
+  if ($("insightsMethodologyBtn")) {
+    $("insightsMethodologyBtn").addEventListener("click", openMethodologyModal);
+  }
+
+  if ($("viewAllWatchlistBtn")) {
+    $("viewAllWatchlistBtn").addEventListener("click", () => {
+      openMethodologyModal();
+    });
+  }
+
+  // Sidebar Nav Links
+  document.querySelectorAll(".sidebar-nav-item").forEach(item => {
+    item.addEventListener("click", () => {
+      document.querySelectorAll(".sidebar-nav-item").forEach(el => el.classList.remove("active"));
+      item.classList.add("active");
+    });
   });
 
-  // Search Input
-  $("searchInput").addEventListener("input", e => {
-    state.query = e.target.value;
-    renderMap();
-    renderTable();
-    renderKPIs(matchingMarkets());
-  });
+  if ($("navMethodology")) {
+    $("navMethodology").addEventListener("click", openMethodologyModal);
+  }
 
   // Export
-  $("exportButton").addEventListener("click", () => {
-    download("esl-atlas-filtered-markets.json", JSON.stringify({
-      exported_at: new Date().toISOString(),
-      metric: state.metric,
-      filters: { cluster: state.cluster, query: state.query },
-      markets: matchingMarkets()
-    }, null, 2), "application/json");
-  });
+  if ($("exportButton")) {
+    $("exportButton").addEventListener("click", () => {
+      download("esl-atlas-filtered-markets.json", JSON.stringify({
+        exported_at: new Date().toISOString(),
+        metric: state.metric,
+        filters: { cluster: state.cluster, route: state.route, scoreTier: state.scoreTier, query: state.query },
+        markets: matchingMarkets()
+      }, null, 2), "application/json");
+    });
+  }
 
   // Read Mode Header & Modal Navigation
-  $("readModeHeaderBtn").addEventListener("click", () => openArticle(state.selected));
-  $("closeArticleBtn").addEventListener("click", closeArticle);
-  $("articlePrevBtn").addEventListener("click", () => navArticle(-1));
-  $("articleNextBtn").addEventListener("click", () => navArticle(1));
-  $("articleModal").addEventListener("click", e => {
-    if (e.target === $("articleModal")) closeArticle();
-  });
+  if ($("readModeHeaderBtn")) {
+    $("readModeHeaderBtn").addEventListener("click", () => openArticle(state.selected));
+  }
+  if ($("closeArticleBtn")) {
+    $("closeArticleBtn").addEventListener("click", closeArticle);
+  }
+  if ($("articlePrevBtn")) {
+    $("articlePrevBtn").addEventListener("click", () => navArticle(-1));
+  }
+  if ($("articleNextBtn")) {
+    $("articleNextBtn").addEventListener("click", () => navArticle(1));
+  }
+  if ($("articleModal")) {
+    $("articleModal").addEventListener("click", e => {
+      if (e.target === $("articleModal")) closeArticle();
+    });
+  }
 
   // Methodology & Terms Modal Navigation
-  $("methodologyHeaderBtn").addEventListener("click", openMethodologyModal);
+  if ($("methodologyHeaderBtn")) {
+    $("methodologyHeaderBtn").addEventListener("click", openMethodologyModal);
+  }
   if ($("articleMethodologyBtn")) {
     $("articleMethodologyBtn").addEventListener("click", openMethodologyModal);
   }
-  $("closeMethodologyBtn").addEventListener("click", closeMethodologyModal);
-  $("methodologyModal").addEventListener("click", e => {
-    if (e.target === $("methodologyModal")) closeMethodologyModal();
-  });
+  if ($("closeMethodologyBtn")) {
+    $("closeMethodologyBtn").addEventListener("click", closeMethodologyModal);
+  }
+  if ($("methodologyModal")) {
+    $("methodologyModal").addEventListener("click", e => {
+      if (e.target === $("methodologyModal")) closeMethodologyModal();
+    });
+  }
 
   // Delegated handler for any ".open-methodology-btn" buttons inside articles or panels
   document.addEventListener("click", e => {
@@ -1625,8 +1837,9 @@ async function init() {
 
   setupEvents();
   renderWatchlist();
+  renderInsights();
+  renderFloatingDetail();
   renderTable();
-  renderDetail();
   renderCompare();
   updateAiContextDisplay();
   renderAiMessages();
