@@ -110,6 +110,32 @@ const DIMENSION_META = {
       mid: "5–7: Sourced from reputable secondary industry reports (EF EPI, Statista, global bank research) and cross-regional comparisons.",
       low: "1–4: Inferred from regional proxies or preliminary desk assumptions. Requires field validation before committing capital."
     }
+  },
+  launch_fit: {
+    title: "Composite Launch Fit",
+    icon: "🎯",
+    weight: "Composite Score",
+    weightNum: 1.0,
+    definition: "Synthesized market readiness score reflecting outcome urgency, monetization ability, channel reach, and competitive whitespace.",
+    metricsTracked: "Formula: 30% Demand + 20% Paid Conversion + 20% B2B Fit + 15% Whitespace + 10% Delivery + 5% Feasibility.",
+    rubric: {
+      high: "8–10 (Tier 1 Priority): Exceptional job-driven urgency, strong B2B/SaaS willingness to pay, scalable channels. Immediate expansion target.",
+      mid: "6–7.9 (Tier 2 Selective): Solid market need, but gated by unit economics, local incumbents, or pricing. Best entered via corporate partnerships.",
+      low: "1–5.9 (Tier 3 Watchlist): Challenging commercial profile (low ARPU, steep ad CAC, or high payment friction). Monitored opportunistically."
+    }
+  },
+  ef_2025: {
+    title: "EF EPI 2025 Score",
+    icon: "🌐",
+    weight: "Context Benchmark",
+    weightNum: 0,
+    definition: "Self-selected score from EF English Proficiency Index (400–700 scale). Measures test-taker performance, NOT national workforce fluency or market demand.",
+    metricsTracked: "Standardized EF test scores across self-selected online test-takers globally.",
+    rubric: {
+      high: "600+ (Very High): Widespread general English familiarity; market need shifts to niche executive communication.",
+      mid: "500–599 (Moderate): Established urban familiarity; strong demand for career-advancing spoken fluency.",
+      low: "< 500 (Low / Very Low): Low general proficiency, yet often the HIGHEST commercial urgency for career advancement."
+    }
   }
 };
 
@@ -745,20 +771,20 @@ function navArticle(direction) {
   selectMarket(markets[nextIdx].iso3, false);
 }
 
-/* Theme-Aware Vibrant Heatmap Palettes */
+/* Theme-Aware Vibrant Heatmap Palettes (0 = Alert/Red, 10 = High/Green) */
 function getThemePalette(theme) {
   switch (theme) {
     case "ops":
-      return ["#163820", "#235c34", "#388e3c", "#76c043", "#b7ff65", "#ffaa00", "#ff3333"];
+      return ["#ef4444", "#ffaa00", "#b7ff65", "#76c043", "#388e3c", "#235c34"];
     case "satellite":
-      return ["#034078", "#0077b6", "#00b4d8", "#48cae4", "#00f5a0", "#ffd166", "#ef476f"];
+      return ["#ef476f", "#ffd166", "#00f5a0", "#48cae4", "#00b4d8", "#0077b6"];
     case "field":
-      return ["#1e3a8a", "#0284c7", "#0d9488", "#10b981", "#f59e0b", "#f43f5e", "#e11d48"];
+      return ["#f43f5e", "#f97316", "#f59e0b", "#10b981", "#0284c7", "#38bdf8"];
     case "cyberpunk":
-      return ["#3b0764", "#6b21a8", "#a855f7", "#ec4899", "#ff2a85", "#00f0ff", "#ffe600"];
+      return ["#ff0055", "#ff2a85", "#ec4899", "#a855f7", "#00f0ff", "#ffe600"];
     case "briefing":
     default:
-      return ["#38bdf8", "#06b6d4", "#10b981", "#eab308", "#f97316", "#ef4444"];
+      return ["#ef4444", "#f97316", "#eab308", "#84cc16", "#10b981", "#059669"];
   }
 }
 
@@ -910,6 +936,146 @@ function renderDetail() {
   renderFloatingDetail(market);
 }
 
+function getHeaderTooltipHtml(metricKey) {
+  const meta = DIMENSION_META[metricKey];
+  if (!meta) return "";
+  return `
+    <div class="tip-topline">
+      <div class="tip-country">
+        <span style="font-size:16px;">${meta.icon || "📊"}</span>
+        <span class="tip-header-title">${esc(meta.title)}</span>
+      </div>
+      <span class="tip-header-weight">${esc(meta.weight)}</span>
+    </div>
+    <p class="tip-header-def">${esc(meta.definition)}</p>
+    <div style="font-size:11px; margin-bottom:6px; color:var(--text-dim);">
+      <strong>Signals Tracked:</strong> ${esc(meta.metricsTracked)}
+    </div>
+    ${meta.rubric ? `
+      <div class="tip-rubric-box">
+        <div class="tip-rubric-high"><strong>High (8–10):</strong> ${esc(meta.rubric.high)}</div>
+        <div class="tip-rubric-mid"><strong>Mid (5–7):</strong> ${esc(meta.rubric.mid)}</div>
+        <div class="tip-rubric-low"><strong>Low (1–4):</strong> ${esc(meta.rubric.low)}</div>
+      </div>
+    ` : ""}
+  `;
+}
+
+function getCellTooltipHtml(iso, key) {
+  const m = markets.find(x => x.iso3 === iso);
+  if (!m) return "";
+  const meta = DIMENSION_META[key] || { title: metricLabel(), icon: "📊" };
+  const iso2Code = ISO2[m.iso3] || m.iso3;
+
+  let val, scoreText, color;
+  if (key === "launch_fit") {
+    val = m.derived.launch_fit;
+    scoreText = `${val.toFixed(2)} / 10`;
+    color = getHeatColor(val, 0, 10);
+  } else if (key === "ef_2025") {
+    val = m.ef_2025;
+    scoreText = `${val} (${m.band})`;
+    color = getHeatColor(val, 400, 650);
+  } else {
+    val = m.ratings ? (m.ratings[key] ?? 0) : 0;
+    scoreText = `${val} / 10`;
+    color = getHeatColor(val, 0, 10);
+  }
+
+  let reason = "";
+  let evidence = "";
+
+  switch (key) {
+    case "demand":
+      reason = `<strong>Job-linked necessity:</strong> ${esc(m.demand_evidence || m.target)}`;
+      evidence = `Target cohort & outcome: ${esc(m.target)}`;
+      break;
+    case "paid_conversion":
+      reason = `<strong>Commercial buying power:</strong> ${esc(m.buyer)}`;
+      evidence = `Subscription willingness: Based on digital payments, household disposable income, and corporate L&D subsidies.`;
+      break;
+    case "distribution":
+      reason = `<strong>B2B / Institutional channel:</strong> ${esc(m.buyer)}`;
+      evidence = `Target sales route: ${esc(m.target)}`;
+      break;
+    case "whitespace":
+      reason = `<strong>Existing / substitute supply:</strong> ${esc(m.supply)}`;
+      evidence = val <= 3 ? "Red ocean: heavily entrenched competitors with aggressive ad spending." : (val >= 7 ? "Greenfield: low voice AI density; high openness for roleplay." : "Moderate: established offline tutoring, open for voice AI roleplay.");
+      break;
+    case "delivery":
+      reason = `<strong>Digital infrastructure:</strong> High-speed 4G/5G mobile data and friction-free payment rails for sub-800ms WebRTC voice AI.`;
+      evidence = `Score ${val}/10 indicates ${val >= 8 ? "reliable low-latency voice streaming and instant mobile payments" : (val >= 6 ? "stable metro connectivity with minor regional drop-offs" : "mobile data latency or checkout conversion hurdles")}.`;
+      break;
+    case "feasibility":
+      reason = `<strong>Operating hurdles & risk:</strong> ${esc(m.risk)}`;
+      evidence = `Localization / Regulatory: Speech recognition accent adaptation, data privacy laws, and cross-border billing.`;
+      break;
+    case "evidence_confidence":
+      reason = `<strong>Empirical rigor:</strong> Verified across ${m.sources?.length || 2} independent primary & secondary source citations.`;
+      evidence = `Diagnostic score: Evidence depth is evaluated separately to avoid penalizing high-potential early markets.`;
+      break;
+    case "launch_fit":
+    default:
+      reason = `<strong>Strategic Route:</strong> ${esc(m.status)}`;
+      evidence = `Composite formula: (0.30 × Demand) + (0.20 × Paid) + (0.20 × B2B) + (0.15 × Gap) + (0.10 × Delivery) + (0.05 × Feasibility)`;
+      break;
+  }
+
+  return `
+    <div class="tip-topline">
+      <div class="tip-country">
+        ${flag(m.iso3)}
+        <span>${esc(m.country)} (${iso2Code})</span>
+      </div>
+      <span class="tip-dim-badge" style="color:${color}; border-color:${color};">${esc(meta.title)}: <strong>${scoreText}</strong></span>
+    </div>
+    <div class="tip-reason">${reason}</div>
+    ${evidence ? `<div class="tip-evidence-callout">${evidence}</div>` : ""}
+  `;
+}
+
+function showTableTooltip(e, html) {
+  const tip = $("richTableTooltip");
+  if (!tip) return;
+  tip.innerHTML = html;
+  tip.hidden = false;
+  tip.classList.add("visible");
+  positionTableTooltip(e);
+}
+
+function positionTableTooltip(e) {
+  const tip = $("richTableTooltip");
+  if (!tip || tip.hidden) return;
+  const tipWidth = tip.offsetWidth || 310;
+  const tipHeight = tip.offsetHeight || 160;
+  const pad = 14;
+
+  let x = e.clientX + 16;
+  let y = e.clientY + 16;
+
+  // Prevent right overflow
+  if (x + tipWidth > window.innerWidth - pad) {
+    x = e.clientX - tipWidth - 16;
+  }
+  // Prevent bottom overflow
+  if (y + tipHeight > window.innerHeight - pad) {
+    y = e.clientY - tipHeight - 16;
+  }
+  // Prevent left/top overflow
+  if (x < pad) x = pad;
+  if (y < pad) y = pad;
+
+  tip.style.left = `${x}px`;
+  tip.style.top = `${y}px`;
+}
+
+function hideTableTooltip() {
+  const tip = $("richTableTooltip");
+  if (!tip) return;
+  tip.classList.remove("visible");
+  tip.hidden = true;
+}
+
 function renderTable() {
   let list = matchingMarkets().slice();
   if ($("thMetricLabel")) {
@@ -960,14 +1126,14 @@ function renderTable() {
         <td class="td-left">
           <span class="route-badge-pill" title="${esc(m.status)}">${esc(m.status)}</span>
         </td>
-        <td>${renderHeatCell(curVal, true)}</td>
-        <td>${renderHeatCell(m.ratings.demand)}</td>
-        <td>${renderHeatCell(m.ratings.paid_conversion)}</td>
-        <td>${renderHeatCell(m.ratings.distribution)}</td>
-        <td>${renderHeatCell(m.ratings.whitespace)}</td>
-        <td>${renderHeatCell(m.ratings.delivery)}</td>
-        <td>${renderHeatCell(m.ratings.feasibility)}</td>
-        <td>${renderHeatCell(m.ratings.evidence_confidence)}</td>
+        <td data-cell-tip="${state.metric}" data-iso="${m.iso3}">${renderHeatCell(curVal, true)}</td>
+        <td data-cell-tip="demand" data-iso="${m.iso3}">${renderHeatCell(m.ratings.demand)}</td>
+        <td data-cell-tip="paid_conversion" data-iso="${m.iso3}">${renderHeatCell(m.ratings.paid_conversion)}</td>
+        <td data-cell-tip="distribution" data-iso="${m.iso3}">${renderHeatCell(m.ratings.distribution)}</td>
+        <td data-cell-tip="whitespace" data-iso="${m.iso3}">${renderHeatCell(m.ratings.whitespace)}</td>
+        <td data-cell-tip="delivery" data-iso="${m.iso3}">${renderHeatCell(m.ratings.delivery)}</td>
+        <td data-cell-tip="feasibility" data-iso="${m.iso3}">${renderHeatCell(m.ratings.feasibility)}</td>
+        <td data-cell-tip="evidence_confidence" data-iso="${m.iso3}">${renderHeatCell(m.ratings.evidence_confidence)}</td>
         <td style="text-align:center;">
           <button class="btn-table-action ${isCompared ? 'btn-table-added' : 'btn-table-compare'}" data-compare="${m.iso3}" type="button">
             ${isCompared ? "Added" : "+ Compare"}
@@ -1190,6 +1356,41 @@ function setTheme(themeKey) {
 }
 
 function setupEvents() {
+  // Delegated hover handlers for rich table tooltips (Definitions & Country Reasons)
+  document.addEventListener("mouseover", e => {
+    const headerEl = e.target.closest("[data-header-tip]");
+    if (headerEl) {
+      const tipKey = headerEl.dataset.headerTip;
+      const html = getHeaderTooltipHtml(tipKey);
+      if (html) showTableTooltip(e, html);
+      return;
+    }
+
+    const cellEl = e.target.closest("[data-cell-tip]");
+    if (cellEl) {
+      const key = cellEl.dataset.cellTip;
+      const iso = cellEl.dataset.iso;
+      const html = getCellTooltipHtml(iso, key);
+      if (html) showTableTooltip(e, html);
+      return;
+    }
+  });
+
+  document.addEventListener("mousemove", e => {
+    if (e.target.closest("[data-header-tip]") || e.target.closest("[data-cell-tip]")) {
+      positionTableTooltip(e);
+    }
+  });
+
+  document.addEventListener("mouseout", e => {
+    const targetEl = e.target.closest("[data-header-tip]") || e.target.closest("[data-cell-tip]");
+    if (targetEl) {
+      if (!e.relatedTarget || !targetEl.contains(e.relatedTarget)) {
+        hideTableTooltip();
+      }
+    }
+  });
+
   // Theme Buttons
   document.querySelectorAll(".theme-btn").forEach(btn => {
     btn.addEventListener("click", () => setTheme(btn.dataset.theme));
@@ -1857,6 +2058,14 @@ async function createMap() {
 
     const geoPath = d3.geoPath(activeProjection);
     mapSvg.attr("viewBox", `0 0 ${width} ${height}`);
+    mapSvg.selectAll("*").remove();
+
+    // Ocean background rect
+    mapSvg.append("rect")
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("class", "map-ocean")
+      .style("fill", "var(--map-bg)");
 
     mapLayer = mapSvg.append("g").attr("class", "map-countries");
 

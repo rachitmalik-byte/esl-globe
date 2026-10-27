@@ -137,7 +137,7 @@
           <button class="metric-chip" data-metric="ef_2025" type="button">🌐 EF EPI 2025</button>
         </nav>
 
-        <!-- Main Map Card with Floating Overlay Detail -->
+        <!-- Main Map Card with Side-by-Side Detail Panel (Card does not block map!) -->
         <section class="map-section-card" id="mapSection">
           <div class="map-card-header">
             <div class="map-card-title-group">
@@ -162,27 +162,29 @@
             </div>
           </div>
 
-          <div id="mapWrap" class="map-wrap">
-            <svg id="worldMap" role="img" aria-label="Interactive world map showing 30 ESL expansion markets"></svg>
-            <div id="mapTooltip" class="map-tooltip" hidden></div>
+          <div class="map-layout-grid">
+            <div id="mapWrap" class="map-wrap">
+              <svg id="worldMap" role="img" aria-label="Interactive world map showing 30 ESL expansion markets"></svg>
+              <div id="mapTooltip" class="map-tooltip" hidden></div>
 
-            <!-- Overhauled Dynamic Legend in bottom-left corner of the map -->
-            <div class="map-corner-legend">
-              <div class="legend-bar-wrap">
-                <div id="legendBar" class="legend-bar"></div>
-                <div id="legendPointer" class="legend-pointer" style="left: 50%;"></div>
-              </div>
-              <div class="legend-ticks">
-                <span id="legendMin">4.9</span>
-                <span id="legendQ1">5.7</span>
-                <span id="legendMid">6.5</span>
-                <span id="legendQ3">7.3</span>
-                <span id="legendMax">8.2</span>
+              <!-- Overhauled Dynamic Legend in bottom-left corner of the map -->
+              <div class="map-corner-legend">
+                <div class="legend-bar-wrap">
+                  <div id="legendBar" class="legend-bar"></div>
+                  <div id="legendPointer" class="legend-pointer" style="left: 50%;"></div>
+                </div>
+                <div class="legend-ticks">
+                  <span id="legendMin">4.9</span>
+                  <span id="legendQ1">5.7</span>
+                  <span id="legendMid">6.5</span>
+                  <span id="legendQ3">7.3</span>
+                  <span id="legendMax">8.2</span>
+                </div>
               </div>
             </div>
 
-            <!-- Floating Overlay Detail Card (Top-Right inside Map) -->
-            <aside id="floatingMarketCard" class="floating-market-card">
+            <!-- Active Market Card (Docked side-by-side next to map) -->
+            <aside id="floatingMarketCard" class="map-detail-panel">
               <div class="floating-card-header">
                 <div class="floating-country-info">
                   <span id="floatingFlag" class="floating-flag">🇮🇳</span>
@@ -191,7 +193,7 @@
                     <p id="floatingCountryRegion">South Asia</p>
                   </div>
                 </div>
-                <button id="closeFloatingCardBtn" class="floating-close-btn" type="button" aria-label="Close detail card">✕</button>
+                <button id="closeFloatingCardBtn" class="floating-close-btn" type="button" aria-label="Reset selection">✕</button>
               </div>
 
               <div class="floating-score-section">
@@ -266,14 +268,14 @@
                     <th scope="col" style="width:36px; text-align:center;">#</th>
                     <th scope="col" data-sort="country" class="th-left" style="min-width:180px;">MARKET</th>
                     <th scope="col" data-sort="status" class="th-left" style="min-width:170px;">STRATEGIC ROUTE</th>
-                    <th scope="col" data-sort="currentMetric" class="th-current-metric" id="thMetricLabel" style="min-width:105px; text-align:center;">COMPOSITE<br>LAUNCH FIT</th>
-                    <th scope="col" data-sort="demand" style="min-width:55px; text-align:center;">DEMAND</th>
-                    <th scope="col" data-sort="paid" style="min-width:55px; text-align:center;">PAID</th>
-                    <th scope="col" data-sort="b2b" style="min-width:55px; text-align:center;">B2B</th>
-                    <th scope="col" data-sort="whitespace" style="min-width:55px; text-align:center;">GAP</th>
-                    <th scope="col" data-sort="delivery" style="min-width:55px; text-align:center;">DELIVERY</th>
-                    <th scope="col" data-sort="feasibility" style="min-width:55px; text-align:center;">FEASIBILITY</th>
-                    <th scope="col" data-sort="evidence" style="min-width:55px; text-align:center;">EVIDENCE</th>
+                    <th scope="col" data-sort="currentMetric" data-header-tip="launch_fit" class="th-current-metric" id="thMetricLabel" style="min-width:105px; text-align:center;">COMPOSITE<br>LAUNCH FIT</th>
+                    <th scope="col" data-sort="demand" data-header-tip="demand" style="min-width:58px; text-align:center;">DEMAND</th>
+                    <th scope="col" data-sort="paid" data-header-tip="paid_conversion" style="min-width:58px; text-align:center;">PAID</th>
+                    <th scope="col" data-sort="b2b" data-header-tip="distribution" style="min-width:58px; text-align:center;">B2B</th>
+                    <th scope="col" data-sort="whitespace" data-header-tip="whitespace" style="min-width:58px; text-align:center;">GAP</th>
+                    <th scope="col" data-sort="delivery" data-header-tip="delivery" style="min-width:58px; text-align:center;">DELIVERY</th>
+                    <th scope="col" data-sort="feasibility" data-header-tip="feasibility" style="min-width:58px; text-align:center;">FEASIBILITY</th>
+                    <th scope="col" data-sort="evidence" data-header-tip="evidence_confidence" style="min-width:58px; text-align:center;">EVIDENCE</th>
                     <th scope="col" style="min-width:105px; text-align:center;">ACTIONS</th>
                   </tr>
                 </thead>
@@ -481,6 +483,9 @@
       </div>
     </footer>
   </aside>
+
+  <!-- Rich Interactive Tooltip for Definitions & Country Reasons -->
+  <div id="richTableTooltip" class="rich-table-tooltip" hidden></div>
 
   <script src="./d3.min.js"></script>
   <script type="module" src="./app.js"></script>
