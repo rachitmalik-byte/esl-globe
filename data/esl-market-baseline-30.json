@@ -1,0 +1,100 @@
+{
+  "dataset": "ESL market baseline — 30 countries",
+  "as_of": "2026-10-27",
+  "purpose": "Evidence-first country screening for an AI-first English learning product with optional human escalation and B2B/B2B2C distribution.",
+  "status": "Stage 1 baseline only. No commercial attractiveness ratings have been assigned yet.",
+  "source_register": [
+    {
+      "id": "EF_EPI_2025",
+      "title": "EF English Proficiency Index 2025",
+      "url": "https://www.ef.com/assetscdn/WIBIwq6RdJvcD9bc8RMd/cefcom-epi-site/reports/2025/ef-epi-2025-english.pdf",
+      "type": "Publisher index; 2.2m online test takers in 123 countries/regions",
+      "use": "Comparable English learner/proficiency signal and annual change",
+      "limitation": "Self-selected online test takers. It does not measure the share of a national population that speaks English or the number of paid English learners.",
+      "confidence": "Medium for cross-market learner signal; not representative population prevalence"
+    },
+    {
+      "id": "WB_FINDEX_2025",
+      "title": "World Bank Global Findex 2025",
+      "url": "https://www.worldbank.org/en/publication/globalfindex/download-data",
+      "type": "Nationally representative survey data, 2024 fieldwork",
+      "use": "Payment readiness: account ownership, digital payments, phone and internet access",
+      "limitation": "Does not report English-learning purchases or subscription willingness-to-pay.",
+      "confidence": "High for the defined payment/access indicators"
+    },
+    {
+      "id": "WB_WDI",
+      "title": "World Development Indicators",
+      "url": "https://databank.worldbank.org/",
+      "type": "Officially recognized international data collection",
+      "use": "GDP per capita PPP, population, labour, internet and service-export indicators",
+      "limitation": "Release dates and coverage differ by field and country.",
+      "confidence": "High for quoted indicators after field/year validation"
+    },
+    {
+      "id": "ITU_IDI_2025",
+      "title": "ITU ICT Development Index 2025",
+      "url": "https://www.itu.int/itu-d/reports/statistics/idi2025/",
+      "type": "UN ICT index, 2023 reference data",
+      "use": "Digital delivery readiness and affordability context",
+      "limitation": "Not a direct measure of app adoption or learning demand; some country values use estimates/imputation.",
+      "confidence": "Medium-high for country digital-readiness comparison"
+    },
+    {
+      "id": "WB_DDS_2025",
+      "title": "World Bank Digital Progress and Trends Report 2025",
+      "url": "https://documents1.worldbank.org/curated/en/099112525160536089/pdf/P505350-59c98ca8-0803-4f23-b470-17f3dab010ab.pdf",
+      "type": "World Bank synthesis using WTO/World Bank/IMF data",
+      "use": "Digital-services, outsourcing and workforce-demand evidence",
+      "limitation": "A sector proxy, not a direct count of English-learning purchasers.",
+      "confidence": "Medium-high for sector direction"
+    },
+    {
+      "id": "KEARNEY_GSLI_2023",
+      "title": "Kearney Global Services Location Index 2023",
+      "url": "https://www.kearney.com/documents/291362523/297668319/Regenerative%2Btalent%2Bpools--The%2B2023%2BKearney%2BGlobal%2BServices%2BLocation%2BIndex.pdf/c7895012-1f45-eb16-55fb-d32dfa861a40?t=1690244354000",
+      "type": "Consulting index",
+      "use": "Outsourcing ecosystem and talent/operating-environment screen",
+      "limitation": "Not current consumer demand data and not an English-learning market measurement.",
+      "confidence": "Directional"
+    }
+  ],
+  "markets": [
+    {"iso3":"IND","country":"India","cluster":"South Asia","ef_epi_2025":484,"change_vs_2024":-6,"ef_signal":"Low","research_route":"Home-market validation; regional-language, job-outcome B2B/B2B2C"},
+    {"iso3":"BGD","country":"Bangladesh","cluster":"South Asia","ef_epi_2025":506,"change_vs_2024":6,"ef_signal":"Moderate","research_route":"Mobile-first career and migration-related English; validate payment and retention"},
+    {"iso3":"PAK","country":"Pakistan","cluster":"South Asia","ef_epi_2025":493,"change_vs_2024":0,"ef_signal":"Low","research_route":"Professional/remote-work English; examine payments, regulation and language mix"},
+    {"iso3":"LKA","country":"Sri Lanka","cluster":"South Asia","ef_epi_2025":486,"change_vs_2024":0,"ef_signal":"Low","research_route":"Services, tourism and outbound-mobility cohorts; test market size before entry"},
+    {"iso3":"NPL","country":"Nepal","cluster":"South Asia","ef_epi_2025":514,"change_vs_2024":2,"ef_signal":"Moderate","research_route":"Migration, hospitality and student pathways; validate addressable paying base"},
+    {"iso3":"IDN","country":"Indonesia","cluster":"Southeast Asia","ef_epi_2025":471,"change_vs_2024":3,"ef_signal":"Low","research_route":"Low-cost B2B2C; Bahasa onboarding and partner-led distribution"},
+    {"iso3":"VNM","country":"Vietnam","cluster":"Southeast Asia","ef_epi_2025":500,"change_vs_2024":2,"ef_signal":"Moderate","research_route":"Workplace speaking; crowded centre/app market requires channel advantage"},
+    {"iso3":"THA","country":"Thailand","cluster":"Southeast Asia","ef_epi_2025":402,"change_vs_2024":-13,"ef_signal":"Very low","research_route":"Tourism, service and export roles; test willingness-to-pay and local content"},
+    {"iso3":"MYS","country":"Malaysia","cluster":"Southeast Asia","ef_epi_2025":581,"change_vs_2024":15,"ef_signal":"High","research_route":"Benchmark and specialised workplace English, not remedial mass market"},
+    {"iso3":"PHL","country":"Philippines","cluster":"Southeast Asia","ef_epi_2025":569,"change_vs_2024":-1,"ef_signal":"High","research_route":"BPO benchmark and role-assessment reference; limited remedial market"},
+    {"iso3":"SAU","country":"Saudi Arabia","cluster":"Gulf / MENA","ef_epi_2025":404,"change_vs_2024":-13,"ef_signal":"Very low","research_route":"Partner-led enterprise or public workforce programmes only"},
+    {"iso3":"ARE","country":"United Arab Emirates","cluster":"Gulf / MENA","ef_epi_2025":487,"change_vs_2024":-2,"ef_signal":"Low","research_route":"Enterprise/regional hub; premium, diverse frontline-workforce use cases"},
+    {"iso3":"EGY","country":"Egypt","cluster":"MENA / Africa","ef_epi_2025":458,"change_vs_2024":-7,"ef_signal":"Very low","research_route":"BPO/digital-services and employability; Arabic localisation and partner channel"},
+    {"iso3":"MAR","country":"Morocco","cluster":"MENA / Africa","ef_epi_2025":492,"change_vs_2024":13,"ef_signal":"Low","research_route":"Francophone/European services and tourism; English must complement French/Arabic reality"},
+    {"iso3":"TUR","country":"Türkiye","cluster":"MENA / Europe","ef_epi_2025":488,"change_vs_2024":-9,"ef_signal":"Low","research_route":"Export, tourism and professional English; Turkish localization and local payment research"},
+    {"iso3":"TUN","country":"Tunisia","cluster":"MENA / Africa","ef_epi_2025":498,"change_vs_2024":2,"ef_signal":"Low","research_route":"European services/BPO; French/Arabic linguistic context is material"},
+    {"iso3":"MEX","country":"Mexico","cluster":"Latin America","ef_epi_2025":440,"change_vs_2024":-19,"ef_signal":"Very low","research_route":"Nearshoring, technical and customer English; Spanish-first B2B sales"},
+    {"iso3":"COL","country":"Colombia","cluster":"Latin America","ef_epi_2025":480,"change_vs_2024":-5,"ef_signal":"Low","research_route":"BPO/nearshore workplace English in selected cities, not generic mass B2C"},
+    {"iso3":"BRA","country":"Brazil","cluster":"Latin America","ef_epi_2025":482,"change_vs_2024":16,"ef_signal":"Low","research_route":"Large but later: Portuguese product depth plus partner-led employer wedge"},
+    {"iso3":"PER","country":"Peru","cluster":"Latin America","ef_epi_2025":519,"change_vs_2024":0,"ef_signal":"Moderate","research_route":"Professional and mobility niches; validate scale and distribution economics"},
+    {"iso3":"CHL","country":"Chile","cluster":"Latin America","ef_epi_2025":517,"change_vs_2024":-8,"ef_signal":"Moderate","research_route":"Higher-value professional/digital-services niches; smaller pool"},
+    {"iso3":"ARG","country":"Argentina","cluster":"Latin America","ef_epi_2025":575,"change_vs_2024":13,"ef_signal":"High","research_route":"Remote-work and specialized business English; macro/payment volatility must be screened"},
+    {"iso3":"ECU","country":"Ecuador","cluster":"Latin America","ef_epi_2025":466,"change_vs_2024":1,"ef_signal":"Low","research_route":"Smaller Spanish-speaking B2B/B2C test; validate scale before localisation spend"},
+    {"iso3":"NGA","country":"Nigeria","cluster":"Africa","ef_epi_2025":568,"change_vs_2024":11,"ef_signal":"High","research_route":"Professional communication and employability, not basic English; payments/connectivity require city-level view"},
+    {"iso3":"ZAF","country":"South Africa","cluster":"Africa","ef_epi_2025":602,"change_vs_2024":8,"ef_signal":"High","research_route":"BPO/enterprise benchmark and specialised workplace communication"},
+    {"iso3":"KEN","country":"Kenya","cluster":"Africa","ef_epi_2025":593,"change_vs_2024":12,"ef_signal":"High","research_route":"Digital-services/enterprise communication; role-specific rather than remedial English"},
+    {"iso3":"JPN","country":"Japan","cluster":"East Asia","ef_epi_2025":446,"change_vs_2024":-8,"ef_signal":"Very low","research_route":"High spending potential but difficult localisation and incumbent competition"},
+    {"iso3":"KOR","country":"South Korea","cluster":"East Asia","ef_epi_2025":522,"change_vs_2024":-1,"ef_signal":"Moderate","research_route":"Premium, intensely competitive English market; evaluate only with differentiated work outcome"},
+    {"iso3":"CHN","country":"China","cluster":"East Asia","ef_epi_2025":464,"change_vs_2024":9,"ef_signal":"Low","research_route":"Large theoretical demand but regulatory, product, distribution and data constraints are gating"},
+    {"iso3":"UZB","country":"Uzbekistan","cluster":"Central Asia","ef_epi_2025":429,"change_vs_2024":-10,"ef_signal":"Very low","research_route":"Emerging digital-services/mobility opportunity; confirm payment, language and partner economics"}
+  ],
+  "not_yet_measured": [
+    "Number of Indians or residents who pay for English learning services by country",
+    "Country-level app customer-acquisition cost",
+    "Competitor revenue, profit, paid users, conversion and retention where not publicly disclosed",
+    "A universal count of English-requiring job posts"
+  ]
+}

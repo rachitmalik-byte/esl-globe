@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Global ESL Market Atlas - AI-first English learning expansion intelligence.">
+  <title>Global ESL Market Atlas</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-theme="briefing">
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">◌</div>
+      <div>
+        <p class="eyebrow">MARKET INTELLIGENCE</p>
+        <h1>Global ESL Market Atlas</h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="theme-switcher" role="radiogroup" aria-label="Visual Theme">
+        <button class="theme-btn active" data-theme="briefing" type="button" title="Executive Light Briefing">☀️ Simple</button>
+        <button class="theme-btn" data-theme="field" type="button" title="Dark Mode Field View">🌙 Dark</button>
+        <button class="theme-btn" data-theme="satellite" type="button" title="Deep Oceanic Satellite View">🛰️ Satellite</button>
+        <button class="theme-btn" data-theme="ops" type="button" title="Tactical Military HUD">🪖 Call of Duty</button>
+        <button class="theme-btn" data-theme="cyberpunk" type="button" title="Synthwave Neon Radar">⚡ Cyberpunk</button>
+      </div>
+      <button id="readModeHeaderBtn" class="btn btn-mini" type="button">📖 Read Mode</button>
+      <button id="exportButton" class="btn btn-mini" type="button">Export Filtered JSON</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <!-- Top KPI Strip -->
+    <section class="kpi-strip" aria-label="Key Performance Indicators">
+      <div class="kpi-card">
+        <span class="kpi-label">Active Heatmap Metric</span>
+        <div class="kpi-value kpi-highlight" id="kpiMetricName">Launch Fit</div>
+        <div class="kpi-sub" id="kpiLeader">Top: Japan (8.15 / 10)</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Selected Market</span>
+        <div class="kpi-value" id="kpiSelectedCountry">India 🇮🇳</div>
+        <div class="kpi-sub" id="kpiSelectedRoute">Home-market validation</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Market Coverage</span>
+        <div class="kpi-value"><span id="kpiShownCount">30</span> <span style="font-size:14px;font-weight:600;color:var(--muted)">/ 30 markets</span></div>
+        <div class="kpi-sub">7 strategic clusters screened</div>
+      </div>
+      <div class="kpi-card kpi-warning">
+        <span class="kpi-label">Strategic Reality Check</span>
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-top:2px;">Downloads ≠ Willingness to Pay</div>
+        <div class="kpi-sub">Low English proficiency does not prove consumer subscription intent.</div>
+      </div>
+    </section>
+
+    <!-- Quick Metric Switcher Chips -->
+    <nav class="metric-chips-bar" aria-label="Metric Switcher">
+      <span class="metric-chips-label">Heatmap Metric:</span>
+      <button class="metric-chip active" data-metric="launch_fit" type="button">🎯 Composite Launch Fit</button>
+      <button class="metric-chip" data-metric="paid_conversion" type="button">💰 Paid Conversion</button>
+      <button class="metric-chip" data-metric="demand" type="button">🔥 Outcome Demand</button>
+      <button class="metric-chip" data-metric="distribution" type="button">🏢 Distribution / B2B</button>
+      <button class="metric-chip" data-metric="whitespace" type="button">🧭 Whitespace Gap</button>
+      <button class="metric-chip" data-metric="feasibility" type="button">⚡ Operating Feasibility</button>
+      <button class="metric-chip" data-metric="evidence_confidence" type="button">🛡️ Evidence Confidence</button>
+      <button class="metric-chip" data-metric="ef_2025" type="button">🌐 EF EPI 2025 Signal</button>
+    </nav>
+
+    <!-- Main Workspace (Map + Detail Panel) -->
+    <section class="workspace">
+      <!-- Interactive World Map Card -->
+      <article class="map-card">
+        <div class="map-topline">
+          <div class="map-meta">
+            <span class="eyebrow" id="metricTypeBadge">DERIVED COMPOSITE</span>
+            <h2 id="metricTitle">Composite Launch Fit</h2>
+            <p id="metricDefinition">Weighted score: demand, paid conversion, B2B fit, whitespace & feasibility</p>
+          </div>
+          <div class="map-tools">
+            <button id="zoomIn" class="icon-btn" type="button" title="Zoom in">+</button>
+            <button id="zoomOut" class="icon-btn" type="button" title="Zoom out">−</button>
+            <button id="zoomReset" class="icon-btn" type="button" title="Reset view">⌂</button>
+          </div>
+        </div>
+
+        <div id="mapWrap" class="map-wrap">
+          <svg id="worldMap" role="img" aria-label="Interactive world map showing 30 ESL expansion markets"></svg>
+          <div id="mapTooltip" class="map-tooltip" hidden></div>
+        </div>
+
+        <!-- Overhauled Dynamic Legend -->
+        <div class="legend-container">
+          <div class="legend-scale">
+            <div class="legend-bar-wrap">
+              <div id="legendBar" class="legend-bar"></div>
+              <div id="legendPointer" class="legend-pointer" style="left: 50%;"></div>
+            </div>
+            <div class="legend-ticks">
+              <span id="legendMin">Min</span>
+              <span id="legendQ1">25%</span>
+              <span id="legendMid">Median</span>
+              <span id="legendQ3">75%</span>
+              <span id="legendMax">Max</span>
+            </div>
+          </div>
+          <div class="legend-info">
+            <span id="legendNote">Scores are 1–10 assessments. Click any market for full evidence dossier.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Country Detail Panel -->
+      <aside class="detail-panel" id="detailPanel">
+        <div id="emptyDetail" class="detail-empty">
+          <div class="detail-orb">◎</div>
+          <h3>Select a Market</h3>
+          <p>Click any highlighted country on the map or in the table below to inspect its buyer, role outcome, supply reality, and cited sources.</p>
+        </div>
+        <div id="marketDetail" hidden></div>
+      </aside>
+    </section>
+
+    <!-- Lower Controls Bar -->
+    <section class="controls-bar">
+      <div class="cluster-tabs" id="clusterTabs">
+        <button class="cluster-tab active" data-cluster="all" type="button">All Regions</button>
+        <button class="cluster-tab" data-cluster="South Asia" type="button">South Asia</button>
+        <button class="cluster-tab" data-cluster="Southeast Asia" type="button">Southeast Asia</button>
+        <button class="cluster-tab" data-cluster="Latin America" type="button">Latin America</button>
+        <button class="cluster-tab" data-cluster="Gulf / MENA" type="button">Gulf / MENA</button>
+        <button class="cluster-tab" data-cluster="MENA / Africa" type="button">MENA & Africa</button>
+        <button class="cluster-tab" data-cluster="East Asia" type="button">East Asia</button>
+      </div>
+
+      <div class="search-box">
+        <span style="color:var(--muted)">🔍</span>
+        <input type="search" id="searchInput" placeholder="Search India, Japan, Mexico..." autocomplete="off">
+      </div>
+    </section>
+
+    <!-- Lower Section: Table & Watchlist -->
+    <section class="lower-grid">
+      <article class="table-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <h3 style="margin:0;font-size:17px;">Filtered Market Universe</h3>
+            <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">Click any country row to highlight on map. Click columns to sort.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col" data-sort="country">Market</th>
+                <th scope="col" data-sort="status">Strategic Route</th>
+                <th scope="col" data-sort="currentMetric" class="th-current-metric" id="thMetricLabel">Score</th>
+                <th scope="col" data-sort="demand">Demand</th>
+                <th scope="col" data-sort="paid">Paid</th>
+                <th scope="col" data-sort="b2b">B2B</th>
+                <th scope="col" data-sort="whitespace">Gap</th>
+                <th scope="col" data-sort="evidence">Confidence</th>
+                <th scope="col">Compare</th>
+              </tr>
+            </thead>
+            <tbody id="marketRows"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <aside class="watchlist-card">
+        <span class="eyebrow">HONORABLE MENTIONS</span>
+        <h3 style="margin:4px 0 0;font-size:16px;">Unscored Watchlist</h3>
+        <p style="margin:4px 0 0;font-size:12px;color:var(--muted)">Held outside heatmaps until equivalent empirical evidence is gathered.</p>
+        <ul id="watchlist"></ul>
+      </aside>
+    </section>
+
+    <!-- Comparison Tray -->
+    <section id="compareSection" class="compare-section" hidden>
+      <div class="compare-header">
+        <div>
+          <span class="eyebrow">BENCHMARK MATRIX</span>
+          <h3 style="margin:2px 0 0;font-size:18px;">Direct Market Comparison</h3>
+        </div>
+        <button id="clearCompare" class="btn btn-mini" type="button">Clear Comparison</button>
+      </div>
+      <div id="comparisonGrid" class="comparison-grid"></div>
+    </section>
+    <!-- Read Mode Article Modal -->
+    <div id="articleModal" class="article-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="article-modal-container">
+        <div class="article-modal-header">
+          <img id="articleHeroImg" class="article-hero-img" src="" alt="Country landscape" loading="eager">
+          <div class="article-hero-gradient"></div>
+          <div class="article-top-nav">
+            <div class="modal-nav-group">
+              <button id="articlePrevBtn" class="btn-modal-nav" type="button">← Prev Market</button>
+              <button id="articleNextBtn" class="btn-modal-nav" type="button">Next Market →</button>
+            </div>
+            <button id="closeArticleBtn" class="btn-close-modal" type="button" aria-label="Close article">✕</button>
+          </div>
+          <div class="article-hero-content">
+            <div class="article-title-wrap">
+              <span class="eyebrow" id="articleClusterBadge" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.8);">REGION</span>
+              <h2 id="articleCountryTitle">Country Name</h2>
+            </div>
+            <div class="article-pills">
+              <span id="articleRouteBadge" class="article-pill article-pill-accent">Route</span>
+              <span id="articleFitBadge" class="article-pill">Launch Fit: —</span>
+              <span id="articleEfBadge" class="article-pill">EF EPI: —</span>
+            </div>
+          </div>
+        </div>
+        <div class="article-scroll-body" id="articleBody"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Global ESL Market Atlas · Strategic Expansion Intelligence</span>
+    <span>Sourced evidence pack · Private screening tool</span>
+  </footer>
+
+  <script src="./d3.min.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
